@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<info> 
+    <id>files_readmemd</id>
+    <name>README.md</name>
+    <summary>Show README.md gitlab style</summary>
+    <description><![CDATA[Show README.md gitlab style ]]></description>
+    <version>0.0.1</version>
+    <licence>agpl</licence>
+    <author mail="matthieu.lecorre@univ-nantes.fr" homepage="http://www.univ-nantes.fr">Matthieu Le Corre</author>
+    <namespace>ReadMeMd</namespace>
+    <bugs>https://gitlab.univ-nantes.fr</bugs>
+    <dependencies>
+        <nextcloud min-version="12" max-version="14"/>
+    </dependencies>
+    <types>
+            <filesystem/>
+    </types>	    
+</info>

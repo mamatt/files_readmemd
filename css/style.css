@@ -1,0 +1,19 @@
+.readmemd {
+	padding: 2em ;
+	border-top: 1px solid silver ;
+	margin-top: 1em ;
+	background-color: #c6d6390f ;
+}
+
+.readmemd::before {
+	content:"README.md" ;
+	color: silver ;
+}
+
+.headermd {
+	padding: 2em ;
+	border-bottom: 1px solid silver ;
+	margin-bottom: 1em ;
+	background-color: #c6d6390f ;
+}
+
