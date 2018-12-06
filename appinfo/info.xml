@@ -10,7 +10,7 @@
     <namespace>ReadMeMd</namespace>
     <bugs>https://gitlab.univ-nantes.fr</bugs>
     <dependencies>
-        <nextcloud min-version="12" max-version="14"/>
+        <nextcloud min-version="12" max-version="15"/>
     </dependencies>
     <types>
             <filesystem/>

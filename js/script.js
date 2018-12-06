@@ -8,15 +8,15 @@ OCA.ReadmeMD = {};
  */
 OCA.ReadmeMD.App = {
     /**
-     * Holds the MD container and content
+     * Holds the MDs objects
      */
-    container: null,
-    content: null,
+	header: null,
+    	readme: null,
     
     /**
      * Setup on page load
      */
-    initialize: function (container) {
+    initialize: function (header,readme) {
         // Don't load if not in the files app
         if (!$('#content.app-files').length) {
             return;
@@ -35,8 +35,11 @@ OCA.ReadmeMD.App = {
 	$("#filestable").on('updated',this.checkMD);
 
 	// container creation
-	this.container = container;
-	this.createContainer() ;
+	this.header = header;
+	this.readme = readme;
+	
+	this.createContainer(this.header) ;
+	this.createContainer(this.readme) ;
     
     },
 
@@ -45,13 +48,21 @@ OCA.ReadmeMD.App = {
      * check MD handler
      */
     checkMD: function() {
-	OCA.ReadmeMD.container.addClass("hidden") ;
+	OCA.ReadmeMD.header.container.addClass("hidden") ;
+	OCA.ReadmeMD.readme.container.addClass("hidden") ;
 
 	for (var filenum in  OCA.Files.App.fileList.files) {
-            if ( OCA.Files.App.fileList.files[filenum].name == "README.md") { 
-		OCA.ReadmeMD.container.removeClass("hidden") ;
-		OCA.ReadmeMD.fillContainer() ;
+            
+	    if ( OCA.Files.App.fileList.files[filenum].name == OCA.ReadmeMD.header.filename ) { 
+		OCA.ReadmeMD.header.container.removeClass("hidden") ;
+		OCA.ReadmeMD.fillContainer(OCA.ReadmeMD.header) ;
 	    } ;
+
+            if ( OCA.Files.App.fileList.files[filenum].name == OCA.ReadmeMD.readme.filename ) { 
+		OCA.ReadmeMD.readme.container.removeClass("hidden") ;
+		OCA.ReadmeMD.fillContainer(OCA.ReadmeMD.readme) ;
+	    } ;
+	   
 	 } ;
 
     },
@@ -59,49 +70,65 @@ OCA.ReadmeMD.App = {
     /**
      * show contenair
      */
-   createContainer: function() {
-	$('#filestable').after(this.container)  ;
-	
+   createContainer: function(zone) {
+	   
+	 if (zone.position == "before")
+	   { $('#filestable').before(zone.container)  ; }
+
+	 if (zone.position == "after")
+	   { $('#filestable').after(zone.container) ; }
    },
 
 
   /**
   * fill contant
   */
-  fillContainer: function() {
+  fillContainer: function(zone) {
 
-		dir=OCA.Files.App.fileList._currentDirectory ;
-		filename ="README.md" ;
+		dir=OCA.Files.App.fileList._currentDirectory ;i
 
-		$.get(
-			OC.generateUrl('/apps/files_texteditor/ajax/loadfile'),
-			{
-				filename: filename,
-				dir: dir
-			}
-		    ).done(function(data) {
-					OCA.ReadmeMD.content=data.filecontents ;
-					OCA.ReadmeMD.renderMD() ;
+	  	if (zone.position === "before" ) {
+			$.get(
+				OC.generateUrl('/apps/files_texteditor/ajax/loadfile'),
+				{
+					filename: zone.filename,
+					dir: dir
+				}
+		    	).done(function(data,textStatus,jqXHR) {
+				OCA.ReadmeMD.header.content=data.filecontents ;
+				OCA.ReadmeMD.renderMD(OCA.ReadmeMD.header) ;
 		    }) ;
+		};
+
+	  	if (zone.position === "after" ) {
+			$.get(
+				OC.generateUrl('/apps/files_texteditor/ajax/loadfile'),
+				{
+					filename: zone.filename,
+					dir: dir
+				}
+		    	).done(function(data,textStatus,jqXHR) {
+				OCA.ReadmeMD.readme.content=data.filecontents ;
+				OCA.ReadmeMD.renderMD(OCA.ReadmeMD.readme) ;
+		    }) ;
+	};
 
   },
 
   /**
    * Render Markdown
    **/
-  renderMD: function() {
-	OCA.ReadmeMD.container
-	     .addClass('icon-loading')
-             .children().remove();
-
+  renderMD: function(zone) {
+	//cleanup old content
+	zone.container.children().remove();
+	
+	//render MD
 	OCA.Files_Texteditor.previewPlugins["text/markdown"].renderer.renderText(
-		OCA.ReadmeMD.content,
-		OCA.ReadmeMD.container
+		zone.content,
+		zone.container
 	).done(function(data) {
 		$("#filestable > tfoot > tr").height("auto") ;
-		OCA.ReadmeMD.container.removeClass('icon-loading') ;
 	});
-
    }
 
 };
@@ -110,7 +137,21 @@ OCA.ReadmeMD.App = {
 OCA.ReadmeMD = OCA.ReadmeMD.App ;
 
 $(document).ready(function () {
-	OCA.ReadmeMD.initialize($('<div id="preview" class="hidden text-markdown readmemd"></div>') );
+	var header = {
+		container: $('<div id="headerMD" class="hidden text-markdown headermd"></div>'),
+		position : "before",
+		filename : "HEADER.md",
+		content  : null
+	} ;
+
+	var footer = {
+		container: $('<div id="readmeMD" class="hidden text-markdown readmemd"></div>'),
+		position : "after",
+		filename : "README.md",
+		content  :  null
+	} ;
+
+	OCA.ReadmeMD.initialize(header,footer);
 });
 
 
