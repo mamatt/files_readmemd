@@ -7,6 +7,7 @@ OCA.ReadmeMD = {};
  * @namespace OCA.IndexMD.App
  */
 OCA.ReadmeMD.App = {
+
     /**
      * Holds the MDs objects
      */
@@ -17,6 +18,9 @@ OCA.ReadmeMD.App = {
      * Setup on page load
      */
     initialize: function (header,readme) {
+
+	var self = this ;
+
         // Don't load if not in the files app
         if (!$('#content.app-files').length) {
             return;
@@ -28,19 +32,28 @@ OCA.ReadmeMD.App = {
 	    return;
 	}
 
-	//initialise MD renderer
-	OCA.Files_Texteditor.previewPlugins["text/markdown"].init() ;
-
-	// trigger on filetable
-	$("#filestable").on('updated',this.checkMD);
-
 	// container creation
 	this.header = header;
 	this.readme = readme;
 	
 	this.createContainer(this.header) ;
 	this.createContainer(this.readme) ;
-    
+
+	//initialise MD renderer
+	this.PromiseMDinit = OCA.Files_Texteditor.previewPlugins["text/markdown"].init()
+
+	// then trigger on filetable to check if README/HEADER are present
+        $("#filestable") .on('updated',function() { self.checkMD() ; })	    
+	    
+	    
+	//trigger on multiselect to handle the infamous fixed position toolsbar
+	$("#filestable").on('updated',function() {	
+		$("#filestable input:checkbox").change(function() {
+				self.handleMultiselect() ;
+		});
+
+	});
+
     },
 
 
@@ -48,19 +61,27 @@ OCA.ReadmeMD.App = {
      * check MD handler
      */
     checkMD: function() {
-	OCA.ReadmeMD.header.container.addClass("hidden") ;
-	OCA.ReadmeMD.readme.container.addClass("hidden") ;
 
+	//cleanup "old" MDs before checking for new ones
+	this.header.container.addClass("hidden")  ;
+	this.header.container.children().remove() ;
+	this.header.content= null ;
+	
+        this.readme.container.addClass("hidden")  ;
+        this.readme.container.children().remove() ;
+	this.readme.content = null ;
+
+	//list file from current dir and check     
 	for (var filenum in  OCA.Files.App.fileList.files) {
             
-	    if ( OCA.Files.App.fileList.files[filenum].name == OCA.ReadmeMD.header.filename ) { 
-		OCA.ReadmeMD.header.container.removeClass("hidden") ;
-		OCA.ReadmeMD.fillContainer(OCA.ReadmeMD.header) ;
+	    if ( OCA.Files.App.fileList.files[filenum].name == this.header.filename ) { 
+		this.header.container.removeClass("hidden") ;
+		this.fillContainer(OCA.ReadmeMD.header) ;
 	    } ;
 
-            if ( OCA.Files.App.fileList.files[filenum].name == OCA.ReadmeMD.readme.filename ) { 
-		OCA.ReadmeMD.readme.container.removeClass("hidden") ;
-		OCA.ReadmeMD.fillContainer(OCA.ReadmeMD.readme) ;
+            if ( OCA.Files.App.fileList.files[filenum].name == this.readme.filename ) { 
+		this.readme.container.removeClass("hidden") ;
+		this.fillContainer(OCA.ReadmeMD.readme) ;
 	    } ;
 	   
 	 } ;
@@ -84,52 +105,53 @@ OCA.ReadmeMD.App = {
   * fill contant
   */
   fillContainer: function(zone) {
+	
+	var self=this ;
 
-		dir=OCA.Files.App.fileList._currentDirectory ;i
-
-	  	if (zone.position === "before" ) {
-			$.get(
-				OC.generateUrl('/apps/files_texteditor/ajax/loadfile'),
-				{
-					filename: zone.filename,
-					dir: dir
-				}
-		    	).done(function(data,textStatus,jqXHR) {
-				OCA.ReadmeMD.header.content=data.filecontents ;
-				OCA.ReadmeMD.renderMD(OCA.ReadmeMD.header) ;
-		    }) ;
-		};
-
-	  	if (zone.position === "after" ) {
-			$.get(
-				OC.generateUrl('/apps/files_texteditor/ajax/loadfile'),
-				{
-					filename: zone.filename,
-					dir: dir
-				}
-		    	).done(function(data,textStatus,jqXHR) {
-				OCA.ReadmeMD.readme.content=data.filecontents ;
-				OCA.ReadmeMD.renderMD(OCA.ReadmeMD.readme) ;
-		    }) ;
-	};
-
+	dir=OCA.Files.App.fileList._currentDirectory ;
+	//load header file via texteditor apps 
+		$.get(
+			OC.generateUrl('/apps/files_texteditor/ajax/loadfile'),
+			{
+				filename: zone.filename,
+				dir: dir
+			}
+	    	).done(function(data) {
+			//promise solved -> render MarkDown
+			zone.content=data.filecontents ;
+			self.renderMD(zone) ;
+	        }) ;
   },
 
   /**
    * Render Markdown
    **/
   renderMD: function(zone) {
-	//cleanup old content
-	zone.container.children().remove();
-	
 	//render MD
-	OCA.Files_Texteditor.previewPlugins["text/markdown"].renderer.renderText(
-		zone.content,
-		zone.container
-	).done(function(data) {
-		$("#filestable > tfoot > tr").height("auto") ;
-	});
-   }
+		OCA.Files_Texteditor.previewPlugins["text/markdown"].renderer.renderText(
+			zone.content,
+			zone.container
+		).done(function(data) {
+			$("#filestable > tfoot > tr").height("auto") ;
+		});
+   },
+
+  /**
+   * Handle Multiselect
+   **/
+  handleMultiselect: function() {
+	  // on checkbox change on filestable, check the multiselect class to hide header
+	  // and move footer 70px down, see css
+	  if ($("#filestable input:checked").size() > 0 ) {
+		  this.header.container.addClass("hidden") ;
+		  this.readme.container.addClass("down")   ;
+	  } else {
+		 if (this.header.content != null) {
+		 	this.header.container.removeClass("hidden") ;
+		 }
+		 this.readme.container.removeClass("down") ;
+	  }
+  }
 
 };
 
