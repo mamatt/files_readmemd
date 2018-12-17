@@ -4,15 +4,16 @@
     <name>README.md</name>
     <summary>Show README.md gitlab style</summary>
     <description><![CDATA[Show README.md gitlab style ]]></description>
-    <version>0.0.1</version>
+    <version>1.0.0</version>
     <licence>agpl</licence>
     <author mail="matthieu.lecorre@univ-nantes.fr" homepage="http://www.univ-nantes.fr">Matthieu Le Corre</author>
     <namespace>ReadMeMd</namespace>
-    <bugs>https://gitlab.univ-nantes.fr</bugs>
-    <dependencies>
-        <nextcloud min-version="12" max-version="15"/>
-    </dependencies>
     <types>
-            <filesystem/>
-    </types>	    
+	<filesystem/>
+    </types>
+    <category>office</category>
+    <bugs>https://gitlab.univ-nantes.fr/uncloud</bugs>
+    <dependencies>	    
+        <nextcloud min-version="14" max-version="15"/>
+    </dependencies>
 </info>
