@@ -12,7 +12,7 @@
 	<filesystem/>
     </types>
     <category>office</category>
-    <bugs>https://gitlab.univ-nantes.fr/uncloud</bugs>
+    <bugs>https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues</bugs>
     <dependencies>	    
         <nextcloud min-version="14" max-version="15"/>
     </dependencies>
