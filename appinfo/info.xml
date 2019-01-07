@@ -2,11 +2,7 @@
 <info> 
     <id>files_readmemd</id>
     <name>README.md</name>
-<<<<<<< HEAD
     <summary>Show README.md and HEADER.md gitlab style on your NextCloud !</summary>
-=======
-    <summary>Show README.md gitlab style</summary>
->>>>>>> f8246586b23acc7d95179a7bef0fe4b0796ad406
     <description><![CDATA[Show README.md & HEADER.md gitlab style on your NextCloud !
 With this app you can add a header and a footer to your nextcloud directories.
 This can be use to explain the goal of a directory, describe the content of a folder ...
