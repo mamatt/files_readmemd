@@ -6,4 +6,5 @@ $eventDispatcher->addListener('OCA\Files::loadAdditionalScripts',
 
 		OCP\Util::addscript('files_readmemd', 'script');
 		OCP\Util::addStyle('files_readmemd','style') ;
+		OCP\Util::addStyle('files_readmemd','content') ;
 });

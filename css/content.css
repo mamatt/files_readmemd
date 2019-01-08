@@ -1,0 +1,6 @@
+.headermd ul,
+.readmemd ul
+{
+	list-style: initial ;
+	padding: 1em ;
+}
