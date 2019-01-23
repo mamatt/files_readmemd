@@ -16,6 +16,11 @@ It show README.md in the way gitlab does.
   * Create a README.md file (case sensitive name) and fill it with the apropriate Markdown content.
   * You can do the same with the HEADER.md file.
   * It's rendered using the markdown engine. Before file list for the HEADER.md, after file list for the README.md
+
+Now you can use template to customize the README.md/HEADER.md rendering.
+Create your own theme and use your own content.css (see css/content.css file)
+
+Rendering is done inside a div contenair with headermd or readmemd class.
   
 # Requirement
   * [MarkDown editor](https://apps.nextcloud.com/apps/files_markdown) need to be installed

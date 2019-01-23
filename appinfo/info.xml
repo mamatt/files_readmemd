@@ -15,6 +15,7 @@ It show README.md in the way gitlab does.]]></description>
 	<filesystem/>
     </types>
     <category>office</category>
+    <website>https://gitlab.univ-nantes.fr/uncloud/files_readmemd/</website>
     <bugs>https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues</bugs>
     <screenshot>https://gitlab.univ-nantes.fr/uncloud/files_readmemd/raw/master/screenshot.png</screenshot>
     <dependencies>	    
