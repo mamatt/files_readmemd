@@ -1,4 +1,4 @@
-## [Unreleased]
+## 1.0.1 25-01-2019
 ### Added
  - added a content.css file to permit an easy template usage
    [#1](https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues/1)
