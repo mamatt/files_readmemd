@@ -24,7 +24,7 @@ Now you can use template to customize the README.md/HEADER.md rendering.
   
 # Requirement
   * ~~[markDown editor](https://apps.nextcloud.com/apps/files_markdown) need to be installed~~
-  * An alternate renderer is now used when the [markDown editor](https://apps.nextcloud.com/apps/files_markdown) is not available    
+  * An alternate renderer [(showndown)](http://showdownjs.com/) is now used when the [markDown editor](https://apps.nextcloud.com/apps/files_markdown) is not available    
 
 # Limitation
   * Doesn't show up in public share
