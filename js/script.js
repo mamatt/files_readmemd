@@ -1,10 +1,10 @@
 /**
-* @namespace OCA.IndexMD
+* @namespace OCA.ReadmeMD
 */
 OCA.ReadmeMD = {};
 
 /**
- * @namespace OCA.IndexMD.App
+ * @namespace OCA.ReadmeMD.App
  */
 OCA.ReadmeMD.App = {
 
@@ -12,39 +12,26 @@ OCA.ReadmeMD.App = {
      * Holds the MDs objects
      */
 	header: null,
-    	readme: null,
+	readme: null,
     
     /**
      * Setup on page load
      */
-    initialize: function (header,readme) {
+    initialize: function (header,readme,editorType) {
 
 	var self = this ;
-
-        // Don't load if not in the files app
-        if (!$('#content.app-files').length) {
-            return;
-        }
-
-	//Don't load if the markdown apps is not present
-	if (! OCA.Files_Texteditor.previewPlugins["text/markdown"]) {
-	    console.error('MarkDown Apps not available !') ;
-	    return;
-	}
 
 	// container creation
 	this.header = header;
 	this.readme = readme;
 	
+	this.editorType = editorType ;
+
 	this.createContainer(this.header) ;
 	this.createContainer(this.readme) ;
 
-	//initialise MD renderer
-	this.PromiseMDinit = OCA.Files_Texteditor.previewPlugins["text/markdown"].init()
-
 	// then trigger on filetable to check if README/HEADER are present
-        $("#filestable") .on('updated',function() { self.checkMD() ; })	    
-	    
+        $("#filestable").on('updated',function() { self.checkMD() ; })	    	    
 	    
 	//trigger on multiselect to handle the infamous fixed position toolsbar
 	$("#filestable").on('updated',function() {	
@@ -128,12 +115,19 @@ OCA.ReadmeMD.App = {
    **/
   renderMD: function(zone) {
 	//render MD
+	if (this.editorType == "app" ) {
 		OCA.Files_Texteditor.previewPlugins["text/markdown"].renderer.renderText(
 			zone.content,
 			zone.container
 		).done(function(data) {
 			$("#filestable > tfoot > tr").height("auto") ;
 		});
+	} else {
+		var converter = new showdown.Converter();
+		zone.container.html(converter.makeHtml(zone.content)) ;
+		$("#filestable > tfoot > tr").height("auto") ;
+
+	} ;
    },
 
   /**
@@ -159,6 +153,11 @@ OCA.ReadmeMD.App = {
 OCA.ReadmeMD = OCA.ReadmeMD.App ;
 
 $(document).ready(function () {
+ 	// Don't load if not in the files app
+        if (!$('#content.app-files').length) {
+            return;
+        } ;
+
 	var header = {
 		container: $('<div id="headerMD" class="hidden text-markdown headermd"></div>'),
 		position : "before",
@@ -173,7 +172,22 @@ $(document).ready(function () {
 		content  :  null
 	} ;
 
-	OCA.ReadmeMD.initialize(header,footer);
+
+	//Switch to alternate renderer if markdown app is not present
+	if (!OCA.Files_Texteditor.previewPlugins["text/markdown"] ){
+	    	console.warn('MarkDown Apps not available !') ;
+	    	console.warn('Switching to alternate markdown renderer') ;
+		OCA.ReadmeMD.initialize(header,footer,"vendor");
+	} else {
+		// wait for plugin init to load app
+		// initialise MD renderer
+
+		OCA.Files_Texteditor.loadPreviewPlugin("text/markdown").then(function() {
+			OCA.ReadmeMD.initialize(header,footer,"app");
+
+		}) ;
+	} ;
+
 });
 
 
