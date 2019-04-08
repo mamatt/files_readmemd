@@ -1,15 +1,19 @@
 const webpack = require("webpack");
 const path = require("path");
 
-let config = {
-  entry: "./src/script.js",
+module.exports = {
+	devtool: 'source-map',	
+	mode: 'none',
+	
+	entry: {
+		'script.js': "./src/script.js"
+	},
 
-  mode: 'none', 
+	output: {
+		path: path.resolve(__dirname, "./js"),
+    		filename: "[name]"
+  	}
 
-  output: {
-    path: path.resolve(__dirname, "./js"),
-    filename: "script.js",
-  },
+
 }
 
-module.exports = config;

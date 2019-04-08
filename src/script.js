@@ -79,11 +79,8 @@ OCA.ReadmeMD.App = {
 					this.readme.filename = "." +this.readme.filename ;
 					this.readme.container.removeClass("hidden") ;
 					this.fillContainer(OCA.ReadmeMD.readme) ;
-				} ;
-
-				
+				} ;			
 			} ;
-
     },
 
     /**
@@ -154,20 +151,20 @@ $(document).ready(function () {
         } ;
 
 	var header = {
-		container: $('<div id="headerMD" class="hidden text-markdown headermd"></div>'),
+		container: $('<div id="headerMD" class="hidden markdown-body headermd"></div>'),
 		position : "before",
 		filename : "HEADER.md",
 		content  : null
 	} ;
 
 	var footer = {
-		container: $('<div id="readmeMD" class="hidden text-markdown readmemd"></div>'),
+		container: $('<div id="readmeMD" class="hidden markdown-body readmemd"></div>'),
 		position : "after",
 		filename : "README.md",
 		content  :  null
 	} ;
 
-		OCA.ReadmeMD.initialize(header,footer);
+	OCA.ReadmeMD.initialize(header,footer);
 
 });
 

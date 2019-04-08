@@ -6,7 +6,7 @@
 }
 
 .readmemd::before {
-	content:"README.md" ;
+	content:"README.md" !important ;
 	color: silver ;
 }
 
@@ -18,3 +18,10 @@
 .down {
 	margin-top:70px ;
 }
+
+.headermd ul,
+.readmemd ul
+{
+	list-style: initial ;
+}
+
