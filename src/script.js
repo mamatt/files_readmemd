@@ -41,7 +41,6 @@ OCA.ReadmeMD.App = {
 
     },
 
-
     /**
      * check MD handler
      */
@@ -59,15 +58,29 @@ OCA.ReadmeMD.App = {
 			//list file from current dir and check     
 			for (var filenum in  OCA.Files.App.fileList.files) {
 								
-					if ( OCA.Files.App.fileList.files[filenum].name == this.header.filename ) { 
-				this.header.container.removeClass("hidden") ;
-				this.fillContainer(OCA.ReadmeMD.header) ;
-					} ;
+				if ( OCA.Files.App.fileList.files[filenum].name == this.header.filename ) { 
+					this.header.container.removeClass("hidden") ;
+					this.fillContainer(OCA.ReadmeMD.header) ;
+				} ;
 
-								if ( OCA.Files.App.fileList.files[filenum].name == this.readme.filename ) { 
-				this.readme.container.removeClass("hidden") ;
-				this.fillContainer(OCA.ReadmeMD.readme) ;
-					} ;
+				if ( OCA.Files.App.fileList.files[filenum].name == this.readme.filename ) { 
+					this.readme.container.removeClass("hidden") ;
+					this.fillContainer(OCA.ReadmeMD.readme) ;
+				} ;
+
+				//also check for dot files an prefer them.
+				if ( OCA.Files.App.fileList.files[filenum].name == "." + this.header.filename ) {
+					this.header.filename = "." +this.header.filename ;
+					this.header.container.removeClass("hidden") ;
+					this.fillContainer(OCA.ReadmeMD.header) ;
+				} ;
+
+				if ( OCA.Files.App.fileList.files[filenum].name == "." + this.readme.filename ) {
+					this.readme.filename = "." +this.readme.filename ;
+					this.readme.container.removeClass("hidden") ;
+					this.fillContainer(OCA.ReadmeMD.readme) ;
+				} ;
+
 				
 			} ;
 
@@ -87,7 +100,7 @@ OCA.ReadmeMD.App = {
 
 
   /**
-  * fill contant
+  * fill container
   */
   fillContainer: function(zone) {
 	
