@@ -17,9 +17,12 @@ OCA.ReadmeMD.App = {
     /**
      * Setup on page load
      */
-    initialize: function (header,readme) {
+    initialize: function (header,readme,mode) {
 
 	var self = this ;
+
+	//public share or private view
+	this.mode = mode ;
 
 	// container creation
 	this.header = header;
@@ -55,27 +58,33 @@ OCA.ReadmeMD.App = {
 			this.readme.container.children().remove() ;
 			this.readme.content = null ;
 
+	    		if (this.mode == "public") {
+				var FL =  OCA.Sharing.PublicApp.fileList.files ;
+			}else {
+				var FL =  OCA.Files.App.fileList.files ;
+			}
+
 			//list file from current dir and check     
-			for (var filenum in  OCA.Files.App.fileList.files) {
+			for (var filenum in  FL ) {
 								
-				if ( OCA.Files.App.fileList.files[filenum].name == this.header.filename ) { 
+				if ( FL[filenum].name == this.header.filename ) { 
 					this.header.container.removeClass("hidden") ;
 					this.fillContainer(OCA.ReadmeMD.header) ;
 				} ;
 
-				if ( OCA.Files.App.fileList.files[filenum].name == this.readme.filename ) { 
+				if ( FL[filenum].name == this.readme.filename ) { 
 					this.readme.container.removeClass("hidden") ;
 					this.fillContainer(OCA.ReadmeMD.readme) ;
 				} ;
 
 				//also check for dot files an prefer them.
-				if ( OCA.Files.App.fileList.files[filenum].name == "." + this.header.filename ) {
+				if ( FL[filenum].name == "." + this.header.filename ) {
 					this.header.filename = "." +this.header.filename ;
 					this.header.container.removeClass("hidden") ;
 					this.fillContainer(OCA.ReadmeMD.header) ;
 				} ;
 
-				if ( OCA.Files.App.fileList.files[filenum].name == "." + this.readme.filename ) {
+				if ( FL[filenum].name == "." + this.readme.filename ) {
 					this.readme.filename = "." +this.readme.filename ;
 					this.readme.container.removeClass("hidden") ;
 					this.fillContainer(OCA.ReadmeMD.readme) ;
@@ -102,15 +111,22 @@ OCA.ReadmeMD.App = {
   fillContainer: function(zone) {
 	
 	var self=this ;
-
-	var dir=OCA.Files.App.fileList._currentDirectory ;
-	//load header file via remote call apps 
-		$.get(OC.linkToRemoteBase('files'+ dir +"/" +zone.filename))
-			.done(function(data) {
+	
+	if (this.mode == 'public') {
+		var token = $('#sharingToken').val()
+		var dir = OCA.Sharing.PublicApp.fileList._currentDirectory ;
+		var URL = OC.generateUrl('/s/{token}/download?path={path}&files={file}', {token: token, path: dir, file: zone.filename});
+	}else{
+		var dir = OCA.Files.App.fileList._currentDirectory ;
+		var URL = OC.linkToRemoteBase('files'+ dir +"/" +zone.filename)
+	} ;
+	//load header file via remote call apps
+	$.get(URL)
+		.done(function(data) {
 			//promise solved -> render MarkDown
 			zone.content=data ;
 			self.renderMD(zone) ;
-	        }) ;
+	 }) ;
   },
 
   /**
@@ -118,9 +134,9 @@ OCA.ReadmeMD.App = {
    **/
   renderMD: function(zone) {
 	//render MD
-		var converter = require('markdown-it')() ;
-		zone.container.html(converter.render(zone.content)) ;
-		$("#filestable > tfoot > tr").height("auto") ;
+	var converter = require('markdown-it')() ;
+	zone.container.html(converter.render(zone.content)) ;
+	$("#filestable > tfoot > tr").height("auto") ;
    },
 
   /**
@@ -146,9 +162,15 @@ OCA.ReadmeMD = OCA.ReadmeMD.App ;
 
 $(document).ready(function () {
  	// Don't load if not in the files app
-        if (!$('#content.app-files').length) {
-            return;
-        } ;
+        if ($('#content.app-files').length) {
+            var mode = 'private';
+        } else {
+		if ($('#content.app-files_sharing').length) {
+            		var mode = 'public';
+        	} else {
+			return ;
+		}
+	} ;
 
 	var header = {
 		container: $('<div id="headerMD" class="hidden markdown-body headermd"></div>'),
@@ -164,7 +186,7 @@ $(document).ready(function () {
 		content  :  null
 	} ;
 
-	OCA.ReadmeMD.initialize(header,footer);
+	OCA.ReadmeMD.initialize(header,footer,mode);
 
 });
 
