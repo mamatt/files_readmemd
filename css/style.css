@@ -3,6 +3,7 @@
 	border-top: 1px solid silver ;
 	margin-top: 1em ;
 	background-color: #c6d6390f ;
+	text-align: initial ;
 }
 
 .readmemd::before {
@@ -13,6 +14,7 @@
 .headermd {
 	padding: 1em ;
 	border-bottom: 1px solid silver ;
+	text-align: initial ;
 }
 
 .down {

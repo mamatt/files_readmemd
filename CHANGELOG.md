@@ -1,10 +1,12 @@
-## 1.0.2 08-04-2019
+## 1.0.2 09-04-2019
 ### Added
  - check for dot file, and prefer them ( .HEADER.md & .README.md) 
    [#4](https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues/4)
  - Improve CSS default
    [#7](https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues/7)
  - Use of webpack to minimise the apps size, and handle dependancy
+ - Now render in public share
+   [#8](https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues/7)
 
 ### Removed
  - remove all reference to markdown editor app
