@@ -27,3 +27,8 @@
 	list-style: initial ;
 }
 
+.headermd thead,
+.readmemd thead
+{
+	position: initial !important;
+}
