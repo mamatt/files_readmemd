@@ -36,7 +36,7 @@ OCA.ReadmeMD.App = {
 			
 		// trigger on hide filetable to prevent showing in trash favorite recent ...
 		// we need mutationobserver for that !
-		var observer = new MutationObserver(
+		var checkForContentFiles = new MutationObserver(
 			function(mutations) {				
 				mutations.forEach(function(mutation){
 						if (mutation.attributeName === 'class') {
@@ -50,12 +50,53 @@ OCA.ReadmeMD.App = {
 						}
 				});
 			}
-		)
+		) ;
 
-		observer.observe($('#app-content-files')[0],{
+		checkForContentFiles.observe($('#app-content-files')[0],{
 					attributes: true
-		})
-	    
+		}) ;
+
+		var checkForFilestable = new MutationObserver(
+			function(mutations) {				
+				mutations.forEach(function(mutation){
+						if (mutation.attributeName === 'class') {
+								if ($(mutation.target).hasClass("hidden")) {
+									self.header.container.addClass("hidden") ;
+									self.readme.container.addClass("hidden") ;
+								} else {
+									self.header.container.removeClass("hidden") ;
+									self.readme.container.removeClass("hidden") ;
+								}
+						}
+				});
+			}
+		) ;
+
+		checkForFilestable.observe($('#app-content-files')[0],{
+					attributes: true
+		}) ;
+		
+			/* // trigger on data-mtime change for README & HEADER
+					var checkForMtime = new MutationObserver(
+						function(mutations) {
+							//console.log(mutations) ;
+							mutations.forEach(function(mutation){
+								console.log(mutation) ;
+								console.log(mutation.attributeName)
+								if (mutation.attributName === 'data-mtime') 
+								{
+									console.log("Reload README") ;
+								}
+							})
+						}
+					) ;
+
+				checkForMtime.observe($('#filestable')[0],{
+					subtree: true,
+					attributes: true,
+					attributeFilter: ["data-mtime"]
+				})  ;
+	     */
   },
 
 	/**

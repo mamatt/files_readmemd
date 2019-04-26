@@ -1,6 +1,6 @@
 {
   "name": "files_readmemd",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "show README.md github style",
   "main": "./js/script.js",
   "repository": "https://gitlab.univ-nantes.fr/uncloud/files_readmemd.git",
