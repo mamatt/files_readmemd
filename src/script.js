@@ -34,57 +34,55 @@ OCA.ReadmeMD.App = {
 		// trigger on filetable to check if README/HEADER are present
 		$("#filestable").on('updated',function() { self.checkMD() ; })
 			
-		// trigger on hide filetable & app-content-files to prevent showing in trash favorite recent ...
-		// we need mutationobserver for that !
-		var checkForContentFiles = new MutationObserver(hideContainersViaMutation) ;
-				checkForContentFiles.observe($('#app-content-files')[0],{
-					attributes: true
-				}) ;
+		// Mutation observer to toogle readme visibility on hide or show 
+		var hideContainerOnHideObserver = new MutationObserver(function(mutations) { self._callBackToggleContainer(mutations,"hide") }) ;
+		var hideContainerOnShowObserver = new MutationObserver(function(mutations) { self._callBackToggleContainer(mutations,"show") }) ;
 
-		var checkForFilestable = new MutationObserver(hideContainersViaMutation) ;
-				checkForFilestable.observe($('#filestable')[0],{
-					attributes: true
-				}) ;
-		
-			/* // trigger on data-mtime change for README & HEADER
-					var checkForMtime = new MutationObserver(
-						function(mutations) {
-							//console.log(mutations) ;
-							mutations.forEach(function(mutation){
-								console.log(mutation) ;
-								console.log(mutation.attributeName)
-								if (mutation.attributName === 'data-mtime') 
-								{
-									console.log("Reload README") ;
-								}
-							})
-						}
-					) ;
+		//hide on showing trash / favorite / recent  / share ...
+		hideContainerOnHideObserver.observe($('#app-content-files')[0],{attributes: true}) ;
 
-				checkForMtime.observe($('#filestable')[0],{
-					subtree: true,
-					attributes: true,
-					attributeFilter: ["data-mtime"]
-				})  ;
-	     */
+		// this one is for mindmap or all other "fullscreen" apps
+		hideContainerOnHideObserver.observe($('#filestable')[0],{attributes: true }) ;
+
+		// this is a different for search as we doesn't toogle on hide but on show
+		hideContainerOnShowObserver.observe($('#searchresults')[0],{attributes: true}) ;
+
 	},
 	
   /**
-	 *  Hide containers
 	 *  Mutation observer Callback
 	 */
-	hideContainersViaMutation(mutation) {
+	_callBackToggleContainer(mutations,mode) {
+		var self = this ;
 		mutations.forEach(function(mutation){
 				if (mutation.attributeName === 'class') {
-					this.header.container.addClass("hidden") ;
-					this.readme.container.addClass("hidden") ;
-				} else {
-					if (this.header.content !== null ) { 
-						this.header.container.removeClass("hidden") ;
-					} ;
-					if (this.readme.content !== null) {
-						this.readme.container.removeClass("hidden") ;
-					} ;
+					if (mode === "hide") {
+						//mode hide
+						if ($(mutation.target).hasClass("hidden")) {
+							self.header.container.addClass("hidden") ;
+							self.readme.container.addClass("hidden") ;
+						} else {
+							if (self.header.content !== null ) { 
+								self.header.container.removeClass("hidden") ;
+							} ;
+							if (self.readme.content !== null) {
+								self.readme.container.removeClass("hidden") ;
+							} ;
+						} ;
+					} else {
+						//mode show
+						if ($(mutation.target).hasClass("hidden")) {
+							if (self.header.content !== null ) { 
+								self.header.container.removeClass("hidden") ;
+							} ;
+							if (self.readme.content !== null) {
+								self.readme.container.removeClass("hidden") ;
+							} ;
+						} else {
+							self.header.container.addClass("hidden") ;
+							self.readme.container.addClass("hidden") ;
+						} ;
+					}
 				} ;
 			}) ;
 	},
@@ -133,7 +131,34 @@ OCA.ReadmeMD.App = {
 				this.readme.filename = "." +this.readme.filename ;
 				this.readme.container.removeClass("hidden") ;
 				this.fillContainer(OCA.ReadmeMD.readme) ;
-			} ;			
+			} ;
+			
+			// now we check for .markdown and then dot file .markdown in order of priority
+			if ( FL[filenum].name == this.header.filename.split(".")[0]+".markdown" ) { 
+				this.header.filename = this.header.filename.split(".")[0]+".markdown" ;
+				this.header.container.removeClass("hidden") ;
+				this.fillContainer(OCA.ReadmeMD.header) ;
+			} ;
+
+			if ( FL[filenum].name == this.readme.filename.split(".")[0]+".markdown"  ) {
+				this.readme.filename = this.readme.filename.split(".")[0]+".markdown" ;
+				this.readme.container.removeClass("hidden") ;
+				this.fillContainer(OCA.ReadmeMD.readme) ;
+			} ;
+
+			if ( FL[filenum].name == "." + this.header.filename.split(".")[0]+".markdown" ) { 
+				this.header.filename = "." + this.header.filename.split(".")[0]+".markdown" ;
+				this.header.container.removeClass("hidden") ;
+				this.fillContainer(OCA.ReadmeMD.header) ;
+			} ;
+
+			if ( FL[filenum].name == "." + this.readme.filename.split(".")[0]+".markdown"  ) {
+				this.readme.filename = "." + this.readme.filename.split(".")[0]+".markdown" ;
+				this.readme.container.removeClass("hidden") ;
+				this.fillContainer(OCA.ReadmeMD.readme) ;
+			} ;
+
+
 		} ;
 	},
 
