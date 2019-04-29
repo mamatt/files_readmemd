@@ -32,49 +32,19 @@ OCA.ReadmeMD.App = {
 		this.createContainer(this.readme) ;
 
 		// trigger on filetable to check if README/HEADER are present
-			$("#filestable").on('updated',function() { self.checkMD() ; })
+		$("#filestable").on('updated',function() { self.checkMD() ; })
 			
-		// trigger on hide filetable to prevent showing in trash favorite recent ...
+		// trigger on hide filetable & app-content-files to prevent showing in trash favorite recent ...
 		// we need mutationobserver for that !
-		var checkForContentFiles = new MutationObserver(
-			function(mutations) {				
-				mutations.forEach(function(mutation){
-						if (mutation.attributeName === 'class') {
-								if ($(mutation.target).hasClass("hidden")) {
-									self.header.container.addClass("hidden") ;
-									self.readme.container.addClass("hidden") ;
-								} else {
-									self.header.container.removeClass("hidden") ;
-									self.readme.container.removeClass("hidden") ;
-								}
-						}
-				});
-			}
-		) ;
-
-		checkForContentFiles.observe($('#app-content-files')[0],{
+		var checkForContentFiles = new MutationObserver(hideContainersViaMutation) ;
+				checkForContentFiles.observe($('#app-content-files')[0],{
 					attributes: true
-		}) ;
+				}) ;
 
-		var checkForFilestable = new MutationObserver(
-			function(mutations) {				
-				mutations.forEach(function(mutation){
-						if (mutation.attributeName === 'class') {
-								if ($(mutation.target).hasClass("hidden")) {
-									self.header.container.addClass("hidden") ;
-									self.readme.container.addClass("hidden") ;
-								} else {
-									self.header.container.removeClass("hidden") ;
-									self.readme.container.removeClass("hidden") ;
-								}
-						}
-				});
-			}
-		) ;
-
-		checkForFilestable.observe($('#app-content-files')[0],{
+		var checkForFilestable = new MutationObserver(hideContainersViaMutation) ;
+				checkForFilestable.observe($('#filestable')[0],{
 					attributes: true
-		}) ;
+				}) ;
 		
 			/* // trigger on data-mtime change for README & HEADER
 					var checkForMtime = new MutationObserver(
@@ -97,7 +67,27 @@ OCA.ReadmeMD.App = {
 					attributeFilter: ["data-mtime"]
 				})  ;
 	     */
-  },
+	},
+	
+  /**
+	 *  Hide containers
+	 *  Mutation observer Callback
+	 */
+	hideContainersViaMutation(mutation) {
+		mutations.forEach(function(mutation){
+				if (mutation.attributeName === 'class') {
+					this.header.container.addClass("hidden") ;
+					this.readme.container.addClass("hidden") ;
+				} else {
+					if (this.header.content !== null ) { 
+						this.header.container.removeClass("hidden") ;
+					} ;
+					if (this.readme.content !== null) {
+						this.readme.container.removeClass("hidden") ;
+					} ;
+				} ;
+			}) ;
+	},
 
 	/**
 	 * check MD handler
