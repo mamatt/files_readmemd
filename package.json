@@ -6,8 +6,15 @@
   "repository": "https://gitlab.univ-nantes.fr/uncloud/files_readmemd.git",
   "author": "Matthieu Le Corre <matthieu.lecorre@univ-nantes.fr>",
   "license": "AGPL-3.0",
+  "scripts": {
+    "build": "NODE_ENV=production webpack --progress --hide-modules --config webpack.prod.js ",
+    "dev": "NODE_ENV=none webpack --progress --config webpack.dev.js ",
+    "watch": "NODE_ENV=none webpack --progress --watch --config webpack.dev.js "
+  },
   "dependencies": {
     "github-markdown-css": "^3.0.1",
+    "jslint": "^0.12.1",
+    "lint": "^1.1.2",
     "markdown-it": "^8.4.2",
     "markdown-it-anchor": "^5.0.2",
     "markdown-it-github-preamble": "^1.0.0",

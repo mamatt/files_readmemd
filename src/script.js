@@ -13,7 +13,7 @@ OCA.ReadmeMD.App = {
  */
 	header: null,
 	readme: null,
-    
+  
 	/**
 	 * Setup on page load
 	 */
@@ -101,65 +101,44 @@ OCA.ReadmeMD.App = {
 		this.readme.container.children().remove() ;
 		this.readme.content = null ;
 
-				if (this.mode == "public") {
+		if (this.mode == "public") {
 			var FL =  OCA.Sharing.PublicApp.fileList.files ;
 		}else {
 			var FL =  OCA.Files.App.fileList.files ;
 		}
 
-		//list file from current dir and check     
-		for (var filenum in  FL ) {
-							
-			if ( FL[filenum].name == this.header.filename ) { 
-				this.header.container.removeClass("hidden") ;
-				this.fillContainer(OCA.ReadmeMD.header) ;
+		//list file from current dir and check 
+		var foundHD = null ;
+		var foundRM = null ; 
+	
+		for (var activFile in this.header.filenames ) {
+			for (var filenum in  FL) {
+				if ( FL[filenum].name == this.header.filenames[activFile] ) {
+						foundHD = FL[filenum].name ;
+					} ;
 			} ;
-
-			if ( FL[filenum].name == this.readme.filename ) { 
-				this.readme.container.removeClass("hidden") ;
-				this.fillContainer(OCA.ReadmeMD.readme) ;
-			} ;
-
-			//also check for dot files an prefer them.
-			if ( FL[filenum].name == "." + this.header.filename ) {
-				this.header.filename = "." +this.header.filename ;
-				this.header.container.removeClass("hidden") ;
-				this.fillContainer(OCA.ReadmeMD.header) ;
-			} ;
-
-			if ( FL[filenum].name == "." + this.readme.filename ) {
-				this.readme.filename = "." +this.readme.filename ;
-				this.readme.container.removeClass("hidden") ;
-				this.fillContainer(OCA.ReadmeMD.readme) ;
-			} ;
-			
-			// now we check for .markdown and then dot file .markdown in order of priority
-			if ( FL[filenum].name == this.header.filename.split(".")[0]+".markdown" ) { 
-				this.header.filename = this.header.filename.split(".")[0]+".markdown" ;
-				this.header.container.removeClass("hidden") ;
-				this.fillContainer(OCA.ReadmeMD.header) ;
-			} ;
-
-			if ( FL[filenum].name == this.readme.filename.split(".")[0]+".markdown"  ) {
-				this.readme.filename = this.readme.filename.split(".")[0]+".markdown" ;
-				this.readme.container.removeClass("hidden") ;
-				this.fillContainer(OCA.ReadmeMD.readme) ;
-			} ;
-
-			if ( FL[filenum].name == "." + this.header.filename.split(".")[0]+".markdown" ) { 
-				this.header.filename = "." + this.header.filename.split(".")[0]+".markdown" ;
-				this.header.container.removeClass("hidden") ;
-				this.fillContainer(OCA.ReadmeMD.header) ;
-			} ;
-
-			if ( FL[filenum].name == "." + this.readme.filename.split(".")[0]+".markdown"  ) {
-				this.readme.filename = "." + this.readme.filename.split(".")[0]+".markdown" ;
-				this.readme.container.removeClass("hidden") ;
-				this.fillContainer(OCA.ReadmeMD.readme) ;
-			} ;
-
-
 		} ;
+
+		for (var activFile in this.readme.filenames ) {
+			for (var filenum in  FL) {
+				if ( FL[filenum].name == this.readme.filenames[activFile] ) {
+					foundRM = FL[filenum].name ;
+				} ;
+			} ;
+		} ;
+
+		if (foundHD !== null ) {
+					this.header.filename = foundHD ;
+					this.header.container.removeClass("hidden") ;
+					this.fillContainer(OCA.ReadmeMD.header) ;
+				}
+
+		if (foundRM !== null ) {
+			this.readme.filename = foundRM ;
+			this.readme.container.removeClass("hidden") ;
+			this.fillContainer(OCA.ReadmeMD.readme) ;
+		} ;
+		
 	},
 
 	/**
@@ -173,7 +152,6 @@ OCA.ReadmeMD.App = {
 	if (zone.position == "after")
 		{ $('#app-content-files').after(zone.container) ; }
 	},
-
 
   /**
   * fill container
@@ -228,14 +206,26 @@ $(document).ready(function () {
 	var header = {
 		container: $('<div id="app-content-headerMD" class="hidden markdown-body headermd"></div>'),
 		position : "before",
-		filename : "HEADER.md",
+		filename: null,
+		filenames : [
+			"HEADER.md",
+			"HEADER.markdown",
+			".HEADER.md",
+			".HEADER.markdown"
+		],
 		content  : null
 	} ;
 
 	var footer = {
 		container: $('<div id="app-content-readmeMD" class="hidden markdown-body readmemd"></div>'),
 		position : "after",
-		filename : "README.md",
+		filename: null,
+		filenames : [
+			"README.md",
+			"README.markdown",
+			".README.md",
+			".README.markdown"
+		],
 		content  :  null
 	} ;
 

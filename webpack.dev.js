@@ -3,8 +3,7 @@ const path = require("path");
 
 module.exports = {
 	devtool: 'source-map',	
-	mode: 'production',
-	
+	mode: 'none',	
 	entry: {
 		'script.js': "./src/script.js"
 	},
