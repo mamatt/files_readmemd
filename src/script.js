@@ -182,21 +182,39 @@ OCA.ReadmeMD.App = {
 	 **/
 	renderMD: function(zone) {
 	//render MD
-	var converter = require('markdown-it')() ;
+	
+	//var self = this ;
+	
+	var md = require('markdown-it') ;
+
+
+	var converter = md({
+											replaceLink: function(link,env){
+												if ( link.startsWith('http://') ||  link.startsWith('https://') ) { 
+														return link ; 
+													} else {
+														return OC.linkToRemoteBase('files') + '/' +link ;
+													}
+											}
+										})
+									.use(require('markdown-it-task-lists'), {enabled: true} )
+									.use(require('markdown-it-highlightjs'))
+									.use(require('markdown-it-replace-link'))
+									.use(require('markdown-it-imsize'))
+
 	zone.container.html(converter.render(zone.content)) ;
 	$("#filestable > tfoot > tr").height("auto") ;
 	},
-
 };
 
 OCA.ReadmeMD = OCA.ReadmeMD.App ;
 
 $(document).ready(function () {
  	// Don't load if not in the files app
-        if ($('#content.app-files').length) {
+  if ($('#content.app-files').length) {
             var mode = 'private';
-        } else {
-		if ($('#content.app-files_sharing').length) {
+  } else {
+			if ($('#content.app-files_sharing').length) {
             		var mode = 'public';
         	} else {
 			return ;

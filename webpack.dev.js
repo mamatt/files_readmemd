@@ -11,7 +11,11 @@ module.exports = {
 	output: {
 		path: path.resolve(__dirname, "./js"),
     		filename: "[name]"
-  	}
+	  },
+	  
+	  node: {
+		fs: 'empty'
+	  }
 
 
 }

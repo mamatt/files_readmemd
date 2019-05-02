@@ -1,6 +1,6 @@
 {
   "name": "files_readmemd",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "show README.md github style",
   "main": "./js/script.js",
   "repository": "https://gitlab.univ-nantes.fr/uncloud/files_readmemd.git",
@@ -13,18 +13,16 @@
   },
   "dependencies": {
     "github-markdown-css": "^3.0.1",
-    "jslint": "^0.12.1",
-    "lint": "^1.1.2",
     "markdown-it": "^8.4.2",
-    "markdown-it-anchor": "^5.0.2",
-    "markdown-it-github-preamble": "^1.0.0",
     "markdown-it-highlightjs": "^3.0.0",
-    "markdown-it-texmath": "^0.5.5"
+    "markdown-it-imsize": "^2.0.1",
+    "markdown-it-replace-link": "^1.0.1",
+    "markdown-it-task-lists": "^2.1.1"
   },
   "devDependencies": {
     "css-loader": "^2.1.1",
     "style-loader": "^0.23.1",
-    "webpack": "^4.29.6",
-    "webpack-cli": "^3.3.0"
+    "webpack": "^4.30.0",
+    "webpack-cli": "^3.3.1"
   }
 }
