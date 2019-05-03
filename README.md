@@ -17,6 +17,7 @@ It show README.md in the way gitlab does.
   * You can do the same with the HEADER.md file.
   * It's rendered using the same markdown engine as the app. Before file list for the HEADER.md, after file list for the README.md
   * You can now use .README.md & .HEADER.md .It means that you can now hide those files.
+  * You can also use .markdown extention.
   * It render now in public shared !
 
 Now you can use template to customize the README.md/HEADER.md rendering.
@@ -24,4 +25,14 @@ Now you can use template to customize the README.md/HEADER.md rendering.
   * Create your own theme and use your own content.css (see css/content.css file)
   * Rendering is done inside a div contenair with headermd or readmemd class.
 
- 
+# Markdow enabled plugins
+
+The following markdown plugins are available, more to come, fill a issue if you need more.
+
+ * Image sizing :  [markdown-it-imsize](https://www.npmjs.com/package/markdown-it-imsize)
+ * Task list : [markdown-it-task-lists
+](https://www.npmjs.com/package/markdown-it-task-lists)
+ * Code highlight : [markdown-it-highlightjs](https://www.npmjs.com/package/markdown-it-highlightjs)
+
+
+  

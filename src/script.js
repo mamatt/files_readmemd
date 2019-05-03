@@ -39,13 +39,17 @@ OCA.ReadmeMD.App = {
 		var hideContainerOnShowObserver = new MutationObserver(function(mutations) { self._callBackToggleContainer(mutations,"show") }) ;
 
 		//hide on showing trash / favorite / recent  / share ...
-		hideContainerOnHideObserver.observe($('#app-content-files')[0],{attributes: true}) ;
+		if (this.mode == 'private') {
+			hideContainerOnHideObserver.observe($('#app-content-files')[0],{attributes: true}) ;
+
+			// this is a different for search as we doesn't toogle on hide but on show
+			hideContainerOnShowObserver.observe($('#searchresults')[0],{attributes: true}) ;	
+		} ;
 
 		// this one is for mindmap or all other "fullscreen" apps
 		hideContainerOnHideObserver.observe($('#filestable')[0],{attributes: true }) ;
 
-		// this is a different for search as we doesn't toogle on hide but on show
-		hideContainerOnShowObserver.observe($('#searchresults')[0],{attributes: true}) ;
+		
 
 	},
 	
@@ -146,11 +150,16 @@ OCA.ReadmeMD.App = {
 	 */
 	createContainer: function(zone) {
 		
-	if (zone.position == "before")
-		{ $('#filestable').before(zone.container)  ; }
+		if (zone.position == "before")
+			{ $('#filestable').before(zone.container)  ; }
 
-	if (zone.position == "after")
-		{ $('#app-content-files').after(zone.container) ; }
+		if (zone.position == "after")
+			{ if (this.mode == 'private') {
+				$('#app-content-files').after(zone.container) ; 
+			} else {
+				$('#files-public-content').after(zone.container) ; 
+			}
+		}
 	},
 
   /**
@@ -166,7 +175,7 @@ OCA.ReadmeMD.App = {
 		var URL = OC.generateUrl('/s/{token}/download?path={path}&files={file}', {token: token, path: dir, file: zone.filename});
 	}else{
 		var dir = OCA.Files.App.fileList._currentDirectory ;
-		var URL = OC.linkToRemoteBase('files'+ dir +"/" +zone.filename)
+		var URL = OC.linkToRemoteBase('files'+ dir + '/' + zone.filename)
 	} ;
 	//load header file via remote call apps
 	$.get(URL)
@@ -183,24 +192,31 @@ OCA.ReadmeMD.App = {
 	renderMD: function(zone) {
 	//render MD
 	
-	//var self = this ;
+	var self = this ;
 	
 	var md = require('markdown-it') ;
 
 
 	var converter = md({
-											replaceLink: function(link,env){
-												if ( link.startsWith('http://') ||  link.startsWith('https://') ) { 
-														return link ; 
-													} else {
-														return OC.linkToRemoteBase('files') + '/' +link ;
-													}
-											}
-										})
-									.use(require('markdown-it-task-lists'), {enabled: true} )
-									.use(require('markdown-it-highlightjs'))
-									.use(require('markdown-it-replace-link'))
-									.use(require('markdown-it-imsize'))
+					replaceLink: function(link,env){
+						if ( link.startsWith('http://') ||  link.startsWith('https://') ) { 
+								return link ; 
+							} else {
+								if (self.mode == 'public') {
+									var token = $('#sharingToken').val()
+									var dir = OCA.Sharing.PublicApp.fileList._currentDirectory ;
+									return  OC.generateUrl('/s/{token}/download?path={path}&files={file}', {token: token, path: dir, file: link}) ;
+								} else {
+									var dir = OCA.Files.App.fileList._currentDirectory ;
+									return OC.linkToRemoteBase('files') + dir + '/' + link ;
+								} ;
+							}
+					}
+				})
+			.use(require('markdown-it-task-lists'), {enabled: true} )
+			.use(require('markdown-it-highlightjs'))
+			.use(require('markdown-it-replace-link'))
+			.use(require('markdown-it-imsize'))
 
 	zone.container.html(converter.render(zone.content)) ;
 	$("#filestable > tfoot > tr").height("auto") ;

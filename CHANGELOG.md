@@ -1,16 +1,17 @@
-## 1.0.4 NOT YET RELEASED
+## 1.0.4 03-05-2019
 ### Fixed
  - Fix header and footer collision with searching
    [#14](https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues/14#)
  - Fix Header/Footer not always hidden if there is no HEADER/README file
    [#16](https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues/16#)
  - Fix README or ".README" md files will not display images
-   [#15](https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues/15#) 
+   [#15](https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues/15#)
+ - Fix public view failed to show images in 1.0.3 
 
 ### Added
  - Allow for both `.md` and `.markdown` file extensions
    [#17](https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues/17#)
- - Add Markdown-it plugins to handle image size, task list ....  
+ - Add Markdown-it plugins to handle image size, task list ...
    [#13](https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues/13#)
 
 ## 1.0.3 26-04-2019
