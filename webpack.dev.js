@@ -5,7 +5,8 @@ module.exports = {
 	devtool: 'source-map',	
 	mode: 'none',	
 	entry: {
-		'script.js': "./src/script.js"
+		'main.js': "./src/main.js",
+		'config.js': "./src/config.js"
 	},
 
 	output: {

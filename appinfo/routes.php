@@ -19,4 +19,10 @@
  *
  */
 
-$app = new \OCA\ReadmeMD\AppInfo\Application() ;
+ return [
+    'routes' => [
+        [ 'name' => 'config#getConfig', url => '/config', verb => 'GET'  ],
+        [ 'name' => 'config#setConfig', url => '/config', verb => 'POST' ]
+    ]
+
+ ];

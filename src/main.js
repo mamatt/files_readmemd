@@ -1,4 +1,25 @@
 /**
+ * @author Matthieu Le Corre <matthieu.lecorre@univ-nantes.fr>
+ *
+ * @license GNU AGPL version 3 or any later version
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
+ 
+/**
 * @namespace OCA.ReadmeMD
 */
 OCA.ReadmeMD = {};
@@ -21,6 +42,8 @@ OCA.ReadmeMD.App = {
 
 		var self = this ;
 
+		this.appReady = false ;
+
 		//public share or private view
 		this.mode = mode ;
 
@@ -31,32 +54,58 @@ OCA.ReadmeMD.App = {
 		this.createContainer(this.header) ;
 		this.createContainer(this.readme) ;
 
+		// grab the config ;
+		this.getConfig() ;
+
 		// trigger on filetable to check if README/HEADER are present
 		$("#filestable").on('updated',function() { self.checkMD() ; })
 			
 		// Mutation observer to toogle readme visibility on hide or show 
-		var hideContainerOnHideObserver = new MutationObserver(function(mutations) { self._callBackToggleContainer(mutations,"hide") }) ;
-		var hideContainerOnShowObserver = new MutationObserver(function(mutations) { self._callBackToggleContainer(mutations,"show") }) ;
+		var hideContainerOnHideObserver = new MutationObserver(function(mutations) { self.callBackToggleContainer(mutations,"hide") }) ;
+		var hideContainerOnShowObserver = new MutationObserver(function(mutations) { self.callBackToggleContainer(mutations,"show") }) ;
 
 		//hide on showing trash / favorite / recent  / share ...
 		if (this.mode == 'private') {
 			hideContainerOnHideObserver.observe($('#app-content-files')[0],{attributes: true}) ;
 
-			// this is a different for search as we doesn't toogle on hide but on show
-			hideContainerOnShowObserver.observe($('#searchresults')[0],{attributes: true}) ;	
+			// this is a different for search as we doesn't toogle on hide but on show		
+			//hideContainerOnShowObserver.observe($('div.nofilterresults')[0],{attributes: true }) ;
+			hideContainerOnShowObserver.observe($('#searchresults')[0],{attributes: true}) ;
 		} ;
 
 		// this one is for mindmap or all other "fullscreen" apps
 		hideContainerOnHideObserver.observe($('#filestable')[0],{attributes: true }) ;
 
-		
+	},
+
+	/**
+	 *  get the config from DB
+	 */
+	getConfig(key) {
+		var self = this ;
+		$.get(OC.generateUrl("apps/files_readmemd/config"))
+			.done(function (json) {
+				
+				self.asciiDocEnable = json.show_asciidoc ;
+				self.HTMLEnable = json.show_html ;
+
+				if ( json.show_title == "false") {
+					self.readme.container.addClass("no-before") ;
+				} ;
+				
+				if ( json.yellow_back == "false") {
+					self.readme.container.removeClass("yellowish") ;
+				}  ;
+				
+				self.appReady = true ;
+			}) ;
 
 	},
 	
   /**
 	 *  Mutation observer Callback
 	 */
-	_callBackToggleContainer(mutations,mode) {
+	callBackToggleContainer(mutations,mode) {
 		var self = this ;
 		mutations.forEach(function(mutation){
 				if (mutation.attributeName === 'class') {
@@ -132,10 +181,10 @@ OCA.ReadmeMD.App = {
 		} ;
 
 		if (foundHD !== null ) {
-					this.header.filename = foundHD ;
-					this.header.container.removeClass("hidden") ;
-					this.fillContainer(OCA.ReadmeMD.header) ;
-				}
+			this.header.filename = foundHD ;
+			this.header.container.removeClass("hidden") ;
+			this.fillContainer(OCA.ReadmeMD.header) ;
+		} ;
 
 		if (foundRM !== null ) {
 			this.readme.filename = foundRM ;
@@ -251,7 +300,7 @@ $(document).ready(function () {
 	} ;
 
 	var footer = {
-		container: $('<div id="app-content-readmeMD" class="hidden markdown-body readmemd"></div>'),
+		container: $('<div id="app-content-readmeMD" class="hidden markdown-body readmemd yellowish"></div>'),
 		position : "after",
 		filename: null,
 		filenames : [

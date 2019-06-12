@@ -2,13 +2,21 @@
 	padding: 2em ;
 	border-top: 1px solid silver ;
 	margin-top: 1em ;
-	background-color: #c6d6390f ;
+	
 	text-align: initial ;
 }
 
+.yellowish {
+	background-color: #c6d6390f ;
+}
+
 .readmemd::before {
-	content:"README.md" !important ;
+	content:"README.md" !important;
 	color: silver ;
+}
+
+.no-before::before {
+	content : none !important;
 }
 
 .headermd {

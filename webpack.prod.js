@@ -5,7 +5,8 @@ module.exports = {
 	devtool: 'source-map',	
 	mode: 'production',	
 	entry: {
-		'script.js': "./src/script.js"
+		'main.js' : "./src/main.js",
+		'config.js': "./src/config.js"
 	},
 
 	output: {
@@ -14,7 +15,7 @@ module.exports = {
   	},
 
 	node: {
-	fs: 'empty'
+		fs: 'empty'
 	}
 }
 

@@ -2,7 +2,7 @@
   "name": "files_readmemd",
   "version": "1.0.4",
   "description": "show README.md github style",
-  "main": "./js/script.js",
+  "main": "./js/main.js",
   "repository": "https://gitlab.univ-nantes.fr/uncloud/files_readmemd.git",
   "author": "Matthieu Le Corre <matthieu.lecorre@univ-nantes.fr>",
   "license": "AGPL-3.0",
@@ -22,7 +22,7 @@
   "devDependencies": {
     "css-loader": "^2.1.1",
     "style-loader": "^0.23.1",
-    "webpack": "^4.30.0",
-    "webpack-cli": "^3.3.1"
+    "webpack": "^4.33.0",
+    "webpack-cli": "^3.3.4"
   }
 }

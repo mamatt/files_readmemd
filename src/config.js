@@ -1,6 +1,5 @@
-<?php
 /**
- * @author 2019 Matthieu Le Corre <matthieu.lecorre@univ-nantes.fr>
+ * @author Matthieu Le Corre <matthieu.lecorre@univ-nantes.fr>
  *
  * @license GNU AGPL version 3 or any later version
  *
@@ -19,4 +18,20 @@
  *
  */
 
-$app = new \OCA\ReadmeMD\AppInfo\Application() ;
+ $(document).ready(function () {
+
+    $("#readmeMD-appearance-txt").click(function(Event){
+        $.post(OC.generateUrl("apps/files_readmemd/config"),{key: "show_title", value: Event.target.checked})
+            .success(function (json) {
+                        console.log(json) ;
+                })
+    }) ;
+
+    $("#readmeMD-appearance-color").click(function(Event){
+        $.post(OC.generateUrl("apps/files_readmemd/config"),{key: "yellow_back", value: Event.target.checked})
+            .success(function (json) {
+                        console.log(json) ;
+                })
+    }) ;
+
+ }) ;
