@@ -44,6 +44,8 @@ OCA.ReadmeMD.App = {
 
 		this.appReady = false ;
 
+		this.appVisible = true ;
+
 		//public share or private view
 		this.mode = mode ;
 
@@ -124,7 +126,7 @@ OCA.ReadmeMD.App = {
 						} ;
 					} else {
 						//mode show
-						if ($(mutation.target).hasClass("hidden")) {
+						if ($(mutation.target).hasClass("hidden") && window.location.search.indexOf("view") == -1 ) {
 							if (self.header.content !== null ) { 
 								self.header.container.removeClass("hidden") ;
 							} ;
