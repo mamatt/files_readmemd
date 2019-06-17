@@ -12,6 +12,7 @@
     "watch": "NODE_ENV=none webpack --progress --watch --config webpack.dev.js "
   },
   "dependencies": {
+    "asciidoctor": "^2.0.3",
     "github-markdown-css": "^3.0.1",
     "markdown-it": "^8.4.2",
     "markdown-it-highlightjs": "^3.0.0",
@@ -22,7 +23,7 @@
   "devDependencies": {
     "css-loader": "^2.1.1",
     "style-loader": "^0.23.1",
-    "webpack": "^4.33.0",
+    "webpack": "^4.34.0",
     "webpack-cli": "^3.3.4"
   }
 }

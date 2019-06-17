@@ -73,10 +73,10 @@ OCA.ReadmeMD.App = {
 			// this is a different for search as we doesn't toogle on hide but on show		
 			//hideContainerOnShowObserver.observe($('div.nofilterresults')[0],{attributes: true }) ;
 			hideContainerOnShowObserver.observe($('#searchresults')[0],{attributes: true}) ;
+		
+			// this one is for mindmap or all other "fullscreen" apps
+			hideContainerOnHideObserver.observe($('#filestable')[0],{attributes: true }) ;
 		} ;
-
-		// this one is for mindmap or all other "fullscreen" apps
-		hideContainerOnHideObserver.observe($('#filestable')[0],{attributes: true }) ;
 
 	},
 
@@ -233,44 +233,58 @@ OCA.ReadmeMD.App = {
 		.done(function(data) {
 			//promise solved -> render MarkDown
 			zone.content=data ;
-			self.renderMD(zone) ;
+			self.render(zone) ;
 	 }) ;
   },
 
 	/**
 	 * Render Markdown
 	 **/
-	renderMD: function(zone) {
-	//render MD
-	
-	var self = this ;
-	
-	var md = require('markdown-it') ;
+	render: function(zone) {
+		//render MD
+		
+		var self = this ;
+		
+		// check which engine to run
+		var ext = zone.filename.substr(zone.filename.lastIndexOf(".") + 1) ;
 
 
-	var converter = md({
-					replaceLink: function(link,env){
-						if ( link.startsWith('http://') ||  link.startsWith('https://') ) { 
-								return link ; 
-							} else {
-								if (self.mode == 'public') {
-									var token = $('#sharingToken').val()
-									var dir = OCA.Sharing.PublicApp.fileList._currentDirectory ;
-									return  OC.generateUrl('/s/{token}/download?path={path}&files={file}', {token: token, path: dir, file: link}) ;
-								} else {
-									var dir = OCA.Files.App.fileList._currentDirectory ;
-									return OC.linkToRemoteBase('files') + dir + '/' + link ;
-								} ;
+		if (ext == "adoc" ) {
+			var asciidoctor = require("asciidoctor") ;
+			var Aconverter = asciidoctor() ;
+
+			zone.container.html(Aconverter.convert(zone.content)) ;
+			$("#filestable > tfoot > tr").height("auto") ;
+
+		} ;
+
+		if (ext == "md" || ext == "markdown") {
+			var md = require('markdown-it') ;
+			var converter = md({
+							replaceLink: function(link,env){
+								if ( link.startsWith('http://') ||  link.startsWith('https://') ) { 
+										return link ; 
+									} else {
+										if (self.mode == 'public') {
+											var token = $('#sharingToken').val()
+											var dir = OCA.Sharing.PublicApp.fileList._currentDirectory ;
+											return  OC.generateUrl('/s/{token}/download?path={path}&files={file}', {token: token, path: dir, file: link}) ;
+										} else {
+											var dir = OCA.Files.App.fileList._currentDirectory ;
+											return OC.linkToRemoteBase('files') + dir + '/' + link ;
+										} ;
+									}
 							}
-					}
-				})
-			.use(require('markdown-it-task-lists'), {enabled: true} )
-			.use(require('markdown-it-highlightjs'))
-			.use(require('markdown-it-replace-link'))
-			.use(require('markdown-it-imsize'))
+						})
+					.use(require('markdown-it-task-lists'), {enabled: true} )
+					.use(require('markdown-it-highlightjs'))
+					.use(require('markdown-it-replace-link'))
+					.use(require('markdown-it-imsize'))
 
-	zone.container.html(converter.render(zone.content)) ;
-	$("#filestable > tfoot > tr").height("auto") ;
+			zone.container.html(converter.render(zone.content)) ;
+			$("#filestable > tfoot > tr").height("auto") ;
+		};
+
 	},
 };
 
@@ -296,7 +310,8 @@ $(document).ready(function () {
 			"HEADER.md",
 			"HEADER.markdown",
 			".HEADER.md",
-			".HEADER.markdown"
+			".HEADER.markdown",
+			"HEADER.adoc"
 		],
 		content  : null
 	} ;
