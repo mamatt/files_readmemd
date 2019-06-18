@@ -30,8 +30,8 @@ OCA.ReadmeMD = {};
 OCA.ReadmeMD.App = {
     
 	/**
- * Holds the MDs objects
- */
+	 * Holds the MDs objects
+	 */
 	header: null,
 	readme: null,
   
@@ -66,8 +66,9 @@ OCA.ReadmeMD.App = {
 		var hideContainerOnHideObserver = new MutationObserver(function(mutations) { self.callBackToggleContainer(mutations,"hide") }) ;
 		var hideContainerOnShowObserver = new MutationObserver(function(mutations) { self.callBackToggleContainer(mutations,"show") }) ;
 
-		//hide on showing trash / favorite / recent  / share ...
+		// only in private mode
 		if (this.mode == 'private') {
+			//hide on showing trash / favorite / recent  / share ...
 			hideContainerOnHideObserver.observe($('#app-content-files')[0],{attributes: true}) ;
 
 			// this is a different for search as we doesn't toogle on hide but on show		
@@ -88,8 +89,8 @@ OCA.ReadmeMD.App = {
 		$.get(OC.generateUrl("apps/files_readmemd/config"))
 			.done(function (json) {
 				
-				self.asciiDocEnable = json.show_asciidoc ;
-				self.HTMLEnable = json.show_html ;
+				self.show_asciidoc = json.show_asciidoc ;
+				self.show_html = json.show_html ;
 
 				if ( json.show_title == "false") {
 					self.readme.container.addClass("no-before") ;
@@ -104,7 +105,7 @@ OCA.ReadmeMD.App = {
 
 	},
 	
-  /**
+  	/**
 	 *  Mutation observer Callback
 	 */
 	callBackToggleContainer(mutations,mode) {
@@ -142,6 +143,68 @@ OCA.ReadmeMD.App = {
 			}) ;
 	},
 
+	/** 
+	* Generate FileNames lists corresponding to configs
+	**/
+	generateFileNames(zone) {
+		FFNames = [
+			"README.md",
+			"README.markdown",
+			".README.md",
+			".README.markdown"
+		] ;
+
+		HFNames = [
+			"HEADER.md",
+			"HEADER.markdown",
+			".HEADER.md",
+			".HEADER.markdown"
+		] ;
+
+
+		if (this.show_asciidoc == "true") {
+			Array.prototype.push.apply(HFNames,
+				[
+					"HEADER.adoc",
+					"HEADER.asciidoc",
+					".HEADER.adoc",
+					".HEADER.asciidoc"
+			]) ;
+
+			Array.prototype.push.apply(FFNames,
+				[
+					"README.adoc",
+					"README.asciidoc",
+					".README.adoc",
+					".README.asciidoc"
+			]) ;
+
+		}
+
+		if (this.show_html == "true") {
+			Array.prototype.push.apply(HFNames,
+				[
+					"HEADER.htm",
+					"HEADER.html",
+					".HEADER.htm",
+					".HEADER.html"
+			]) ;
+
+			Array.prototype.push.apply(FFNames,
+				[
+					"README.htm",
+					"README.html",
+					".README.htm",
+					".README.html"
+			]) ;
+
+		}
+
+		if (zone == "header") { return HFNames } ;
+		if (zone == "readme") { return FFNames } ;
+	},
+
+
 	/**
 	 * check MD handler
 	 */
@@ -162,9 +225,12 @@ OCA.ReadmeMD.App = {
 			var FL =  OCA.Files.App.fileList.files ;
 		}
 
+		this.header.filenames = this.generateFileNames("header") ;
+		this.readme.filenames = this.generateFileNames("readme") ;
+
 		//list file from current dir and check 
 		var foundHD = null ;
-		var foundRM = null ; 
+		var foundRM = null ;
 	
 		for (var activFile in this.header.filenames ) {
 			for (var filenum in  FL) {
@@ -213,29 +279,29 @@ OCA.ReadmeMD.App = {
 		}
 	},
 
-  /**
-  * fill container
-  */
-  fillContainer: function(zone) {
-	
-	var self=this ;
-	
-	if (this.mode == 'public') {
-		var token = $('#sharingToken').val()
-		var dir = OCA.Sharing.PublicApp.fileList._currentDirectory ;
-		var URL = OC.generateUrl('/s/{token}/download?path={path}&files={file}', {token: token, path: dir, file: zone.filename});
-	}else{
-		var dir = OCA.Files.App.fileList._currentDirectory ;
-		var URL = OC.linkToRemoteBase('files'+ dir + '/' + zone.filename)
-	} ;
-	//load header file via remote call apps
-	$.get(URL)
-		.done(function(data) {
-			//promise solved -> render MarkDown
-			zone.content=data ;
-			self.render(zone) ;
-	 }) ;
-  },
+	/**
+	 * fill container
+	 */
+	fillContainer: function(zone) {
+		
+		var self=this ;
+		
+		if (this.mode == 'public') {
+			var token = $('#sharingToken').val()
+			var dir = OCA.Sharing.PublicApp.fileList._currentDirectory ;
+			var URL = OC.generateUrl('/s/{token}/download?path={path}&files={file}', {token: token, path: dir, file: zone.filename});
+		}else{
+			var dir = OCA.Files.App.fileList._currentDirectory ;
+			var URL = OC.linkToRemoteBase('files'+ dir + '/' + zone.filename)
+		} ;
+		//load header file via remote call apps
+		$.get(URL)
+			.done(function(data) {
+				//promise solved -> render MarkDown
+				zone.content=data ;
+				self.render(zone) ;
+		}) ;
+	},
 
 	/**
 	 * Render Markdown
@@ -248,19 +314,22 @@ OCA.ReadmeMD.App = {
 		// check which engine to run
 		var ext = zone.filename.substr(zone.filename.lastIndexOf(".") + 1) ;
 
-
-		if (ext == "adoc" ) {
-			var asciidoctor = require("asciidoctor") ;
-			var Aconverter = asciidoctor() ;
-
-			zone.container.html(Aconverter.convert(zone.content)) ;
+		if (ext == "html" && this.show_html == "true" ) {
+			zone.container.html(zone.content) ;
 			$("#filestable > tfoot > tr").height("auto") ;
+		}
 
-		} ;
+		if (ext == "adoc" && this.show_asciidoc == "true") {
+			import('asciidoctor').then(Aconverter  => {
+					zone.container.html(Aconverter.convert(zone.content)) ;
+					$("#filestable > tfoot > tr").height("auto") ;
+			});
+
+		} ; 
 
 		if (ext == "md" || ext == "markdown") {
-			var md = require('markdown-it') ;
-			var converter = md({
+			import('markdown-it').then(MDconverter => {
+			var converter = MDconverter.default({
 							replaceLink: function(link,env){
 								if ( link.startsWith('http://') ||  link.startsWith('https://') ) { 
 										return link ; 
@@ -277,12 +346,20 @@ OCA.ReadmeMD.App = {
 							}
 						})
 					.use(require('markdown-it-task-lists'), {enabled: true} )
-					.use(require('markdown-it-highlightjs'))
 					.use(require('markdown-it-replace-link'))
 					.use(require('markdown-it-imsize'))
 
-			zone.container.html(converter.render(zone.content)) ;
-			$("#filestable > tfoot > tr").height("auto") ;
+					/** this plugins is large, try to load only when needed*/
+					if (zone.content.indexOf('```') !== -1 ) {
+						import('markdown-it-highlightjs').then(module => {
+							converter.use(module) ;
+						}) ;
+					}
+					
+					
+				zone.container.html(converter.render(zone.content)) ;
+				$("#filestable > tfoot > tr").height("auto") ;
+			});
 		};
 
 	},
@@ -332,5 +409,11 @@ $(document).ready(function () {
 	OCA.ReadmeMD.initialize(header,footer,mode);
 
 });
+
+
+// coerce webpack into loading scripts properly
+__webpack_require__.p = OC.filePath('files_readmemd', 'src', '../js/');
+const script = document.querySelector('[nonce]') ;
+__webpack_require__.nc = script['nonce'] || script.getAttribute('nonce');
 
 

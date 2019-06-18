@@ -1,3 +1,17 @@
+## 1.1.0 NOT RELEASED YET
+### Fixed
+  - NextCloud log error spamming
+  [#21](https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues/21#)
+  - Error in public page breaks edition and menu
+  [#22](https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues/22#)
+
+### Added
+  - New Admin section to configure some styling option, engines and fileslist
+  - New AsciiDoc Engine
+  - Allow HTML direct rendering (dangerous option, mind the consequences)
+  - Dynamic loading of plugins via webpack
+  - Ability to choose the names of the file to be rendered.
+
 ## 1.0.4 03-05-2019
 ### Fixed
  - Fix header and footer collision with searching

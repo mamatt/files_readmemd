@@ -34,4 +34,18 @@
                 })
     }) ;
 
+    $("#readmeMD-engine-asciidoc").click(function(Event){
+        $.post(OC.generateUrl("apps/files_readmemd/config"),{key: "show_asciidoc", value: Event.target.checked})
+            .success(function (json) {
+                        console.log(json) ;
+                })
+    }) ;
+
+    $("#readmeMD-engine-html").click(function(Event){
+        $.post(OC.generateUrl("apps/files_readmemd/config"),{key: "show_html", value: Event.target.checked})
+            .success(function (json) {
+                        console.log(json) ;
+                })
+    }) ;
+
  }) ;

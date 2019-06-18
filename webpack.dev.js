@@ -1,19 +1,19 @@
-const webpack = require("webpack");
+//const webpack = require("webpack");
 const path = require("path");
 
 module.exports = {
 	devtool: 'source-map',	
 	mode: 'none',	
 	entry: {
-		'main.js': "./src/main.js",
-		'config.js': "./src/config.js"
+		'main': "./src/main.js",
+		'config': "./src/config.js"
 	},
 
 	output: {
-		path: path.resolve(__dirname, "./js"),
-    		filename: "[name]"
+		path: path.resolve(__dirname, "js"),
+    	filename: "[name].js"
 	  },
-	  
+
 	  node: {
 		fs: 'empty'
 	  }

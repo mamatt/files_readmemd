@@ -25,19 +25,29 @@
 ?>
 
 
-<!--div id="readmeMD-engine" class="section">
-    <h2> <?php p($l->t("Engines")) ; ?></h2>
+<div id="readmeMD-engine" class="section">
+<h2> <?php p($l->t("Engines")) ; ?></h2>
+    <p>
+        <input id="readmeMD-engine-markdown" name="readmeMD-engine-markdown"
+            type="checkbox" class="checkbox " value="1" checked disabled />
+        <label for="readmeMD-engine-markdown"><?php p($l->t("Rendering Markdown content can't be disabled (.md & .markdown extentions),")) ; ?></label>
+    </p>
     <p>
     
         <input id="readmeMD-engine-asciidoc" name="readmeMD-engine-asciidoc"
             type="checkbox" class="checkbox " value="1" <?php if ($_['show_asciidoc'] == "true"): ?> checked="checked"<?php endif; ?>
         />
-        <label for="readmeMD-engine-asciidoc"><?php p($l->t("Render Asciidoc content")) ; ?></label>
-    </p><p>
+        <label for="readmeMD-engine-asciidoc"><?php p($l->t("Render Asciidoc content (.adoc & .asciidoc extentions).")) ; ?></label>
+    </p>
+    <p class=warning>
+
+        Enabling direct HTML rendering is DANGEROUS. You should activate it only if you know what you are doing.
+        This can easily break the whole page and add potential leaks. You have been warned.
+  <br><br>
         <input id="readmeMD-engine-html" name="readmeMD-engine-html"
             type="checkbox" class="checkbox " value="1" <?php if ($_['show_html'] =="true" ): ?> checked="checked"<?php endif; ?>
         />
-        <label for="readmeMD-engine-html"><?php p($l->t("Render HTML content")) ; ?></label>  
+        <label for="readmeMD-engine-html"><?php p($l->t("Render HTML content (.htm & .html extentions)")) ; ?></label>  
     </p>
 
-</div-->
+</div>
