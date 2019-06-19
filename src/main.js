@@ -114,16 +114,16 @@ OCA.ReadmeMD.App = {
 				if (mutation.attributeName === 'class') {
 					if (mode === "hide") {
 						//mode hide
-						if ($(mutation.target).hasClass("hidden")) {
+						if ($(mutation.target).hasClass("hidden")  ) {
 							self.header.container.addClass("hidden") ;
 							self.readme.container.addClass("hidden") ;
 							$("#filestable > tfoot > tr").height("250px") ;
 						} else {
-							if (self.header.content !== null ) { 
+							if (self.header.content !== null && window.location.search.indexOf("view") == -1) { 
 								self.header.container.removeClass("hidden") ;
 								$("#filestable > tfoot > tr").height("auto") ;
 							} ;
-							if (self.readme.content !== null) {
+							if (self.readme.content !== null && window.location.search.indexOf("view") == -1) {
 								self.readme.container.removeClass("hidden") ;
 								$("#filestable > tfoot > tr").height("auto") ;
 							} ;
@@ -216,6 +216,8 @@ OCA.ReadmeMD.App = {
 	 */
 	checkMD: function() {
 
+		var self = this ;
+
 		//cleanup "old" MDs before checking for new ones
 		this.header.container.addClass("hidden")  ;
 		this.header.container.children().remove() ;
@@ -254,18 +256,33 @@ OCA.ReadmeMD.App = {
 			} ;
 		} ;
 
+		
 		if (foundHD !== null ) {
 			this.header.filename = foundHD ;
 			this.header.container.removeClass("hidden") ;
-			this.fillContainer(OCA.ReadmeMD.header) ;
+			this.fillContainer(this.header) ;
+
+			// clear setInterval and force a new one 
+			//clearInterval(this.header.interval)
+			//this.header.interval = setInterval(function() { refreshContent(this.header) ; } ,10000) ;
+
 		} ;
 
 		if (foundRM !== null ) {
 			this.readme.filename = foundRM ;
 			this.readme.container.removeClass("hidden") ;
-			this.fillContainer(OCA.ReadmeMD.readme) ;
+			this.fillContainer(this.readme) ; 
 		} ;
+
 		
+	},
+
+	/**
+	 * 
+	 * try auto refresh    
+	 */
+	refreshContent: function(zone) {
+
 	},
 
 	/**

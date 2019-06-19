@@ -62,15 +62,9 @@ class Filelist implements ISettings {
      */
     public function getForm() {
 
-        $show_asciidoc = $this->config->getAppValue('show_asciidoc') ; 
-            $show_html = $this->config->getAppValue('show_html')     ;
+        $filesList = $this->config->getFilesList() ;
 
-        $parameters = [
-            'show_asciidoc' => $show_asciidoc,
-            'show_html' => $show_html
-        ];
-
-        return new TemplateResponse('files_readmemd', 'Filelist', $parameters);
+        return new TemplateResponse('files_readmemd', 'Filelist', $filesList);
     }
 
 }

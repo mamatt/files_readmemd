@@ -64,6 +64,10 @@ class Config {
         $this->config->setAppValue($this->appName, $key, $value);
     }
 
+    public function getFilesList() {
+        return $this->config->getAppValue($this->appName,"fileslist") ;
+    }
+
 
 
 
