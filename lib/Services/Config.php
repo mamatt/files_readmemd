@@ -56,7 +56,6 @@ class Config {
 
     }
 
-
     public function getAppValue($key) {
         return $this->config->getAppValue($this->appName, $key);
     }

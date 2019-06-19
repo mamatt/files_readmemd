@@ -1,5 +1,7 @@
 ## 1.1.0 NOT RELEASED YET
 ### Fixed
+  - Search result issue when result match both current and another folder
+  [#20](https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues/20#)
   - NextCloud log error spamming
   [#21](https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues/21#)
   - Error in public page breaks edition and menu

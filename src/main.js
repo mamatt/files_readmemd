@@ -121,9 +121,11 @@ OCA.ReadmeMD.App = {
 						} else {
 							if (self.header.content !== null ) { 
 								self.header.container.removeClass("hidden") ;
+								$("#filestable > tfoot > tr").height("auto") ;
 							} ;
 							if (self.readme.content !== null) {
 								self.readme.container.removeClass("hidden") ;
+								$("#filestable > tfoot > tr").height("auto") ;
 							} ;
 						} ;
 					} else {
@@ -131,9 +133,11 @@ OCA.ReadmeMD.App = {
 						if ($(mutation.target).hasClass("hidden") && window.location.search.indexOf("view") == -1 ) {
 							if (self.header.content !== null ) { 
 								self.header.container.removeClass("hidden") ;
+								$("#filestable > tfoot > tr").height("auto") ;
 							} ;
 							if (self.readme.content !== null) {
 								self.readme.container.removeClass("hidden") ;
+								$("#filestable > tfoot > tr").height("auto") ;
 							} ;
 						} else {
 							self.header.container.addClass("hidden") ;
