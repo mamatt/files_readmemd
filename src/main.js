@@ -117,6 +117,7 @@ OCA.ReadmeMD.App = {
 						if ($(mutation.target).hasClass("hidden")) {
 							self.header.container.addClass("hidden") ;
 							self.readme.container.addClass("hidden") ;
+							$("#filestable > tfoot > tr").height("250px") ;
 						} else {
 							if (self.header.content !== null ) { 
 								self.header.container.removeClass("hidden") ;
@@ -137,6 +138,7 @@ OCA.ReadmeMD.App = {
 						} else {
 							self.header.container.addClass("hidden") ;
 							self.readme.container.addClass("hidden") ;
+							$("#filestable > tfoot > tr").height("250px") ;
 						} ;
 					}
 				} ;
