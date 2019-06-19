@@ -91,6 +91,7 @@ OCA.ReadmeMD.App = {
 				
 				self.show_asciidoc = json.show_asciidoc ;
 				self.show_html = json.show_html ;
+				self.auto_refresh = json.auto_refresh ;
 
 				if ( json.show_title == "false") {
 					self.readme.container.addClass("no-before") ;
@@ -237,13 +238,18 @@ OCA.ReadmeMD.App = {
 		this.readme.filenames = this.generateFileNames("readme") ;
 
 		//list file from current dir and check 
-		var foundHD = null ;
+		//var foundHD = null ;
 		var foundRM = null ;
+
+		this.header.filename = null ;
+		this.readme.filename = null ;
 	
 		for (var activFile in this.header.filenames ) {
 			for (var filenum in  FL) {
 				if ( FL[filenum].name == this.header.filenames[activFile] ) {
-						foundHD = FL[filenum].name ;
+					this.header.filename = FL[filenum].name ;
+					this.header.mtime = FL[filenum].mtime ;
+					this.header.filenum= filenum ;
 					} ;
 			} ;
 		} ;
@@ -251,38 +257,56 @@ OCA.ReadmeMD.App = {
 		for (var activFile in this.readme.filenames ) {
 			for (var filenum in  FL) {
 				if ( FL[filenum].name == this.readme.filenames[activFile] ) {
-					foundRM = FL[filenum].name ;
+					this.readme.filename = FL[filenum].name ;
+					this.readme.mtime = FL[filenum].mtime ;
+					this.readme.filenum= filenum ;
+
 				} ;
 			} ;
 		} ;
 
 		
-		if (foundHD !== null ) {
-			this.header.filename = foundHD ;
+		if (this.header.filename !== null ) {
 			this.header.container.removeClass("hidden") ;
 			this.fillContainer(this.header) ;
 
-			// clear setInterval and force a new one 
-			//clearInterval(this.header.interval)
-			//this.header.interval = setInterval(function() { refreshContent(this.header) ; } ,10000) ;
-
+			if (this.auto_refresh == "true") {
+				// clear setInterval and force a new one 
+				clearInterval(this.header.interval)
+				this.header.interval = setInterval(function() { self.refreshContent(self.header) ; } ,1000) ;
+			} ;
 		} ;
 
-		if (foundRM !== null ) {
-			this.readme.filename = foundRM ;
+		if (this.readme.filename !== null ) {
 			this.readme.container.removeClass("hidden") ;
-			this.fillContainer(this.readme) ; 
-		} ;
+			this.fillContainer(this.readme) ;
 
+			if (this.auto_refresh == "true") {
+				// clear setInterval and force a new one 
+				clearInterval(this.readme.interval)
+				this.readme.interval = setInterval(function() { self.refreshContent(self.readme) ; } ,1000) ;
+			} ;
+
+		} ;
 		
 	},
 
 	/**
 	 * 
-	 * try auto refresh    
+	 *  auto refresh file content if enable     
 	 */
 	refreshContent: function(zone) {
 
+		if (this.mode == "public") {
+			var FL =  OCA.Sharing.PublicApp.fileList.files ;
+		}else {
+			var FL =  OCA.Files.App.fileList.files ;
+		}
+
+		if (zone.mtime != FL[zone.filenum].mtime) {
+			zone.mtime = FL[zone.filenum].mtime ;
+			this.fillContainer(zone) ;
+		} ;
 	},
 
 	/**

@@ -38,7 +38,8 @@ class ConfigController extends Controller {
                 "show_asciidoc" => $this->config->getAppValue("show_asciidoc"),
                     "show_html" => $this->config->getAppValue("show_html")    ,
                   "yellow_back" => $this->config->getAppValue("yellow_back")  ,
-                   "show_title" => $this->config->getAppValue("show_title")
+                   "show_title" => $this->config->getAppValue("show_title")   ,
+                 "auto_refresh" => $this->config->getAppValue("auto_refresh")   ,
         ];
         return $params ;
     }

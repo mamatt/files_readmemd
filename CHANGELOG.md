@@ -13,6 +13,8 @@
   - Allow HTML direct rendering (dangerous option, mind the consequences)
   - Dynamic loading of plugins via webpack
   - Ability to choose the names of the file to be rendered.
+  - Auto-refresh option to refresh the content of HEADER / FOOTER whenever the files changes.
+  [#5](https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues/5#)
 
 ## 1.0.4 03-05-2019
 ### Fixed

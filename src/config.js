@@ -23,28 +23,35 @@
     $("#readmeMD-appearance-txt").click(function(Event){
         $.post(OC.generateUrl("apps/files_readmemd/config"),{key: "show_title", value: Event.target.checked})
             .success(function (json) {
-                        console.log(json) ;
+                        //console.log(json) ;
                 })
     }) ;
 
     $("#readmeMD-appearance-color").click(function(Event){
         $.post(OC.generateUrl("apps/files_readmemd/config"),{key: "yellow_back", value: Event.target.checked})
             .success(function (json) {
-                        console.log(json) ;
+                        //console.log(json) ;
+                })
+    }) ;
+
+    $("#readmeMD-appearance-refresh").click(function(Event){
+        $.post(OC.generateUrl("apps/files_readmemd/config"),{key: "auto_refresh", value: Event.target.checked})
+            .success(function (json) {
+                        //console.log(json) ;
                 })
     }) ;
 
     $("#readmeMD-engine-asciidoc").click(function(Event){
         $.post(OC.generateUrl("apps/files_readmemd/config"),{key: "show_asciidoc", value: Event.target.checked})
             .success(function (json) {
-                        console.log(json) ;
+                        //console.log(json) ;
                 })
     }) ;
 
     $("#readmeMD-engine-html").click(function(Event){
         $.post(OC.generateUrl("apps/files_readmemd/config"),{key: "show_html", value: Event.target.checked})
             .success(function (json) {
-                        console.log(json) ;
+                        //console.log(json) ;
                 })
     }) ;
 

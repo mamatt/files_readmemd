@@ -64,6 +64,8 @@ class Filelist implements ISettings {
 
         $filesList = $this->config->getFilesList() ;
 
+        $filesList = array("README.md") ;
+
         return new TemplateResponse('files_readmemd', 'Filelist', $filesList);
     }
 

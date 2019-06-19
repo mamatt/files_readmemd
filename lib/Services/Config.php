@@ -54,6 +54,10 @@ class Config {
             $this->setAppValue('yellow_back','true') ;
         }
 
+        if (null == $this->getAppValue('auto_refresh') ) { 
+            $this->setAppValue('yellow_back','false') ;
+        }
+
     }
 
     public function getAppValue($key) {

@@ -63,11 +63,13 @@ class Appareance implements ISettings {
     public function getForm() {
 
         $show_title = $this->config->getAppValue('show_title') ; 
-        $yellow_back = $this->config->getAppValue('yellow_back')     ;
+        $yellow_back = $this->config->getAppValue('yellow_back') ;
+        $auto_refresh = $this->config->getAppValue('auto_refresh') ;
 
         $parameters = [
             'show_title' => $show_title,
-            'yellow_back' => $yellow_back
+            'yellow_back' => $yellow_back,
+            'auto_refresh' => $auto_refresh
         ];
 
         return new TemplateResponse('files_readmemd', 'Appareance', $parameters);
