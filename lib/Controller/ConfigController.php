@@ -33,13 +33,19 @@ class ConfigController extends Controller {
         $this->config = $config;
     }
     
+    /**
+     * @NoAdminRequired
+     * @PublicPage
+    */
     public function getConfig() {
         $params = [
                 "show_asciidoc" => $this->config->getAppValue("show_asciidoc"),
                     "show_html" => $this->config->getAppValue("show_html")    ,
                   "yellow_back" => $this->config->getAppValue("yellow_back")  ,
                    "show_title" => $this->config->getAppValue("show_title")   ,
-                 "auto_refresh" => $this->config->getAppValue("auto_refresh")   ,
+                 "auto_refresh" => $this->config->getAppValue("auto_refresh") ,
+             "fileslist_header" => $this->config->getAppValue('fileslist_header'),
+             "fileslist_footer" => $this->config->getAppValue('fileslist_footer')
         ];
         return $params ;
     }
