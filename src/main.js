@@ -30,38 +30,29 @@ OCA.ReadmeMD = {};
 OCA.ReadmeMD.App = {
     
 	/**
-	 * Holds the MDs objects
-	 */
-	//header: null,
-	//readme: null,
-  
-	/**
 	 * Setup on page load
 	 */
-	initialize: function (header,readme,mode) {
+	initialize: function (header,footer,mode) {
 
 		var self = this ;
-
-		this.configReady = false ;
-
-		//this.appVisible = true ;
 
 		//public share or private view
 		this.mode = mode ;
 
 		// container creation
 		this.header = header;
-		this.readme = readme;
+		this.footer = footer;
 		
 		this.createContainer(this.header) ;
-		this.createContainer(this.readme) ;
+		this.createContainer(this.footer) ;
 
-		// grab the config ;
-		this.getConfig() ;
+		//get the config
+		//then setup the trigger on filetable
+		this.getConfig()
+			.then(function() {
+				$("#filestable").on('updated',function() { self.checkMD() ; }) ;
+			}) ;
 
-		// trigger on filetable to check if README/HEADER are present
-		$("#filestable").on('updated',function() { self.checkMD() ; })
-			
 		// Mutation observer to toogle readme visibility on hide or show 
 		var hideContainerOnHideObserver = new MutationObserver(function(mutations) { self.callBackToggleContainer(mutations,"hide") }) ;
 		var hideContainerOnShowObserver = new MutationObserver(function(mutations) { self.callBackToggleContainer(mutations,"show") }) ;
@@ -84,29 +75,29 @@ OCA.ReadmeMD.App = {
 	/**
 	 *  get the config from DB
 	 */
-	getConfig(key) {
+	getConfig() {
 		var self = this ;
-		$.get(OC.generateUrl("apps/files_readmemd/config"))
-			.done(function (json) {
-				
-				self.show_asciidoc = json.show_asciidoc ;
-				self.show_html = json.show_html ;
-				self.auto_refresh = json.auto_refresh ;
+		return new Promise (function (resolve, reject) {
+			$.get(OC.generateUrl("apps/files_readmemd/config"))
+				.done(function (json) {					
+					self.show_asciidoc = json.show_asciidoc ;
+					self.show_html = json.show_html ;
+					self.auto_refresh = json.auto_refresh ;
 
-				if ( json.show_title == "false") {
-					self.readme.container.addClass("no-before") ;
-				} ;
-				
-				if ( json.yellow_back == "false") {
-					self.readme.container.removeClass("yellowish") ;
-				}  ;
+					if ( json.show_title == "false") {
+						self.footer.container.addClass("no-before") ;
+					} ;
+					
+					if ( json.yellow_back == "false") {
+						self.footer.container.removeClass("yellowish") ;
+					}  ;
 
-				self.fileslist_header = json.fileslist_header ;
-				self.fileslist_footer = json.fileslist_footer ;
-				
-				self.configReady = true ;
-			}) ;
-
+					self.fileslist_header = json.fileslist_header ;
+					self.fileslist_footer = json.fileslist_footer ;
+					
+					resolve() ;
+				}) ;
+		}) ;	
 	},
 	
   	/**
@@ -120,15 +111,15 @@ OCA.ReadmeMD.App = {
 						//mode hide
 						if ($(mutation.target).hasClass("hidden")  ) {
 							self.header.container.addClass("hidden") ;
-							self.readme.container.addClass("hidden") ;
+							self.footer.container.addClass("hidden") ;
 							$("#filestable > tfoot > tr").height("250px") ;
 						} else {
 							if (self.header.content !== null && window.location.search.indexOf("view") == -1) { 
 								self.header.container.removeClass("hidden") ;
 								$("#filestable > tfoot > tr").height("auto") ;
 							} ;
-							if (self.readme.content !== null && window.location.search.indexOf("view") == -1) {
-								self.readme.container.removeClass("hidden") ;
+							if (self.footer.content !== null && window.location.search.indexOf("view") == -1) {
+								self.footer.container.removeClass("hidden") ;
 								$("#filestable > tfoot > tr").height("auto") ;
 							} ;
 						} ;
@@ -139,13 +130,13 @@ OCA.ReadmeMD.App = {
 								self.header.container.removeClass("hidden") ;
 								$("#filestable > tfoot > tr").height("auto") ;
 							} ;
-							if (self.readme.content !== null) {
-								self.readme.container.removeClass("hidden") ;
+							if (self.footer.content !== null) {
+								self.footer.container.removeClass("hidden") ;
 								$("#filestable > tfoot > tr").height("auto") ;
 							} ;
 						} else {
 							self.header.container.addClass("hidden") ;
-							self.readme.container.addClass("hidden") ;
+							self.footer.container.addClass("hidden") ;
 							$("#filestable > tfoot > tr").height("250px") ;
 						} ;
 					}
@@ -216,7 +207,7 @@ OCA.ReadmeMD.App = {
 
 
 		if (zone == "header") { return HFNames } ;
-		if (zone == "readme") { return FFNames } ;
+		if (zone == "footer") { return FFNames } ;
 	},
 
 
@@ -232,9 +223,9 @@ OCA.ReadmeMD.App = {
 		this.header.container.children().remove() ;
 		this.header.content= null ;
 
-		this.readme.container.addClass("hidden")  ;
-		this.readme.container.children().remove() ;
-		this.readme.content = null ;
+		this.footer.container.addClass("hidden")  ;
+		this.footer.container.children().remove() ;
+		this.footer.content = null ;
 
 		if (this.mode == "public") {
 			var FL =  OCA.Sharing.PublicApp.fileList.files ;
@@ -243,14 +234,11 @@ OCA.ReadmeMD.App = {
 		}
 
 		this.header.filenames = this.generateFileNames("header") ;
-		this.readme.filenames = this.generateFileNames("readme") ;
+		this.footer.filenames = this.generateFileNames("footer") ;
 
-		//list file from current dir and check 
-		//var foundHD = null ;
-		var foundRM = null ;
-
+		//list files from current dir and check 
 		this.header.filename = null ;
-		this.readme.filename = null ;
+		this.footer.filename = null ;
 	
 		for (var activFile in this.header.filenames ) {
 			for (var filenum in  FL) {
@@ -262,12 +250,12 @@ OCA.ReadmeMD.App = {
 			} ;
 		} ;
 
-		for (var activFile in this.readme.filenames ) {
+		for (var activFile in this.footer.filenames ) {
 			for (var filenum in  FL) {
-				if ( FL[filenum].name == this.readme.filenames[activFile] ) {
-					this.readme.filename = FL[filenum].name ;
-					this.readme.mtime = FL[filenum].mtime ;
-					this.readme.filenum= filenum ;
+				if ( FL[filenum].name == this.footer.filenames[activFile] ) {
+					this.footer.filename = FL[filenum].name ;
+					this.footer.mtime = FL[filenum].mtime ;
+					this.footer.filenum= filenum ;
 
 				} ;
 			} ;
@@ -285,14 +273,14 @@ OCA.ReadmeMD.App = {
 			} ;
 		} ;
 
-		if (this.readme.filename !== null ) {
-			this.readme.container.removeClass("hidden") ;
-			this.fillContainer(this.readme) ;
+		if (this.footer.filename !== null ) {
+			this.footer.container.removeClass("hidden") ;
+			this.fillContainer(this.footer) ;
 
 			if (this.auto_refresh == "true") {
 				// clear setInterval and force a new one 
-				clearInterval(this.readme.interval)
-				this.readme.interval = setInterval(function() { self.refreshContent(self.readme) ; } ,1000) ;
+				clearInterval(this.footer.interval)
+				this.footer.interval = setInterval(function() { self.refreshContent(self.footer) ; } ,1000) ;
 			} ;
 		} ;	
 	},
@@ -436,13 +424,7 @@ $(document).ready(function () {
 		container: $('<div id="app-content-headerMD" class="hidden markdown-body headermd"></div>'),
 		position : "before",
 		filename: null,
-		filenames : [
-			"HEADER.md",
-			"HEADER.markdown",
-			".HEADER.md",
-			".HEADER.markdown",
-			"HEADER.adoc"
-		],
+		filenames : null,
 		content  : null
 	} ;
 
@@ -450,12 +432,7 @@ $(document).ready(function () {
 		container: $('<div id="app-content-readmeMD" class="hidden markdown-body readmemd yellowish"></div>'),
 		position : "after",
 		filename: null,
-		filenames : [
-			"README.md",
-			"README.markdown",
-			".README.md",
-			".README.markdown"
-		],
+		filenames : null,
 		content  :  null
 	} ;
 

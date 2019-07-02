@@ -1,4 +1,4 @@
-## 1.1.0 NOT RELEASED YET
+## 1.1.0 02-07-2019
 ### Fixed
   - Search result issue when result match both current and another folder
   [#20](https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues/20#)
