@@ -32,21 +32,21 @@ script("files_readmemd","config") ;
     <p>
     
         <input id="readmeMD-appearance-txt" name="readmeMD-appearance-txt"
-            type="checkbox" class="checkbox " value="1" <?php if ($_['show_title'] == 'true'): ?> checked="checked"<?php endif; ?>
+            type="checkbox" class="checkbox " value="1" <?php if ($_['show_title'] === 'true'): ?> checked="checked"<?php endif; ?>
         />
         <label for="readmeMD-appearance-txt"><?php p($l->t("Show \"README.md\" text before content")) ; ?></label>
     </p>
     
     <p>
         <input id="readmeMD-appearance-color" name="readmeMD-appearance-color"
-            type="checkbox" class="checkbox " value="1" <?php if ($_['yellow_back'] == 'true'): ?> checked="checked"<?php endif; ?>
+            type="checkbox" class="checkbox " value="1" <?php if ($_['yellow_back'] === 'true'): ?> checked="checked"<?php endif; ?>
         />
         <label for="readmeMD-appearance-color"><?php p($l->t("Show yellow background for README.md")) ; ?></label> 
     </p>
 
     <p>
         <input id="readmeMD-appearance-refresh" name="readmeMD-appearance-refresh"
-            type="checkbox" class="checkbox " value="1" <?php if ($_['auto_refresh'] == 'true'): ?> checked="checked"<?php endif; ?>
+            type="checkbox" class="checkbox " value="1" <?php if ($_['auto_refresh'] === 'true'): ?> checked="checked"<?php endif; ?>
         />
         <label for="readmeMD-appearance-refresh"><?php p($l->t("Auto refresh (check every 1 sec.) of HEADER/FOOTER content whenever files contents change (maybe lower general performance)")) ; ?></label> 
     </p>

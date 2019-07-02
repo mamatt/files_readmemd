@@ -35,7 +35,7 @@
     <p>
     
         <input id="readmeMD-engine-asciidoc" name="readmeMD-engine-asciidoc"
-            type="checkbox" class="checkbox " value="1" <?php if ($_['show_asciidoc'] == "true"): ?> checked="checked"<?php endif; ?>
+            type="checkbox" class="checkbox " value="1" <?php if ($_['show_asciidoc'] === "true"): ?> checked="checked"<?php endif; ?>
         />
         <label for="readmeMD-engine-asciidoc"><?php p($l->t("Render Asciidoc content (.adoc & .asciidoc extentions).")) ; ?></label>
     </p>
@@ -45,7 +45,7 @@
         This can easily break the whole page and add potential leaks. You have been warned.
   <br><br>
         <input id="readmeMD-engine-html" name="readmeMD-engine-html"
-            type="checkbox" class="checkbox " value="1" <?php if ($_['show_html'] =="true" ): ?> checked="checked"<?php endif; ?>
+            type="checkbox" class="checkbox " value="1" <?php if ($_['show_html'] === "true" ): ?> checked="checked"<?php endif; ?>
         />
         <label for="readmeMD-engine-html"><?php p($l->t("Render HTML content (.htm & .html extentions)")) ; ?></label>  
     </p>

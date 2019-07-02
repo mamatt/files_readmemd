@@ -38,31 +38,31 @@ class Config {
 
     private function setDefaults() {
         
-        if (null == $this->getAppValue('show_asciidoc') ) { 
+        if (null === $this->getAppValue('show_asciidoc') ) { 
             $this->setAppValue('show_asciidoc','false') ;
         }
 
-        if (null == $this->getAppValue('show_html') ) { 
+        if (null === $this->getAppValue('show_html') ) { 
             $this->setAppValue('show_html','false') ;
         }
 
-        if (null == $this->getAppValue('show_title') ) { 
+        if (null === $this->getAppValue('show_title') ) { 
             $this->setAppValue('show_title','true') ;
         }
 
-        if (null == $this->getAppValue('yellow_back') ) { 
+        if (null === $this->getAppValue('yellow_back') ) { 
             $this->setAppValue('yellow_back','true') ;
         }
 
-        if (null == $this->getAppValue('auto_refresh') ) { 
+        if (null === $this->getAppValue('auto_refresh') ) { 
             $this->setAppValue('yellow_back','false') ;
         }
 
-        if (null == json_decode($this->getAppValue('fileslist_header')) ){
+        if (null === json_decode($this->getAppValue('fileslist_header')) ){
             $this->setAppValue('fileslist_header',json_encode(array('HEADER'))) ;
         }
 
-        if (null == json_decode($this->getAppValue('fileslist_footer')) ){
+        if (null === json_decode($this->getAppValue('fileslist_footer')) ){
             $this->setAppValue('fileslist_footer',json_encode(array('README'))) ;
         }
 

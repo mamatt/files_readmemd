@@ -58,7 +58,7 @@ class ConfigController extends Controller {
 
     public function removeFileName($file,$zone) {
         
-        if ($zone == "header") {
+        if ($zone === "header") {
             $FL = json_decode($this->config->getAppValue('fileslist_header')) ;
             $idx = array_search($file,$FL) ;
             if ($idx !== false) {
@@ -67,7 +67,7 @@ class ConfigController extends Controller {
             }
         }
 
-        if ($zone == "footer") {
+        if ($zone === "footer") {
             $FL = json_decode($this->config->getAppValue('fileslist_footer')) ;
             $idx = array_search($file,$FL) ;
             if ($idx !== false) {
@@ -81,13 +81,13 @@ class ConfigController extends Controller {
 
     public function addFileName ($file,$zone) {
 
-        if ($zone == "header") {
+        if ($zone === "header") {
             $FL = json_decode($this->config->getAppValue('fileslist_header')) ;
             array_push($FL,$file) ;
             $this->setConfig('fileslist_header',json_encode($FL)) ;
         }
 
-        if ($zone == "footer") {
+        if ($zone === "footer") {
             $FL = json_decode($this->config->getAppValue('fileslist_footer')) ;
             array_push($FL,$file) ;
             $this->setConfig('fileslist_footer',json_encode($FL)) ;
