@@ -44,8 +44,8 @@ class ConfigController extends Controller {
                   "yellow_back" => $this->config->getAppValue("yellow_back")  ,
                    "show_title" => $this->config->getAppValue("show_title")   ,
                  "auto_refresh" => $this->config->getAppValue("auto_refresh") ,
-             "fileslist_header" => $this->config->getAppValue('fileslist_header'),
-             "fileslist_footer" => $this->config->getAppValue('fileslist_footer')
+             "fileslist_header" => json_decode($this->config->getAppValue('fileslist_header')),
+             "fileslist_footer" => json_decode($this->config->getAppValue('fileslist_footer'))
         ];
         return $params ;
     }
@@ -55,5 +55,45 @@ class ConfigController extends Controller {
 
         return  $this->config->getAppValue($key) ;
     }
+
+    public function removeFileName($file,$zone) {
+        
+        if ($zone == "header") {
+            $FL = json_decode($this->config->getAppValue('fileslist_header')) ;
+            $idx = array_search($file,$FL) ;
+            if ($idx !== false) {
+                array_splice($FL,$idx,1) ;
+                $resultat = $this->config->setAppValue('fileslist_header',json_encode($FL)) ;
+            }
+        }
+
+        if ($zone == "footer") {
+            $FL = json_decode($this->config->getAppValue('fileslist_footer')) ;
+            $idx = array_search($file,$FL) ;
+            if ($idx !== false) {
+                array_splice($FL,$idx,1) ;
+                $resultat = $this->config->setAppValue('fileslist_footer',json_encode($FL)) ;
+                return $resultat ;
+            }
+        }
+        
+    }
+
+    public function addFileName ($file,$zone) {
+
+        if ($zone == "header") {
+            $FL = json_decode($this->config->getAppValue('fileslist_header')) ;
+            array_push($FL,$file) ;
+            $this->setConfig('fileslist_header',json_encode($FL)) ;
+        }
+
+        if ($zone == "footer") {
+            $FL = json_decode($this->config->getAppValue('fileslist_footer')) ;
+            array_push($FL,$file) ;
+            $this->setConfig('fileslist_footer',json_encode($FL)) ;
+            return "success" ;
+        }
+
+    } 
 
 }

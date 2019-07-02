@@ -58,6 +58,14 @@ class Config {
             $this->setAppValue('yellow_back','false') ;
         }
 
+        if (null == json_decode($this->getAppValue('fileslist_header')) ){
+            $this->setAppValue('fileslist_header',json_encode(array('HEADER'))) ;
+        }
+
+        if (null == json_decode($this->getAppValue('fileslist_footer')) ){
+            $this->setAppValue('fileslist_footer',json_encode(array('README'))) ;
+        }
+
     }
 
     public function getAppValue($key) {
@@ -67,12 +75,5 @@ class Config {
     public function setAppValue($key, $value) {
         $this->config->setAppValue($this->appName, $key, $value);
     }
-
-    public function getFilesList() {
-        return $this->config->getAppValue($this->appName,"fileslist") ;
-    }
-
-
-
 
 }

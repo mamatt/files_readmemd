@@ -22,25 +22,55 @@
 /** @var $l \OCP\IL10N */
 /** @var $_ array */
 
+
+style("files_readmemd","admin") ;
 ?>
 
 
-<!--form id="readmeMD-filelist" class="section" data-readmeMD-filelist-id="">
+<form id="readmeMD-filelist" class="section" >
     <h2> <?php p($l->t("Files list")) ; ?>
     </h2>
 
-    <p class="settings-hint"><?php echo $l->t("Choose the name of the files which will be used as HEADER/FOOTER content") ;?></p>
+    <p class="settings-hint">
+		<?php p($l->t("Choose the name of the files which will be used as HEADER/FOOTER content,")) ;?>
+		<br>
+		<?php p($l->t("Enter basename without file extensions :")) ;?>
+	</p>
 
-	<input type="hidden" name="readmeMD-filelist" id="readmeMD-filelist" placeholder="<?php p($l->t('Select file …')); ?>" />
+	<h3 id="readmeMD-filelist_create-header"><?php p($l->t('HEADER base filenames : ')); ?></h3>
 
-	<h3 id="readmeMD-filelist_create"><?php p($l->t('Add a new file name')); ?></h3>
+	<ul id=readmeMD-filelist_header>
+	<?php
+		foreach($_["fileslist_header"] as $HFN) { ?>
+			<li class="readmeMD-filelist" id="readmeMD-filelist-<?php p($HFN); ?>">
+			<a data-zone="header" data-filename="<?php p($HFN); ?>" class="readmeMD-filelist_delete icon-inline icon icon-delete"></a><?php p($HFN); ?>
+			</li>
+		<?php } ;
+	?>
+	</ul>
 
-	<div class="readmeMD-filelist-input">
-		<input type="text" id="readmeMD-filelist_name" name="readmeMD-filelist_name" placeholder="<?php p($l->t('File Name')); ?>">
+	<div class="readmeMD-filelist-input-header">
+		<input type="text" id="readmeMD-filelist_name-header" name="readmeMD-filelist_name-header" placeholder="<?php p($l->t('HEADER base Name')); ?>">
 
-		<a id="readmeMD-filelist_delete" class="hidden button"><span><?php p($l->t('Delete')); ?></span></a>
-		<a id="readmeMD-filelist_reset" class="button"><span><?php p($l->t('Reset')); ?></span></a>
-		<a id="readmeMD-filelist_submit" class="button"><span><?php p($l->t('Add')); ?></span></a>
+		<a id="readmeMD-filelist_submit-header" class="button"><span><?php p($l->t('Add')); ?></span></a>
 	</div>
 
-</form-->
+	<h3 id="readmeMD-filelist_create-footer"><?php p($l->t('FOOTER base filenames : ')); ?></h3>
+
+	<ul id=readmeMD-filelist_footer>
+	<?php
+		foreach($_["fileslist_footer"] as $FFN) { ?>
+			<li class="readmeMD-filelist" id="<?php p($FFN); ?>">
+				<a data-zone="footer" data-filename="<?php p($FFN); ?>" class="readmeMD-filelist_delete icon-inline icon icon-delete"></a><?php p($FFN); ?>
+			</li>
+		<?php } ;
+	?>
+	</ul>
+
+	<div class="readmeMD-filelist-input-footer">
+		<input type="text" id="readmeMD-filelist_name-footer" name="readmeMD-filelist_name-footer" placeholder="<?php p($l->t('FOOTER Base Name')); ?>">
+
+		<a id="readmeMD-filelist_submit-footer" class="button"><span><?php p($l->t('Add')); ?></span></a>
+	</div>
+
+</form>

@@ -21,8 +21,10 @@
 
  return [
     'routes' => [
-        [ 'name' => 'config#getConfig', 'url' => '/config', 'verb' => 'GET'  ],
-        [ 'name' => 'config#setConfig', 'url' => '/config', 'verb' => 'POST' ]
+        [ 'name' => 'config#getConfig',     'url' => '/config', 'verb' => 'GET'  ],
+        [ 'name' => 'config#setConfig',     'url' => '/config', 'verb' => 'POST' ],
+        [ 'name' => 'config#addFileName',   'url' => '/config/filenames/{zone}/{file}', 'verb' => 'PUT' ],
+        [ 'name' => 'config#removeFileName','url' => '/config/filenames/{zone}/{file}', 'verb' => 'DELETE' ]
     ]
 
  ];

@@ -62,11 +62,12 @@ class Filelist implements ISettings {
      */
     public function getForm() {
 
-        $filesList = $this->config->getFilesList() ;
+        $parameters = [
+            "fileslist_header" => json_decode($this->config->getAppValue('fileslist_header')),
+            "fileslist_footer" => json_decode($this->config->getAppValue('fileslist_footer'))
+        ] ;
 
-        $filesList = array("README.md") ;
-
-        return new TemplateResponse('files_readmemd', 'Filelist', $filesList);
+        return new TemplateResponse('files_readmemd', 'Filelist', $parameters);
     }
 
 }

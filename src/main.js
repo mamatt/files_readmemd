@@ -32,8 +32,8 @@ OCA.ReadmeMD.App = {
 	/**
 	 * Holds the MDs objects
 	 */
-	header: null,
-	readme: null,
+	//header: null,
+	//readme: null,
   
 	/**
 	 * Setup on page load
@@ -42,9 +42,9 @@ OCA.ReadmeMD.App = {
 
 		var self = this ;
 
-		this.appReady = false ;
+		this.configReady = false ;
 
-		this.appVisible = true ;
+		//this.appVisible = true ;
 
 		//public share or private view
 		this.mode = mode ;
@@ -100,8 +100,11 @@ OCA.ReadmeMD.App = {
 				if ( json.yellow_back == "false") {
 					self.readme.container.removeClass("yellowish") ;
 				}  ;
+
+				self.fileslist_header = json.fileslist_header ;
+				self.fileslist_footer = json.fileslist_footer ;
 				
-				self.appReady = true ;
+				self.configReady = true ;
 			}) ;
 
 	},
@@ -154,58 +157,63 @@ OCA.ReadmeMD.App = {
 	* Generate FileNames lists corresponding to configs
 	**/
 	generateFileNames(zone) {
-		FFNames = [
-			"README.md",
-			"README.markdown",
-			".README.md",
-			".README.markdown"
-		] ;
 
-		HFNames = [
-			"HEADER.md",
-			"HEADER.markdown",
-			".HEADER.md",
-			".HEADER.markdown"
-		] ;
+		var FFNames = [] ;
+		this.fileslist_footer.forEach(function(fn){
+			Array.prototype.push.apply(FFNames,[
+				fn+".md",
+				fn+".markdown",
+				"."+fn+".md",
+				"."+fn+".markdown"
+			])
 
+			if (this.show_asciidoc == "true"){
+				Array.prototype.push.apply(FFNames,[
+					fn+".adoc",
+					fn+".asciidoc",
+					"."+fn+".adoc",
+					"."+fn+".asciidoc"
+				])
+			}
 
-		if (this.show_asciidoc == "true") {
-			Array.prototype.push.apply(HFNames,
-				[
-					"HEADER.adoc",
-					"HEADER.asciidoc",
-					".HEADER.adoc",
-					".HEADER.asciidoc"
-			]) ;
+			if (this.show_html == "true") {
+				Array.prototype.push.apply(FFNames,[
+					fn+".htm",
+					fn+".html",
+					"."+fn+".htm",
+					"."+fn+".html"
+				])
+			}
+		})
 
-			Array.prototype.push.apply(FFNames,
-				[
-					"README.adoc",
-					"README.asciidoc",
-					".README.adoc",
-					".README.asciidoc"
-			]) ;
+		var HFNames = [] ;
+		this.fileslist_header.forEach(function(fn){
+			Array.prototype.push.apply(HFNames,[
+				fn+".md",
+				fn+".markdown",
+				"."+fn+".md",
+				"."+fn+".markdown"
+			])
 
-		}
+			if (this.show_asciidoc == "true"){
+				Array.prototype.push.apply(HFNames,[
+					fn+".adoc",
+					fn+".asciidoc",
+					"."+fn+".adoc",
+					"."+fn+".asciidoc"
+				])
+			}
 
-		if (this.show_html == "true") {
-			Array.prototype.push.apply(HFNames,
-				[
-					"HEADER.htm",
-					"HEADER.html",
-					".HEADER.htm",
-					".HEADER.html"
-			]) ;
+			if (this.show_html == "true") {
+				Array.prototype.push.apply(HFNames,[
+					fn+".htm",
+					fn+".html",
+					"."+fn+".htm",
+					"."+fn+".html"
+				])
+			}
+		})
 
-			Array.prototype.push.apply(FFNames,
-				[
-					"README.htm",
-					"README.html",
-					".README.htm",
-					".README.html"
-			]) ;
-
-		}
 
 		if (zone == "header") { return HFNames } ;
 		if (zone == "readme") { return FFNames } ;
@@ -286,9 +294,7 @@ OCA.ReadmeMD.App = {
 				clearInterval(this.readme.interval)
 				this.readme.interval = setInterval(function() { self.refreshContent(self.readme) ; } ,1000) ;
 			} ;
-
-		} ;
-		
+		} ;	
 	},
 
 	/**

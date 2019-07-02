@@ -6,6 +6,9 @@
   [#21](https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues/21#)
   - Error in public page breaks edition and menu
   [#22](https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues/22#)
+  - Fix config is not readable if not admin
+  [#24](https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues/24#)
+  [#26](https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues/26#)
 
 ### Added
   - New Admin section to configure some styling option, engines and fileslist
