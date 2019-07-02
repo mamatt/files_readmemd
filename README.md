@@ -34,5 +34,12 @@ The following markdown plugins are available, more to come, fill a issue if you 
 ](https://www.npmjs.com/package/markdown-it-task-lists)
  * Code highlight : [markdown-it-highlightjs](https://www.npmjs.com/package/markdown-it-highlightjs)
 
+ # Admin section
+
+ There is a new admin section in settings letting you tweak README.md
+
+ * You have now some appearance options
+ * Multi rendering engine are available
+ * You can choose which filenames are to be used for header/footer content.
 
   
