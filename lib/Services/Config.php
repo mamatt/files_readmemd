@@ -38,24 +38,24 @@ class Config {
 
     private function setDefaults() {
         
-        if (null === $this->getAppValue('show_asciidoc') ) { 
+        if (empty($this->getAppValue('show_asciidoc')) ) { 
             $this->setAppValue('show_asciidoc','false') ;
         }
 
-        if (null === $this->getAppValue('show_html') ) { 
+        if (empty($this->getAppValue('show_html')) ) { 
             $this->setAppValue('show_html','false') ;
         }
 
-        if (null === $this->getAppValue('show_title') ) { 
+        if (empty($this->getAppValue('show_title')) ) { 
             $this->setAppValue('show_title','true') ;
         }
 
-        if (null === $this->getAppValue('yellow_back') ) { 
+        if (empty($this->getAppValue('yellow_back')) ) { 
             $this->setAppValue('yellow_back','true') ;
         }
 
-        if (null === $this->getAppValue('auto_refresh') ) { 
-            $this->setAppValue('yellow_back','false') ;
+        if (empty($this->getAppValue('auto_refresh')) ) { 
+            $this->setAppValue('auto_refresh','false') ;
         }
 
         if (null === json_decode($this->getAppValue('fileslist_header')) ){
