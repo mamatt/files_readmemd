@@ -1,3 +1,10 @@
+# 1.1.1 26-07-2019
+### Fixed
+  - HTML and asciidoc rendering not working
+  [#29](https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues/29#)
+  - Fix Config defaults
+  [#28](https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues/28#)
+
 ## 1.1.0 02-07-2019
 ### Fixed
   - Search result issue when result match both current and another folder
