@@ -150,6 +150,9 @@ OCA.ReadmeMD.App = {
 	generateFileNames(zone) {
 
 		var FFNames = [] ;
+
+		var self = this ;
+
 		this.fileslist_footer.forEach(function(fn){
 			Array.prototype.push.apply(FFNames,[
 				fn+".md",
@@ -158,7 +161,7 @@ OCA.ReadmeMD.App = {
 				"."+fn+".markdown"
 			])
 
-			if (this.show_asciidoc == "true"){
+			if (self.show_asciidoc == "true"){
 				Array.prototype.push.apply(FFNames,[
 					fn+".adoc",
 					fn+".asciidoc",
@@ -167,7 +170,7 @@ OCA.ReadmeMD.App = {
 				])
 			}
 
-			if (this.show_html == "true") {
+			if (self.show_html == "true") {
 				Array.prototype.push.apply(FFNames,[
 					fn+".htm",
 					fn+".html",
@@ -186,7 +189,7 @@ OCA.ReadmeMD.App = {
 				"."+fn+".markdown"
 			])
 
-			if (this.show_asciidoc == "true"){
+			if (self.show_asciidoc == "true"){
 				Array.prototype.push.apply(HFNames,[
 					fn+".adoc",
 					fn+".asciidoc",
@@ -195,7 +198,7 @@ OCA.ReadmeMD.App = {
 				])
 			}
 
-			if (this.show_html == "true") {
+			if (self.show_html == "true") {
 				Array.prototype.push.apply(HFNames,[
 					fn+".htm",
 					fn+".html",
