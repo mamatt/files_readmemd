@@ -375,7 +375,7 @@ OCA.ReadmeMD.App = {
 			import('markdown-it').then(MDconverter => {
 			var converter = MDconverter.default({
 							replaceLink: function(link,env){
-								if ( link.startsWith('http://') ||  link.startsWith('https://') ) { 
+								if ( link.startsWith('http://') ||  link.startsWith('https://') || link.startsWith(OC.getRootPath()+'/index.php/core/preview') ){ 
 										return link ; 
 									} else {
 										if (self.mode == 'public') {

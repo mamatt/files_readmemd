@@ -1,3 +1,9 @@
+# 1.1.2 NO_RELEASED_YET
+### Fixed
+  - Image not loading when using MD produced by the new text editor
+### Added
+  - Compatibilité with NC 17
+
 # 1.1.1 26-07-2019
 ### Fixed
   - HTML and asciidoc rendering not working
