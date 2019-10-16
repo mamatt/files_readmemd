@@ -333,10 +333,17 @@ OCA.ReadmeMD.App = {
 		if (this.mode == 'public') {
 			var token = $('#sharingToken').val()
 			var dir = OCA.Sharing.PublicApp.fileList._currentDirectory ;
-			var URL = OC.generateUrl('/s/{token}/download?path={path}&files={file}', {token: token, path: dir, file: zone.filename});
+			var URL = OC.generateUrl('/s/{token}/download?path={path}&files={file}',
+								{	token: token, 
+									path: escape(dir),
+									file: escape(zone.filename)
+								}
+						);
 		}else{
 			var dir = OCA.Files.App.fileList._currentDirectory ;
-			var URL = OC.linkToRemoteBase('files'+ dir + '/' + zone.filename)
+			console.log(dir)
+			console.log(escape(dir) )
+			var URL = OC.linkToRemoteBase('files'+ escape(dir) + '/' + escape(zone.filename))
 		} ;
 		//load header file via remote call apps
 		$.get(URL)
