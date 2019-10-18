@@ -1,11 +1,11 @@
-# 1.1.2 NO_RELEASED_YET
+# 1.1.2 18-10-2019
 ### Fixed
   - Image not loading when using MD produced by the new text editor
   [#33](https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues/33#)
   - Special characters in sharename (?) results in not found
   [#31](https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues/32#)
 ### Added
-  - Compatibilité with NC 17
+  - Compatibility with NC 17
 
 # 1.1.1 26-07-2019
 ### Fixed
