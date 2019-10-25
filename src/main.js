@@ -341,8 +341,6 @@ OCA.ReadmeMD.App = {
 						);
 		}else{
 			var dir = OCA.Files.App.fileList._currentDirectory ;
-			console.log(dir)
-			console.log(escape(dir) )
 			var URL = OC.linkToRemoteBase('files'+ escape(dir) + '/' + escape(zone.filename))
 		} ;
 		//load header file via remote call apps
@@ -382,7 +380,7 @@ OCA.ReadmeMD.App = {
 			import('markdown-it').then(MDconverter => {
 			var converter = MDconverter.default({
 							replaceLink: function(link,env){
-								if ( link.startsWith('mailto:') ||( link.startsWith('http://') ||  link.startsWith('https://') || link.startsWith(OC.getRootPath()+'/index.php/core/preview') ){ 
+								if ( link.startsWith('mailto:') ||  link.startsWith('http://') ||  link.startsWith('https://') || link.startsWith(OC.generateUrl('core/preview')) ){ 
 										return link ; 
 									} else {
 										if (self.mode == 'public') {
