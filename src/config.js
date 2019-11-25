@@ -74,7 +74,7 @@
        //console.log( "Deleting " + zone + " -> " + fn ) ;
 
        $.ajax({
-           url:OC.generateUrl("apps/files_readmemd/config/filenames/" + zone + "/" + fn ),
+           url:OC.generateUrl("apps/files_readmemd/config/filenames/" + zone + "/" + fn.replace("?","%3F") ),
            type: 'DELETE',
            success: function(data) {
                $(self).parent().remove() ;
@@ -91,7 +91,7 @@
         var zone = "footer" ;
 
         $.ajax({
-            url:OC.generateUrl("apps/files_readmemd/config/filenames/" + zone + "/" + fn ),
+            url:OC.generateUrl("apps/files_readmemd/config/filenames/" + zone + "/" + fn.replace("?","%3F") ),
             type: 'PUT',
             success: function(data) {             
                 $("#readmeMD-filelist_footer").append(
@@ -109,7 +109,7 @@
         var zone = "header" ;
 
         $.ajax({
-            url:OC.generateUrl("apps/files_readmemd/config/filenames/" + zone + "/" + fn ),
+            url:OC.generateUrl("apps/files_readmemd/config/filenames/" + zone + "/" + fn.replace("?","%3F") ),
             type: 'PUT',
             success: function(data) {             
                 $("#readmeMD-filelist_header").append(

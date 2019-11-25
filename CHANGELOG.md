@@ -1,9 +1,19 @@
-# 1.1.3 NOT_RELEASED_YET
+# 1.1.3 25-11-2019
 ### Fixed
+  - Folder or file name with UTf-8 characters not displaying
+  [#36](https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues/36#)
+  [#35](https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues/35#)
   - Image not loading when using url rewrite
   [#33](https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues/33#)
-  - mailto-Links aren't rendered correctly
+  - Mailto-Links aren't rendered correctly
 ￼  [#34](https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues/34#)
+### Added
+  - Mermaid rendering
+  [#39](https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues/39#)
+  - Latex Rendering
+  [#38](https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues/38#)
+  - Support Dark Theme
+  [#37](https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues/37#)
 
 # 1.1.2 18-10-2019
 ### Fixed

@@ -340,8 +340,9 @@ OCA.ReadmeMD.App = {
 								}
 						);
 		}else{
-			var dir = OCA.Files.App.fileList._currentDirectory ;
-			var URL = OC.linkToRemoteBase('files'+ escape(dir) + '/' + escape(zone.filename))
+			var dir = OCA.Files.App.fileList._currentDirectory.replace("?","%3F") ;
+			var fname = zone.filename.replace("?","%3F") ;
+			var URL = OC.linkToRemoteBase('files'+ dir + '/' + fname ) ;
 		} ;
 		//load header file via remote call apps
 		$.get(URL)
@@ -369,15 +370,17 @@ OCA.ReadmeMD.App = {
 		}
 
 		if (ext == "adoc" && this.show_asciidoc == "true") {
-			import('asciidoctor').then(Aconverter  => {
-					zone.container.html(Aconverter.convert(zone.content)) ;
+			import(/* webpackChunkName: "asciidoctor" */  'asciidoctor').then( Aconverter  => {
+					console.log("ReadMeMD : asciidoctor loaded") ;
+					converter = Aconverter.default() ;
+					zone.container.html(converter.convert(zone.content)) ;
 					$("#filestable > tfoot > tr").height("auto") ;
 			});
 
 		} ; 
 
 		if (ext == "md" || ext == "markdown") {
-			import('markdown-it').then(MDconverter => {
+			import(/* webpackChunkName: "markdown-it" */  'markdown-it').then( MDconverter => {
 			var converter = MDconverter.default({
 							replaceLink: function(link,env){
 								if ( link.startsWith('mailto:') ||  link.startsWith('http://') ||  link.startsWith('https://') || link.startsWith(OC.generateUrl('core/preview')) ){ 
@@ -396,22 +399,57 @@ OCA.ReadmeMD.App = {
 						})
 					.use(require('markdown-it-task-lists'), {enabled: true} )
 					.use(require('markdown-it-replace-link'))
-					.use(require('markdown-it-imsize'))
+					.use(require('markdown-it-imsize')) ;
 
-					/** this plugins is large, try to load only when needed*/
-					if (zone.content.indexOf('```') !== -1 ) {
-						import('markdown-it-highlightjs').then(module => {
-							converter.use(module) ;
-						}) ;
-					}
 					
-					
-				zone.container.html(converter.render(zone.content)) ;
-				$("#filestable > tfoot > tr").height("auto") ;
+			this.loadAdditionnalMDPlugins(zone,converter)
+				.then(function() {
+					zone.container.html(converter.render(zone.content)) ;
+					$("#filestable > tfoot > tr").height("auto") ;
+				})
+
 			});
 		};
 
 	},
+
+
+	/**
+	 * 	load large MD plugins only when needed
+	 */
+	loadAdditionnalMDPlugins(zone,converter) {
+
+			promiseList = []
+
+			/** highlightjs*/
+			if (zone.content.indexOf('```') !== -1 ) {
+				promiseList.push(import(/* webpackChunkName: "m-it-highlightjs" */ 'markdown-it-highlightjs').then(module => {
+					converter.use(module.default) ;
+					console.log("ReadMeMD : highlightjs loaded") ;
+				})) ; 
+			} 
+
+			/** Mermaid */
+			if (zone.content.match(/(gantt|sequenceDiagram|graph (?:TB|BT|RL|LR|TD))/) !== null ) {
+				promiseList.push(import(/* webpackChunkName: "m-it-mermaid" */ 'markdown-it-mermaid-plus').then(module => {
+					converter.use(module.default) ;
+					console.log("ReadMeMD : Mermaid loaded") ;
+				})) 
+			}
+
+			/** Latex*/
+			if (zone.content.indexOf('$') !== -1 ) {
+				promiseList.push(import(/* webpackChunkName: "katex" */ 'katex')) ;
+				promiseList.push(import(/* webpackChunkName: "m-it-katex" */ 'markdown-it-katex').then(module => {
+					converter.use(module.default) ;
+					console.log("ReadMeMD : Katex loaded") ;
+				})) ;
+			}
+
+
+			return Promise.all(promiseList) ;
+
+	}
 };
 
 OCA.ReadmeMD = OCA.ReadmeMD.App ;
