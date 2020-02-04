@@ -11,7 +11,8 @@ module.exports = {
 
 	output: {
 		path: path.resolve(__dirname, "js"),
-    	filename: "[name].js"
+		filename: "[name].js",
+		jsonpFunction: "webpackJsonpFileReadmeMD"
 	  },
 
 	  node: {
