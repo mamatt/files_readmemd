@@ -335,8 +335,8 @@ OCA.ReadmeMD.App = {
 			var dir = OCA.Sharing.PublicApp.fileList._currentDirectory ;
 			var URL = OC.generateUrl('/s/{token}/download?path={path}&files={file}',
 								{	token: token, 
-									path: escape(dir),
-									file: escape(zone.filename)
+									path: dir,
+									file: zone.filename
 								}
 						);
 		}else{
@@ -399,7 +399,9 @@ OCA.ReadmeMD.App = {
 						})
 					.use(require('markdown-it-task-lists'), {enabled: true} )
 					.use(require('markdown-it-replace-link'))
-					.use(require('markdown-it-imsize')) ;
+					.use(require('markdown-it-imsize'))
+					.use(require('markdown-it-anchor').default)
+					.use(require('markdown-it-toc-done-right').default) ;
 
 					
 			this.loadAdditionnalMDPlugins(zone,converter)

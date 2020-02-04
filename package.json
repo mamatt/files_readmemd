@@ -12,20 +12,22 @@
     "watch": "NODE_ENV=none webpack --progress --watch --config webpack.dev.js "
   },
   "dependencies": {
-    "asciidoctor": "^2.0.3",
+    "asciidoctor": "^2.1.1",
     "github-markdown-css": "^3.0.1",
     "markdown-it": "^8.4.2",
+    "markdown-it-anchor": "^5.2.5",
     "markdown-it-highlightjs": "^3.0.0",
     "markdown-it-imsize": "^2.0.1",
     "markdown-it-katex": "^2.0.3",
     "markdown-it-mermaid-plus": "^0.2.5",
     "markdown-it-replace-link": "^1.0.1",
-    "markdown-it-task-lists": "^2.1.1"
+    "markdown-it-task-lists": "^2.1.1",
+    "markdown-it-toc-done-right": "^4.1.0"
   },
   "devDependencies": {
     "css-loader": "^2.1.1",
     "style-loader": "^0.23.1",
-    "webpack": "^4.41.2",
+    "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10"
   }
 }

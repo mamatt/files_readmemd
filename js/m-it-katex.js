@@ -1,2 +1,209 @@
-(window.webpackJsonpFileReadmeMD=window.webpackJsonpFileReadmeMD||[]).push([[2],{32:function(r,e,n){"use strict";var t=n(27);function c(r,e){var n,t,c=r.posMax,i=!0,o=!0;return n=e>0?r.src.charCodeAt(e-1):-1,t=e+1<=c?r.src.charCodeAt(e+1):-1,(32===n||9===n||t>=48&&t<=57)&&(o=!1),32!==t&&9!==t||(i=!1),{can_open:i,can_close:o}}function i(r,e){var n,t,i,o;if("$"!==r.src[r.pos])return!1;if(!c(r,r.pos).can_open)return e||(r.pending+="$"),r.pos+=1,!0;for(t=n=r.pos+1;-1!==(t=r.src.indexOf("$",t));){for(o=t-1;"\\"===r.src[o];)o-=1;if((t-o)%2==1)break;t+=1}return-1===t?(e||(r.pending+="$"),r.pos=n,!0):t-n==0?(e||(r.pending+="$$"),r.pos=n+1,!0):c(r,t).can_close?(e||((i=r.push("math_inline","math",0)).markup="$",i.content=r.src.slice(n,t)),r.pos=t+1,!0):(e||(r.pending+="$"),r.pos=n,!0)}function o(r,e,n,t){var c,i,o,s,a,l=!1,u=r.bMarks[e]+r.tShift[e],p=r.eMarks[e];if(u+2>p)return!1;if("$$"!==r.src.slice(u,u+2))return!1;if(u+=2,c=r.src.slice(u,p),t)return!0;for("$$"===c.trim().slice(-2)&&(c=c.trim().slice(0,-2),l=!0),o=e;!l&&!(++o>=n)&&!((u=r.bMarks[o]+r.tShift[o])<(p=r.eMarks[o])&&r.tShift[o]<r.blkIndent);)"$$"===r.src.slice(u,p).trim().slice(-2)&&(s=r.src.slice(0,p).lastIndexOf("$$"),i=r.src.slice(u,s),l=!0);return r.line=o+1,(a=r.push("math_block","math",0)).block=!0,a.content=(c&&c.trim()?c+"\n":"")+r.getLines(e+1,o,r.tShift[e],!0)+(i&&i.trim()?i:""),a.map=[e,r.line],a.markup="$$",!0}r.exports=function(r,e){e=e||{};r.inline.ruler.after("escape","math_inline",i),r.block.ruler.after("blockquote","math_block",o,{alt:["paragraph","reference","blockquote","list"]}),r.renderer.rules.math_inline=function(r,n){return function(r){e.displayMode=!1;try{return t.renderToString(r,e)}catch(n){return e.throwOnError&&console.log(n),r}}(r[n].content)},r.renderer.rules.math_block=function(r,n){return function(r){e.displayMode=!0;try{return"<p>"+t.renderToString(r,e)+"</p>"}catch(n){return e.throwOnError&&console.log(n),r}}(r[n].content)+"\n"}}}}]);
+(window["webpackJsonpFileReadmeMD"] = window["webpackJsonpFileReadmeMD"] || []).push([[8],{
+
+/***/ 1312:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* Process inline math */
+/*
+Like markdown-it-simplemath, this is a stripped down, simplified version of:
+https://github.com/runarberg/markdown-it-math
+
+It differs in that it takes (a subset of) LaTeX as input and relies on KaTeX
+for rendering output.
+*/
+
+/*jslint node: true */
+
+
+var katex = __webpack_require__(1289);
+
+// Test if potential opening or closing delimieter
+// Assumes that there is a "$" at state.src[pos]
+function isValidDelim(state, pos) {
+    var prevChar, nextChar,
+        max = state.posMax,
+        can_open = true,
+        can_close = true;
+
+    prevChar = pos > 0 ? state.src.charCodeAt(pos - 1) : -1;
+    nextChar = pos + 1 <= max ? state.src.charCodeAt(pos + 1) : -1;
+
+    // Check non-whitespace conditions for opening and closing, and
+    // check that closing delimeter isn't followed by a number
+    if (prevChar === 0x20/* " " */ || prevChar === 0x09/* \t */ ||
+            (nextChar >= 0x30/* "0" */ && nextChar <= 0x39/* "9" */)) {
+        can_close = false;
+    }
+    if (nextChar === 0x20/* " " */ || nextChar === 0x09/* \t */) {
+        can_open = false;
+    }
+
+    return {
+        can_open: can_open,
+        can_close: can_close
+    };
+}
+
+function math_inline(state, silent) {
+    var start, match, token, res, pos, esc_count;
+
+    if (state.src[state.pos] !== "$") { return false; }
+
+    res = isValidDelim(state, state.pos);
+    if (!res.can_open) {
+        if (!silent) { state.pending += "$"; }
+        state.pos += 1;
+        return true;
+    }
+
+    // First check for and bypass all properly escaped delimieters
+    // This loop will assume that the first leading backtick can not
+    // be the first character in state.src, which is known since
+    // we have found an opening delimieter already.
+    start = state.pos + 1;
+    match = start;
+    while ( (match = state.src.indexOf("$", match)) !== -1) {
+        // Found potential $, look for escapes, pos will point to
+        // first non escape when complete
+        pos = match - 1;
+        while (state.src[pos] === "\\") { pos -= 1; }
+
+        // Even number of escapes, potential closing delimiter found
+        if ( ((match - pos) % 2) == 1 ) { break; }
+        match += 1;
+    }
+
+    // No closing delimter found.  Consume $ and continue.
+    if (match === -1) {
+        if (!silent) { state.pending += "$"; }
+        state.pos = start;
+        return true;
+    }
+
+    // Check if we have empty content, ie: $$.  Do not parse.
+    if (match - start === 0) {
+        if (!silent) { state.pending += "$$"; }
+        state.pos = start + 1;
+        return true;
+    }
+
+    // Check for valid closing delimiter
+    res = isValidDelim(state, match);
+    if (!res.can_close) {
+        if (!silent) { state.pending += "$"; }
+        state.pos = start;
+        return true;
+    }
+
+    if (!silent) {
+        token         = state.push('math_inline', 'math', 0);
+        token.markup  = "$";
+        token.content = state.src.slice(start, match);
+    }
+
+    state.pos = match + 1;
+    return true;
+}
+
+function math_block(state, start, end, silent){
+    var firstLine, lastLine, next, lastPos, found = false, token,
+        pos = state.bMarks[start] + state.tShift[start],
+        max = state.eMarks[start]
+
+    if(pos + 2 > max){ return false; }
+    if(state.src.slice(pos,pos+2)!=='$$'){ return false; }
+
+    pos += 2;
+    firstLine = state.src.slice(pos,max);
+
+    if(silent){ return true; }
+    if(firstLine.trim().slice(-2)==='$$'){
+        // Single line expression
+        firstLine = firstLine.trim().slice(0, -2);
+        found = true;
+    }
+
+    for(next = start; !found; ){
+
+        next++;
+
+        if(next >= end){ break; }
+
+        pos = state.bMarks[next]+state.tShift[next];
+        max = state.eMarks[next];
+
+        if(pos < max && state.tShift[next] < state.blkIndent){
+            // non-empty line with negative indent should stop the list:
+            break;
+        }
+
+        if(state.src.slice(pos,max).trim().slice(-2)==='$$'){
+            lastPos = state.src.slice(0,max).lastIndexOf('$$');
+            lastLine = state.src.slice(pos,lastPos);
+            found = true;
+        }
+
+    }
+
+    state.line = next + 1;
+
+    token = state.push('math_block', 'math', 0);
+    token.block = true;
+    token.content = (firstLine && firstLine.trim() ? firstLine + '\n' : '')
+    + state.getLines(start + 1, next, state.tShift[start], true)
+    + (lastLine && lastLine.trim() ? lastLine : '');
+    token.map = [ start, state.line ];
+    token.markup = '$$';
+    return true;
+}
+
+module.exports = function math_plugin(md, options) {
+    // Default options
+
+    options = options || {};
+
+    // set KaTeX as the renderer for markdown-it-simplemath
+    var katexInline = function(latex){
+        options.displayMode = false;
+        try{
+            return katex.renderToString(latex, options);
+        }
+        catch(error){
+            if(options.throwOnError){ console.log(error); }
+            return latex;
+        }
+    };
+
+    var inlineRenderer = function(tokens, idx){
+        return katexInline(tokens[idx].content);
+    };
+
+    var katexBlock = function(latex){
+        options.displayMode = true;
+        try{
+            return "<p>" + katex.renderToString(latex, options) + "</p>";
+        }
+        catch(error){
+            if(options.throwOnError){ console.log(error); }
+            return latex;
+        }
+    }
+
+    var blockRenderer = function(tokens, idx){
+        return  katexBlock(tokens[idx].content) + '\n';
+    }
+
+    md.inline.ruler.after('escape', 'math_inline', math_inline);
+    md.block.ruler.after('blockquote', 'math_block', math_block, {
+        alt: [ 'paragraph', 'reference', 'blockquote', 'list' ]
+    });
+    md.renderer.rules.math_inline = inlineRenderer;
+    md.renderer.rules.math_block = blockRenderer;
+};
+
+
+/***/ })
+
+}]);
 //# sourceMappingURL=m-it-katex.js.map
