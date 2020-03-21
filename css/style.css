@@ -11,7 +11,7 @@
 }
 
 .readmemd::before {
-	content:"README.md" !important;
+	content: attr(data-filename) !important;
 	color: silver ;
 }
 

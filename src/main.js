@@ -278,6 +278,7 @@ OCA.ReadmeMD.App = {
 
 		if (this.footer.filename !== null ) {
 			this.footer.container.removeClass("hidden") ;
+			$(this.footer.container).attr('data-filename', this.footer.filename);
 			this.fillContainer(this.footer) ;
 
 			if (this.auto_refresh == "true") {
