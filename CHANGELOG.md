@@ -1,4 +1,12 @@
-# 1.1.3 25-11-2019
+## 1.1.4 XX-XX-2020
+### Fixed
+ - Incorrect file name displayed
+ [#44](https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues/36#)
+ 
+### Added
+ - NC 18 compatibility 
+
+## 1.1.3 25-11-2019
 ### Fixed
   - Folder or file name with UTf-8 characters not displaying
   [#36](https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues/36#)
@@ -15,7 +23,7 @@
   - Support Dark Theme
   [#37](https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues/37#)
 
-# 1.1.2 18-10-2019
+## 1.1.2 18-10-2019
 ### Fixed
   - Image not loading when using MD produced by the new text editor
   [#33](https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues/33#)
@@ -24,7 +32,7 @@
 ### Added
   - Compatibility with NC 17
 
-# 1.1.1 26-07-2019
+## 1.1.1 26-07-2019
 ### Fixed
   - HTML and asciidoc rendering not working
   [#29](https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues/29#)

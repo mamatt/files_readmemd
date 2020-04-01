@@ -245,7 +245,7 @@ OCA.ReadmeMD.App = {
 	
 		for (var activFile in this.header.filenames ) {
 			for (var filenum in  FL) {
-				if ( FL[filenum].name == this.header.filenames[activFile] ) {
+				if ( FL[filenum].name == this.header.filenames[activFile] && FL[filenum].type == "file" ) {
 					this.header.filename = FL[filenum].name ;
 					this.header.mtime = FL[filenum].mtime ;
 					this.header.filenum= filenum ;
@@ -255,7 +255,7 @@ OCA.ReadmeMD.App = {
 
 		for (var activFile in this.footer.filenames ) {
 			for (var filenum in  FL) {
-				if ( FL[filenum].name == this.footer.filenames[activFile] ) {
+				if ( FL[filenum].name == this.footer.filenames[activFile] && FL[filenum].type == "file" ) {
 					this.footer.filename = FL[filenum].name ;
 					this.footer.mtime = FL[filenum].mtime ;
 					this.footer.filenum= filenum ;

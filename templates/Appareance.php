@@ -34,7 +34,7 @@ script("files_readmemd","config") ;
         <input id="readmeMD-appearance-txt" name="readmeMD-appearance-txt"
             type="checkbox" class="checkbox " value="1" <?php if ($_['show_title'] === 'true'): ?> checked="checked"<?php endif; ?>
         />
-        <label for="readmeMD-appearance-txt"><?php p($l->t("Show \"README.md\" text before content")) ; ?></label>
+        <label for="readmeMD-appearance-txt"><?php p($l->t("Show filename before content")) ; ?></label>
     </p>
     
     <p>
