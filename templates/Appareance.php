@@ -51,4 +51,11 @@ script("files_readmemd","config") ;
         <label for="readmeMD-appearance-refresh"><?php p($l->t("Auto refresh (check every 1 sec.) of HEADER/FOOTER content whenever files contents change (maybe lower general performance)")) ; ?></label> 
     </p>
 
+    <p>
+        <input id="readmeMD-appearance-workspace" name="readmeMD-appearance-worksapce"
+            type="checkbox" class="checkbox " value="1" <?php if ($_['disable_workspace'] === 'true'): ?> checked="checked"<?php endif; ?>
+        />
+        <label for="readmeMD-appearance-workspace"><?php p($l->t("Disable Nextcloud native rich workspaces ")) ; ?></label> 
+    </p>
+
 </div>

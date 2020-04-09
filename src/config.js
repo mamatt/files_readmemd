@@ -43,6 +43,12 @@
                 })
     }) ;
 
+    $("#readmeMD-appearance-workspace").click(function(Event){
+        $.post(OC.generateUrl("apps/files_readmemd/config"),{key: "disable_workspace", value: Event.target.checked})
+            .success(function (json) {
+                        //console.log(json) ;
+                })
+    }) ;
 
     //Engines
 

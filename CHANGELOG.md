@@ -1,9 +1,16 @@
-## 1.1.4 XX-XX-2020
+## 1.1.4 XX-04-2020
 ### Fixed
  - Incorrect file name displayed
- [#44](https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues/36#)
- 
+ [#44](https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues/44#)
+ - if a folder's named as an expected filename (ie. readme.md) it triggers the plugin with an unexpected result
+ [#45](https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues/45#)
+
 ### Added
+ - Option to disable Nextcloud native rich workspaces
+  [#41](https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues/41#)
+ - Anchor links do not work
+  [#43](https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues/43#)
+ - Update plugins list in README.md
  - NC 18 compatibility 
 
 ## 1.1.3 25-11-2019

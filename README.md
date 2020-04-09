@@ -30,9 +30,14 @@ Now you can use template to customize the README.md/HEADER.md rendering.
 The following markdown plugins are available, more to come, fill a issue if you need more.
 
  * Image sizing :  [markdown-it-imsize](https://www.npmjs.com/package/markdown-it-imsize)
- * Task list : [markdown-it-task-lists
-](https://www.npmjs.com/package/markdown-it-task-lists)
+ * Task list : [markdown-it-task-lists](https://www.npmjs.com/package/markdown-it-task-lists)
  * Code highlight : [markdown-it-highlightjs](https://www.npmjs.com/package/markdown-it-highlightjs)
+ * Mermaid : [markdown-it-mermaid-plus](https://www.npmjs.com/package/markdown-it-mermaid-plus)
+ * Katex : [markdown-it-katex](https://www.npmjs.com/package/markdown-it-katex)
+ * image resize : [imsize](https://www.npmjs.com/package/markdown-it-imsize)
+ * Anchord : [markdown-it-anchor](https://www.npmjs.com/package/markdown-it-anchor)
+ * Table of Contents : [markdown-it-toc-done-right](https://www.npmjs.com/package/markdown-it-toc-done-right)
+
 
  # Admin section
 

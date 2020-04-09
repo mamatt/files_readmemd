@@ -58,6 +58,10 @@ class Config {
             $this->setAppValue('auto_refresh','false') ;
         }
 
+        if (empty($this->getAppValue('disable_workspace')) ) { 
+            $this->setAppValue('disable_workspace','true') ;
+        }
+
         if (null === json_decode($this->getAppValue('fileslist_header')) ){
             $this->setAppValue('fileslist_header',json_encode(array('HEADER'))) ;
         }

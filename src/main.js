@@ -18,6 +18,7 @@
  *
  */
 
+import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus'
  
 /**
 * @namespace OCA.ReadmeMD
@@ -50,6 +51,16 @@ OCA.ReadmeMD.App = {
 		//then setup the trigger on filetable
 		this.getConfig()
 			.then(function() {
+				
+				if (self.disable_workspace == "true" ) {
+					console.log('force_disabling workspace') ;
+					emit('Text::hideRichWorkspace','') ;
+				};
+
+					//console.log(OCA.Text.RichWorkspaceEnabled) ;
+					//OCA.Text.RichWorkspaceEnabled =  ! self.disable_workspace ;
+					//console.log(OCA.Text.RichWorkspaceEnabled) ;
+
 				$("#filestable").on('updated',function() { self.checkMD() ; }) ;
 			}) ;
 
@@ -83,6 +94,7 @@ OCA.ReadmeMD.App = {
 					self.show_asciidoc = json.show_asciidoc ;
 					self.show_html = json.show_html ;
 					self.auto_refresh = json.auto_refresh ;
+					self.disable_workspace = json.disable_workspace ;
 
 					if ( json.show_title == "false") {
 						self.footer.container.addClass("no-before") ;
@@ -422,7 +434,7 @@ OCA.ReadmeMD.App = {
 	 */
 	loadAdditionnalMDPlugins(zone,converter) {
 
-			promiseList = []
+			var promiseList = [] ;
 
 			/** highlightjs*/
 			if (zone.content.indexOf('```') !== -1 ) {

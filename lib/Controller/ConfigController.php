@@ -44,6 +44,7 @@ class ConfigController extends Controller {
                   "yellow_back" => $this->config->getAppValue("yellow_back")  ,
                    "show_title" => $this->config->getAppValue("show_title")   ,
                  "auto_refresh" => $this->config->getAppValue("auto_refresh") ,
+            "disable_workspace" => $this->config->getAppValue("disable_workspace") ,
              "fileslist_header" => json_decode($this->config->getAppValue('fileslist_header')),
              "fileslist_footer" => json_decode($this->config->getAppValue('fileslist_footer'))
         ];
