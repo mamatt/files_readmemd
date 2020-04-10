@@ -1,9 +1,12 @@
-## 1.1.4 XX-04-2020
+## 1.1.4 10-04-2020
 ### Fixed
  - Incorrect file name displayed
  [#44](https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues/44#)
  - if a folder's named as an expected filename (ie. readme.md) it triggers the plugin with an unexpected result
  [#45](https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues/45#)
+ - Doesn't work in public shared folder
+ [#48](https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues/48#)
+
 
 ### Added
  - Option to disable Nextcloud native rich workspaces

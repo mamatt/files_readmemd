@@ -53,13 +53,8 @@ OCA.ReadmeMD.App = {
 			.then(function() {
 				
 				if (self.disable_workspace == "true" ) {
-					console.log('force_disabling workspace') ;
 					emit('Text::hideRichWorkspace','') ;
 				};
-
-					//console.log(OCA.Text.RichWorkspaceEnabled) ;
-					//OCA.Text.RichWorkspaceEnabled =  ! self.disable_workspace ;
-					//console.log(OCA.Text.RichWorkspaceEnabled) ;
 
 				$("#filestable").on('updated',function() { self.checkMD() ; }) ;
 			}) ;
