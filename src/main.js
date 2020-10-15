@@ -415,6 +415,12 @@ OCA.ReadmeMD.App = {
 			this.loadAdditionnalMDPlugins(zone,converter)
 				.then(function() {
 					zone.container.html(converter.render(zone.content)) ;
+					// disable checkboxs
+					var checkboxs = zone.container[0].querySelectorAll('input[type=checkBox');
+					[].forEach.call(checkboxs, (cb) => {
+						cb.disabled=true ;
+					}) ;
+
 					$("#filestable > tfoot > tr").height("auto") ;
 				})
 
