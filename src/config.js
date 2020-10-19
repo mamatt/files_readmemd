@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	// Appearance
 
 	document.getElementById('readmeMD-appearance-txt').onclick = function(Event) {
-		const params = new URLSearchParams()
+		const params = new URLSearchParams() // eslint-disable-line
 		params.append('key', 'show_title')
 		params.append('value', Event.target.checked)
 
@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 
 	document.getElementById('readmeMD-appearance-color').onclick = function(Event) {
-		const params = new URLSearchParams()
+		const params = new URLSearchParams() // eslint-disable-line
 		params.append('key', 'yellow_back')
 		params.append('value', Event.target.checked)
 
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 
 	document.getElementById('readmeMD-appearance-refresh').onclick = function(Event) {
-		const params = new URLSearchParams()
+		const params = new URLSearchParams() // eslint-disable-line
 		params.append('key', 'auto_refresh')
 		params.append('value', Event.target.checked)
 
@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 
 	document.getElementById('readmeMD-appearance-workspace').onclick = function(Event) {
-		const params = new URLSearchParams()
+		const params = new URLSearchParams() // eslint-disable-line
 		params.append('key', 'disable_workspace')
 		params.append('value', Event.target.checked)
 
@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	// Engines
 
 	document.getElementById('readmeMD-engine-asciidoc').onclick = function(Event) {
-		const params = new URLSearchParams()
+		const params = new URLSearchParams() // eslint-disable-line
 		params.append('key', 'show_asciidoc')
 		params.append('value', Event.target.checked)
 
@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 
 	document.getElementById('readmeMD-engine-html').onclick = function(Event) {
-		const params = new URLSearchParams()
+		const params = new URLSearchParams() // eslint-disable-line
 		params.append('key', 'show_html')
 		params.append('value', Event.target.checked)
 
@@ -149,18 +149,14 @@ document.addEventListener('DOMContentLoaded', () => {
 	const els = document.getElementsByClassName('readmeMD-filelist_delete');
 	[].forEach.call(els, (el) => {
 		el.onclick = function(Event) {
-			// onst self = this
 
 			const fn = Event.target.dataset.filename
 			const zone = Event.target.dataset.zone
-
-			// console.log("tests" + Event.target)
 
 			axios.delete(generateUrl('apps/files_readmemd/config/filenames/' + zone + '/' + fn.replace('?', '%3F')))
 				.then(function(data) {
 					const parentElement = Event.target.parentNode
 					parentElement.parentNode.removeChild(parentElement)
-					// $(self).parent().remove()
 				})
 		}
 	})

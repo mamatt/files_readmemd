@@ -1,22 +1,7 @@
-const webpack = require("webpack");
-const path = require("path");
+const merge = require('webpack-merge');
+const common = require('./webpack.common.js');
 
-module.exports = {
-	devtool: 'source-map',	
-	mode: 'production',	
-	entry: {
-		'main' : "./src/main.js",
-		'config': "./src/config.js"
-	},
-
-	output: {
-		path: path.resolve(__dirname, "js"),
-		filename: "[name].js",
-		jsonpFunction: "webpackJsonpFileReadmeMD"
-	  },
-
-	node: {
-		fs: 'empty'
-	}
-}
-
+module.exports = merge(common, {
+  mode: 'production',
+  devtool: '#source-map',
+})

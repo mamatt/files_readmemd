@@ -1,8 +1,7 @@
 {
   "name": "files_readmemd",
-  "version": "1.1.5",
+  "version": "1.2.0",
   "description": "show README.md github style",
-  "main": "./js/main.js",
   "repository": "https://gitlab.univ-nantes.fr/uncloud/files_readmemd.git",
   "author": "Matthieu Le Corre <matthieu.lecorre@univ-nantes.fr>",
   "license": "AGPL-3.0",
