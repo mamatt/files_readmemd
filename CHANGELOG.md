@@ -1,5 +1,4 @@
 ## 1.2.0 19-10-2020
-### Fixed
 
 ### Added
  - Checkboxs are now readonly to avoid confusion
@@ -8,7 +7,7 @@
  [#56](https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues/56#)
  - NextCloud 19 & 20 compatibility
 
- ### Changed
+### Changed
   - Massive JS lint
   - Remove all Jquery calls 
 
