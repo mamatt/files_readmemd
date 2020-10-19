@@ -1,3 +1,17 @@
+## 1.2.0 XX-10-2020
+### Fixed
+
+### Added
+ - Checkboxs are now readonly to avoid confusion
+ [#59](https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues/59#)
+ - Hyperlinks in Footer or Header are now opened within a new tab
+ [#56](https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues/56#)
+ - NextCloud 19 & 20 compatibility
+
+ ### Changed
+  - Massive JS lint
+  - Remove all Jquery calls 
+
 ## 1.1.4 10-04-2020
 ### Fixed
  - Incorrect file name displayed

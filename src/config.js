@@ -1,3 +1,5 @@
+/* eslint-env jquery */
+
 /**
  * @author Matthieu Le Corre <matthieu.lecorre@univ-nantes.fr>
  *
@@ -18,113 +20,179 @@
  *
  */
 
- $(document).ready(function () {
+import { generateUrl } from '@nextcloud/router'
+import axios from '@nextcloud/axios'
 
-    //Appearance
+document.addEventListener('DOMContentLoaded', () => {
 
-    $("#readmeMD-appearance-txt").click(function(Event){
-        $.post(OC.generateUrl("apps/files_readmemd/config"),{key: "show_title", value: Event.target.checked})
-            .success(function (json) {
-                        //console.log(json) ;
-                })
-    }) ;
+	// Appearance
 
-    $("#readmeMD-appearance-color").click(function(Event){
-        $.post(OC.generateUrl("apps/files_readmemd/config"),{key: "yellow_back", value: Event.target.checked})
-            .success(function (json) {
-                        //console.log(json) ;
-                })
-    }) ;
+	document.getElementById('readmeMD-appearance-txt').onclick = function(Event) {
+		const params = new URLSearchParams()
+		params.append('key', 'show_title')
+		params.append('value', Event.target.checked)
 
-    $("#readmeMD-appearance-refresh").click(function(Event){
-        $.post(OC.generateUrl("apps/files_readmemd/config"),{key: "auto_refresh", value: Event.target.checked})
-            .success(function (json) {
-                        //console.log(json) ;
-                })
-    }) ;
+		axios.post(
+			generateUrl('apps/files_readmemd/config'),
+			params,
+			{
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+				},
+			},
+		)
+			.success(function(json) {
+			// console.log(json) ;
+			})
+	}
 
-    $("#readmeMD-appearance-workspace").click(function(Event){
-        $.post(OC.generateUrl("apps/files_readmemd/config"),{key: "disable_workspace", value: Event.target.checked})
-            .success(function (json) {
-                        //console.log(json) ;
-                })
-    }) ;
+	document.getElementById('readmeMD-appearance-color').onclick = function(Event) {
+		const params = new URLSearchParams()
+		params.append('key', 'yellow_back')
+		params.append('value', Event.target.checked)
 
-    //Engines
+		axios.post(
+			generateUrl('apps/files_readmemd/config'),
+			params,
+			{
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+				},
+			},
+		)
+			.success(function(json) {
+			// console.log(json) ;
+			})
+	}
 
+	document.getElementById('readmeMD-appearance-refresh').onclick = function(Event) {
+		const params = new URLSearchParams()
+		params.append('key', 'auto_refresh')
+		params.append('value', Event.target.checked)
 
-    $("#readmeMD-engine-asciidoc").click(function(Event){
-        $.post(OC.generateUrl("apps/files_readmemd/config"),{key: "show_asciidoc", value: Event.target.checked})
-            .success(function (json) {
-                        //console.log(json) ;
-                })
-    }) ;
+		axios.post(
+			generateUrl('apps/files_readmemd/config'),
+			params,
+			{
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+				},
+			},
+		)
+			.success(function(json) {
+			// console.log(json) ;
+			})
+	}
 
-    $("#readmeMD-engine-html").click(function(Event){
-        $.post(OC.generateUrl("apps/files_readmemd/config"),{key: "show_html", value: Event.target.checked})
-            .success(function (json) {
-                        //console.log(json) ;
-                })
-    }) ;
+	document.getElementById('readmeMD-appearance-workspace').onclick = function(Event) {
+		const params = new URLSearchParams()
+		params.append('key', 'disable_workspace')
+		params.append('value', Event.target.checked)
 
+		axios.post(
+			generateUrl('apps/files_readmemd/config'),
+			params,
+			{
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+				},
+			},
+		)
+			.success(function(json) {
+			// console.log(json) ;
+			})
+	}
 
-    // Fileslists
+	// Engines
 
-    // DELETE
-    $(".readmeMD-filelist_delete").on("click",function(Event){
-        var self =this ;
+	document.getElementById('readmeMD-engine-asciidoc').onclick = function(Event) {
+		const params = new URLSearchParams()
+		params.append('key', 'show_asciidoc')
+		params.append('value', Event.target.checked)
 
-       var fn = Event.target.dataset.filename ;
-       var zone = Event.target.dataset.zone ;
+		axios.post(
+			generateUrl('apps/files_readmemd/config'),
+			params,
+			{
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+				},
+			},
+		)
+			.success(function(json) {
+			// console.log(json) ;
+			})
+	}
 
-       //console.log( "Deleting " + zone + " -> " + fn ) ;
+	document.getElementById('readmeMD-engine-html').onclick = function(Event) {
+		const params = new URLSearchParams()
+		params.append('key', 'show_html')
+		params.append('value', Event.target.checked)
 
-       $.ajax({
-           url:OC.generateUrl("apps/files_readmemd/config/filenames/" + zone + "/" + fn.replace("?","%3F") ),
-           type: 'DELETE',
-           success: function(data) {
-               $(self).parent().remove() ;
-           }
-       })
+		axios.post(
+			generateUrl('apps/files_readmemd/config'),
+			params,
+			{
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+				},
+			},
+		)
+			.success(function(json) {
+			// console.log(json) ;
+			})
+	}
 
-    }) ;
+	// Fileslists
 
-    //ADD
+	// DELETE
+	const els = document.getElementsByClassName('readmeMD-filelist_delete');
+	[].forEach.call(els, (el) => {
+		el.onclick = function(Event) {
+			// onst self = this
 
-    $("#readmeMD-filelist_submit-footer").on("click",function(Event){
-        
-        var fn = $("#readmeMD-filelist_name-footer")[0].value ;
-        var zone = "footer" ;
+			const fn = Event.target.dataset.filename
+			const zone = Event.target.dataset.zone
 
-        $.ajax({
-            url:OC.generateUrl("apps/files_readmemd/config/filenames/" + zone + "/" + fn.replace("?","%3F") ),
-            type: 'PUT',
-            success: function(data) {             
-                $("#readmeMD-filelist_footer").append(
-                    '<li class="readmeMD-filelist" id="readmeMD-filelist-'+fn+'">'
-                    +'<a data-zone="footer" data-filename="'+fn+'" class="readmeMD-filelist_delete icon-inline icon icon-delete"></a>'
-                    +fn+'</li>')
-            }
-        })
+			// console.log("tests" + Event.target)
 
-    }) ;
+			axios.delete(generateUrl('apps/files_readmemd/config/filenames/' + zone + '/' + fn.replace('?', '%3F')))
+				.then(function(data) {
+					const parentElement = Event.target.parentNode
+					parentElement.parentNode.removeChild(parentElement)
+					// $(self).parent().remove()
+				})
+		}
+	})
 
-    $("#readmeMD-filelist_submit-header").on("click",function(Event){
-        
-        var fn = $("#readmeMD-filelist_name-header")[0].value ;
-        var zone = "header" ;
+	// ADD
 
-        $.ajax({
-            url:OC.generateUrl("apps/files_readmemd/config/filenames/" + zone + "/" + fn.replace("?","%3F") ),
-            type: 'PUT',
-            success: function(data) {             
-                $("#readmeMD-filelist_header").append(
-                    '<li class="readmeMD-filelist" id="readmeMD-filelist-'+fn+'">'
-                    +'<a data-zone="header" data-filename="'+fn+'" class="readmeMD-filelist_delete icon-inline icon icon-delete"></a>'
-                    +fn+'</li>')
-            }
-        })
+	document.getElementById('readmeMD-filelist_submit-footer').onclick = function(Event) {
 
-    }) ;
+		const fn = document.getElementById('readmeMD-filelist_name-footer').value
+		const zone = 'footer'
 
- }); 
+		axios.put(generateUrl('apps/files_readmemd/config/filenames/' + zone + '/' + fn.replace('?', '%3F')))
+			.then(function(data) {
+				document.getElementById('readmeMD-filelist_footer').insertAdjacentHTML('beforeend',
+					'<li class="readmeMD-filelist" id="readmeMD-filelist-' + fn + '">'
+                    + '<a data-zone="footer" data-filename="' + fn + '" class="readmeMD-filelist_delete icon-inline icon icon-delete"></a>'
+                    + fn + '</li>')
+			})
+	}
+
+	document.getElementById('readmeMD-filelist_submit-header').onclick = function(Event) {
+
+		const fn = document.getElementById('readmeMD-filelist_name-header').value
+		const zone = 'header'
+
+		axios.put(generateUrl('apps/files_readmemd/config/filenames/' + zone + '/' + fn.replace('?', '%3F')))
+			.then(function(data) {
+				document.getElementById('readmeMD-filelist_header').insertAdjacentHTML('beforeend',
+					'<li class="readmeMD-filelist" id="readmeMD-filelist-' + fn + '">'
+                    + '<a data-zone="header" data-filename="' + fn + '" class="readmeMD-filelist_delete icon-inline icon icon-delete"></a>'
+                    + fn + '</li>')
+			})
+	}
+
+})
