@@ -1,3 +1,16 @@
+## 1.2.1 12-11-2021
+
+### Added
+ - Compat with NC 21 and NC 22
+ [#68](https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues/68#)
+ - Update Katex to new version
+ [#61](https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues/61#)
+ - Massive update of all libs
+
+ ### Fixed
+ - HEADER blocks file creation drop-down in (publicly) shared folder
+ [#62](https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues/62#)
+
 ## 1.2.0 19-10-2020
 
 ### Added

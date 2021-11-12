@@ -19,7 +19,7 @@ It show README.md in the way gitlab does.]]></description>
     <bugs>https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues</bugs>
     <screenshot>https://gitlab.univ-nantes.fr/uncloud/files_readmemd/raw/master/screenshot.png</screenshot>
     <dependencies>	    
-        <nextcloud min-version="18" max-version="20"/>
+        <nextcloud min-version="18" max-version="22"/>
     </dependencies>
     <settings>   
         <admin>OCA\ReadmeMD\Settings\Admin\Appareance</admin>

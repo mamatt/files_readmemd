@@ -23,6 +23,7 @@
 	padding: 1em ;
 	border-bottom: 1px solid silver ;
 	text-align: initial ;
+	z-index: 59 ;
 }
 
 .headermd ul,

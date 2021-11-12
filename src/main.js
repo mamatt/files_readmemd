@@ -37,6 +37,10 @@ OCA.ReadmeMD.App = {
 
 	/**
 	 * Setup on page load
+	 *
+	 * @param header
+	 * @param footer
+	 * @param mode
 	 */
 	initialize(header, footer, mode) {
 
@@ -114,6 +118,9 @@ OCA.ReadmeMD.App = {
 
 	/**
 	 *  Mutation observer Callback
+	 *
+	 * @param mutations
+	 * @param mode
 	 */
 	callBackToggleContainer(mutations, mode) {
 		const self = this
@@ -157,8 +164,10 @@ OCA.ReadmeMD.App = {
 	},
 
 	/**
-	* Generate FileNames lists corresponding to configs
-	**/
+	 * Generate FileNames lists corresponding to configs
+	 *
+	 * @param zone
+	 */
 	generateFileNames(zone) {
 
 		const FFNames = []
@@ -307,6 +316,8 @@ OCA.ReadmeMD.App = {
 	/**
 	 *
 	 *  auto refresh file content if enable
+	 *
+	 * @param zone
 	 */
 	refreshContent(zone) {
 
@@ -326,6 +337,8 @@ OCA.ReadmeMD.App = {
 
 	/**
 	 * show contenair
+	 *
+	 * @param zone
 	 */
 	createContainer(zone) {
 
@@ -358,6 +371,8 @@ OCA.ReadmeMD.App = {
 
 	/**
 	 * fill container
+	 *
+	 * @param zone
 	 */
 	fillContainer(zone) {
 
@@ -369,7 +384,8 @@ OCA.ReadmeMD.App = {
 			const token = document.getElementById('sharingToken').value
 			dir = OCA.Sharing.PublicApp.fileList._currentDirectory
 			URL = generateUrl('/s/{token}/download?path={path}&files={file}',
-				{ token,
+				{
+					token,
 				  path: dir,
 				  file: zone.filename,
 				}
@@ -390,7 +406,9 @@ OCA.ReadmeMD.App = {
 
 	/**
 	 * Render Markdown
-	 **/
+	 *
+	 * @param zone
+	 */
 	render(zone) {
 		// render MD
 
@@ -476,8 +494,11 @@ OCA.ReadmeMD.App = {
 	},
 
 	/**
-	* load large MD plugins only when needed
-	*/
+	 * load large MD plugins only when needed
+	 *
+	 * @param zone
+	 * @param converter
+	 */
 	loadAdditionnalMDPlugins(zone, converter) {
 
 		const promiseList = []
