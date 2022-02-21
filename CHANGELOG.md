@@ -7,7 +7,7 @@
  [#61](https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues/61#)
  - Massive update of all libs
 
- ### Fixed
+### Fixed
  - HEADER blocks file creation drop-down in (publicly) shared folder
  [#62](https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues/62#)
 
