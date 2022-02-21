@@ -26,8 +26,8 @@ import { generateUrl } from '@nextcloud/router'
 import axios from '@nextcloud/axios'
 
 /**
-* @namespace OCA.ReadmeMD
-*/
+ * @namespace OCA.ReadmeMD
+ */
 OCA.ReadmeMD = {}
 
 /**
@@ -446,6 +446,9 @@ OCA.ReadmeMD.App = {
 								return generateUrl('/s/{token}/download?path={path}&files={file}', { token, path: dir, file: link })
 							} else {
 								dir = OCA.Files.App.fileList._currentDirectory
+								if (link.startsWith('/')) {
+									dir = ''
+								}
 								return OC.linkToRemoteBase('files' + dir + '/' + link)
 							}
 						}

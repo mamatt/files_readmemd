@@ -1,3 +1,14 @@
+## 1.2.2 21-02-2022
+### Added
+ - Compat with NC 23
+  [#72](https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues/72#)
+
+### Fixed
+ - Header/Readme not shown on public shared folder with NC 22
+  [#70](https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues/70#)
+ - Images not showing in the workspace if positioned in a different folder
+  [#71](https://gitlab.univ-nantes.fr/uncloud/files_readmemd/issues/71#)
+
 ## 1.2.1 12-11-2021
 
 ### Added
