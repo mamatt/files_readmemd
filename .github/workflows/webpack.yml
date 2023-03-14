@@ -1,4 +1,4 @@
-name: Build releases
+name: Build production release
 
 on:
   push:
@@ -9,19 +9,16 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [14.x, 16.x, 18.x]
-
     steps:
     - uses: actions/checkout@v3
 
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Use Node.js 16.x
       uses: actions/setup-node@v3
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: '16.x'
 
-    - name: Build
-      run: |
-        npm install
+    - name: Install Dependencies
+      run: npm install
+    
+    - name: Build webpack
         npm run prod
