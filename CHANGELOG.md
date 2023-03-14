@@ -1,3 +1,8 @@
+## 1.2.3 XX-03-2023
+### Added
+ - Compat with NC 25
+   [#78](https://github.com/mamatt/files_readmemd/issues/78)
+   
 ## 1.2.2 21-02-2022
 ### Added
  - Compat with NC 23

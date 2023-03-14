@@ -1,5 +1,3 @@
-/* eslint-env jquery */
-
 /**
  * @author Matthieu Le Corre <matthieu.lecorre@univ-nantes.fr>
  *
