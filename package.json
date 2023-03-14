@@ -1,6 +1,6 @@
 {
   "name": "files_readmemd",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "show README.md github style",
   "repository": "https://gitlab.univ-nantes.fr/uncloud/files_readmemd.git",
   "author": "Matthieu Le Corre <matthieu.lecorre@univ-nantes.fr>",

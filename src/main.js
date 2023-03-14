@@ -4,7 +4,7 @@
 /**
  * @author Matthieu Le Corre <matthieu.lecorre@univ-nantes.fr>
  *
- * @license GNU AGPL version 3 or any later version
+ * @license GNU Affero General Public License v3.0 or later
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -65,7 +65,7 @@ OCA.ReadmeMD.App = {
 					emit('Text::hideRichWorkspace', '')
 				}
 
-				$('#filestable').on('updated', function() {
+				$('#app-content-files .files-filestable').on('updated', function() {
 				// document.getElementById('filestable').addEventListener('updated', function() {
 					self.checkMD()
 				})
@@ -85,7 +85,7 @@ OCA.ReadmeMD.App = {
 			hideContainerOnShowObserver.observe(document.getElementById('searchresults'), { attributes: true })
 
 			// this one is for mindmap or all other "fullscreen" apps
-			hideContainerOnHideObserver.observe(document.getElementById('filestable'), { attributes: true })
+			hideContainerOnHideObserver.observe(document.getElementById('app-content-files .files-filestable'), { attributes: true })
 		}
 
 	},
@@ -131,15 +131,15 @@ OCA.ReadmeMD.App = {
 					if (mutation.target.classList.contains('hidden')) {
 						self.header.container.classList.add('hidden')
 						self.footer.container.classList.add('hidden')
-						document.querySelector('#filestable > tfoot > tr').style.height = '250px'
+						document.querySelector('#app-content-files .files-filestable > tfoot > tr').style.height = '250px'
 					} else {
 						if (self.header.content !== null && window.location.search.indexOf('view') === -1) {
 							self.header.container.classList.remove('hidden')
-							document.querySelector('#filestable > tfoot > tr').style.height = 'auto'
+							document.querySelector('##app-content-files .files-filestable > tfoot > tr').style.height = 'auto'
 						}
 						if (self.footer.content !== null && window.location.search.indexOf('view') === -1) {
 							self.footer.container.rclassList.remove('hidden')
-							document.querySelector('#filestable > tfoot > tr').style.height = 'auto'
+							document.querySelector('#app-content-files .files-filestable > tfoot > tr').style.height = 'auto'
 						}
 					}
 				} else {
@@ -147,16 +147,16 @@ OCA.ReadmeMD.App = {
 					if (mutation.target.classList.contains('hidden') && window.location.search.indexOf('view') === -1) {
 						if (self.header.content !== null) {
 							self.header.container.classList.remove('hidden')
-							document.querySelector('#filestable > tfoot > tr').style.height = 'auto'
+							document.querySelector('#app-content-files .files-filestable > tfoot > tr').style.height = 'auto'
 						}
 						if (self.footer.content !== null) {
 							self.footer.container.classList.remove('hidden')
-							document.querySelector('#filestable > tfoot > tr').style.height = 'auto'
+							document.querySelector('#app-content-files .files-filestable > tfoot > tr').style.height = 'auto'
 						}
 					} else {
 						self.header.container.addClass('hidden')
 						self.footer.container.addClass('hidden')
-						document.querySelector('#filestable > tfoot > tr').style.height = '250px'
+						document.querySelector('#app-content-files .files-filestable > tfoot > tr').style.height = '250px'
 					}
 				}
 			}
@@ -351,7 +351,7 @@ OCA.ReadmeMD.App = {
 			el.classList.add('markdown-body')
 			el.classList.add('headermd')
 
-			document.getElementById('filestable').before(el)
+			document.getElementById('app-content-files').getElementsByClassName('filelist-header')[0].after(el)
 		}
 
 		if (zone.position === 'after') {
@@ -362,7 +362,7 @@ OCA.ReadmeMD.App = {
 			el.classList.add('yellowish')
 
 			if (this.mode === 'private') {
-				document.getElementById('app-content-files').after(el)
+				document.getElementById('app-content-files').getElementsByClassName('filelist-footer')[0].before(el)
 			} else {
 				document.getElementById('files-public-content').after(el)
 			}
@@ -420,7 +420,7 @@ OCA.ReadmeMD.App = {
 
 		if (ext === 'html' && this.show_html === 'true') {
 			zone.container.innerHTML = zone.content
-			document.querySelector('#filestable > tfoot > tr').style.height = 'auto'
+			document.querySelector('#app-content-files .files-filestable > tfoot > tr').style.height = 'auto'
 		}
 
 		if (ext === 'adoc' && this.show_asciidoc === 'true') {
@@ -428,7 +428,7 @@ OCA.ReadmeMD.App = {
 				console.debug('ReadMeMD : asciidoctor loaded')
 				const converter = Aconverter.default()
 				zone.container.innerHTML = converter.convert(zone.content)
-				document.querySelector('#filestable > tfoot > tr').style.height = 'auto'
+				document.querySelector('#app-content-files .files-filestable > tfoot > tr').style.height = 'auto'
 			})
 
 		}
@@ -488,7 +488,7 @@ OCA.ReadmeMD.App = {
 						[].forEach.call(checkboxs, (cb) => {
 							cb.onclick = function() { return false }
 						})
-						document.querySelector('#filestable > tfoot > tr').style.height = 'auto'
+						document.querySelector('#app-content-files .files-filestable > tfoot > tr').style.height = 'auto'
 					})
 
 			})
