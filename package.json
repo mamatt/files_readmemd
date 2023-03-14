@@ -27,7 +27,7 @@
     "markdown-it-highlightjs": "^4.0.1",
     "markdown-it-imsize": "^2.0.1",
     "markdown-it-katex": "^2.0.3",
-    "markdown-it-mermaid-plus": "^0.2.5",
+    "markdown-it-mermaid": "^0.2.0",
     "markdown-it-replace-link": "^1.2.0",
     "markdown-it-task-lists": "^2.1.1",
     "markdown-it-toc-done-right": "^4.2.0"
