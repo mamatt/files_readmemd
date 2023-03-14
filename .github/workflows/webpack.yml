@@ -21,4 +21,4 @@ jobs:
       run: npm install
     
     - name: Build webpack
-      run:  npm run prod
+      run:  npm run build
