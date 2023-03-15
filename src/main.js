@@ -1,10 +1,9 @@
 /* eslint-env jquery */
-/* eslint-disable valid-jsdoc */
 
 /**
  * @author Matthieu Le Corre <matthieu.lecorre@univ-nantes.fr>
  *
- * @license GNU Affero General Public License v3.0 or later
+ * @license AGPL-3.0-or-later
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -21,7 +20,7 @@
  *
  */
 
-import { emit,subscribe } from '@nextcloud/event-bus'
+import { emit } from '@nextcloud/event-bus'
 import { generateUrl } from '@nextcloud/router'
 import axios from '@nextcloud/axios'
 
@@ -38,20 +37,20 @@ OCA.ReadmeMD.App = {
 	/**
 	 * Setup on page load
 	 *
-	 * @param header header container
-	 * @param footer footer container
-	 * @param mode public share or private view
-	 * @param contenair_parent contenair to get attached
+	 * @param {object} header header container
+	 * @param {object} footer container
+	 * @param {string} mode public share or private view
+	 * @param {string} contenairParent contenair to get attached
 	 */
-	initialize(header, footer, mode, contenair_parent) {
-		
+	initialize(header, footer, mode, contenairParent) {
+
 		const self = this
 
 		// public share or private view
 		this.mode = mode
 
 		// public or private don't get the contenair id anymore
-		this.contenair_parent = contenair_parent
+		this.contenairParent = contenairParent
 
 		// container creation
 		this.header = header
@@ -59,7 +58,7 @@ OCA.ReadmeMD.App = {
 
 		this.createContainer(this.header)
 		this.createContainer(this.footer)
-		
+
 		// get the config
 		// then setup the trigger on filetable
 		this.getConfig()
@@ -70,28 +69,27 @@ OCA.ReadmeMD.App = {
 				}
 
 				// jquery is kept here because NC files use jquery event "updated"
-				$(self.contenair_parent + ' .files-filestable').on('updated', function() {
+				$(self.contenairParent + ' .files-filestable').on('updated', function() {
 					self.checkMD()
 				})
 			})
 
 		// only in private mode
 		if (this.mode === 'private') {
-		
+
 			// Mutation observer to toogle readme visibility on hide or show
 			const hideContainerOnHideObserver = new MutationObserver(function(mutations) { self.callBackToggleContainer(mutations, 'hide') })
 			const hideContainerOnShowObserver = new MutationObserver(function(mutations) { self.callBackToggleContainer(mutations, 'show') })
 
-		
 			// hide on showing trash / favorite / recent  / share ...
-			hideContainerOnHideObserver.observe(document.querySelector(this.contenair_parent), { attributes: true })
+			hideContainerOnHideObserver.observe(document.querySelector(this.contenairParent), { attributes: true })
 
 			// this is a different for search as we doesn't toogle on hide but on show
 			// hideContainerOnShowObserver.observe($('div.nofilterresults')[0],{attributes: true }) ;
 			hideContainerOnShowObserver.observe(document.getElementById('searchresults'), { attributes: true })
 
 			// this one is for mindmap or all other "fullscreen" apps
-			hideContainerOnHideObserver.observe(document.querySelector(this.contenair_parent + ' .files-filestable'), { attributes: true })
+			hideContainerOnHideObserver.observe(document.querySelector(this.contenairParent + ' .files-filestable'), { attributes: true })
 		}
 
 	},
@@ -125,8 +123,8 @@ OCA.ReadmeMD.App = {
 	/**
 	 *  Mutation observer Callback
 	 *
-	 * @param mutations
-	 * @param mode
+	 * @param {MutationRecord[]} mutations mutation to listen to
+	 * @param {string} mode hide or show
 	 */
 	callBackToggleContainer(mutations, mode) {
 		const self = this
@@ -137,15 +135,15 @@ OCA.ReadmeMD.App = {
 					if (mutation.target.classList.contains('hidden')) {
 						self.header.container.classList.add('hidden')
 						self.footer.container.classList.add('hidden')
-						document.querySelector(self.contenair_parent + ' .files-filestable > tfoot > tr').style.height = '250px'
+						document.querySelector(self.contenairParent + ' .files-filestable > tfoot > tr').style.height = '250px'
 					} else {
 						if (self.header.content !== null && window.location.search.indexOf('view') === -1) {
 							self.header.container.classList.remove('hidden')
-							document.querySelector(self.contenair_parent + ' .files-filestable > tfoot > tr').style.height = 'auto'
+							document.querySelector(self.contenairParent + ' .files-filestable > tfoot > tr').style.height = 'auto'
 						}
 						if (self.footer.content !== null && window.location.search.indexOf('view') === -1) {
 							self.footer.container.classList.remove('hidden')
-							document.querySelector(self.contenair_parent + ' .files-filestable > tfoot > tr').style.height = 'auto'
+							document.querySelector(self.contenairParent + ' .files-filestable > tfoot > tr').style.height = 'auto'
 						}
 					}
 				} else {
@@ -153,16 +151,16 @@ OCA.ReadmeMD.App = {
 					if (mutation.target.classList.contains('hidden') && window.location.search.indexOf('view') === -1) {
 						if (self.header.content !== null) {
 							self.header.container.classList.remove('hidden')
-							document.querySelector(self.contenair_parent + ' .files-filestable > tfoot > tr').style.height = 'auto'
+							document.querySelector(self.contenairParent + ' .files-filestable > tfoot > tr').style.height = 'auto'
 						}
 						if (self.footer.content !== null) {
 							self.footer.container.classList.remove('hidden')
-							document.querySelector(self.contenair_parent + ' .files-filestable > tfoot > tr').style.height = 'auto'
+							document.querySelector(self.contenairParent + ' .files-filestable > tfoot > tr').style.height = 'auto'
 						}
 					} else {
 						self.header.container.addClass('hidden')
 						self.footer.container.addClass('hidden')
-						document.querySelector(self.contenair_parent + ' .files-filestable > tfoot > tr').style.height = '250px'
+						document.querySelector(self.contenairParent + ' .files-filestable > tfoot > tr').style.height = '250px'
 					}
 				}
 			}
@@ -172,7 +170,7 @@ OCA.ReadmeMD.App = {
 	/**
 	 * Generate FileNames lists corresponding to configs
 	 *
-	 * @param zone
+	 * @param {string} zone footer or header
 	 */
 	generateFileNames(zone) {
 
@@ -323,7 +321,7 @@ OCA.ReadmeMD.App = {
 	 *
 	 *  auto refresh file content if enable
 	 *
-	 * @param zone
+	 * @param {string} zone footer or header
 	 */
 	refreshContent(zone) {
 
@@ -344,7 +342,7 @@ OCA.ReadmeMD.App = {
 	/**
 	 * show contenair
 	 *
-	 * @param zone
+	 * @param {string} zone footer or header
 	 */
 	createContainer(zone) {
 
@@ -357,7 +355,7 @@ OCA.ReadmeMD.App = {
 			el.classList.add('markdown-body')
 			el.classList.add('headermd')
 
-			document.querySelector(this.contenair_parent + ' .filelist-header').after(el)
+			document.querySelector(this.contenairParent + ' .filelist-header').after(el)
 		}
 
 		if (zone.position === 'after') {
@@ -367,7 +365,7 @@ OCA.ReadmeMD.App = {
 			el.classList.add('readmemd')
 			el.classList.add('yellowish')
 
-			document.querySelector(this.contenair_parent + ' .filelist-footer').before(el)
+			document.querySelector(this.contenairParent + ' .filelist-footer').before(el)
 
 		}
 	},
@@ -375,7 +373,7 @@ OCA.ReadmeMD.App = {
 	/**
 	 * fill container
 	 *
-	 * @param zone
+	 * @param {string} zone footer or header
 	 */
 	fillContainer(zone) {
 
@@ -410,7 +408,7 @@ OCA.ReadmeMD.App = {
 	/**
 	 * Render Markdown
 	 *
-	 * @param zone
+	 * @param {string} zone footer or header
 	 */
 	render(zone) {
 		// render MD
@@ -423,7 +421,7 @@ OCA.ReadmeMD.App = {
 
 		if (ext === 'html' && this.show_html === 'true') {
 			zone.container.innerHTML = zone.content
-			document.querySelector(self.contenair_parent + ' .files-filestable > tfoot > tr').style.height = 'auto'
+			document.querySelector(self.contenairParent + ' .files-filestable > tfoot > tr').style.height = 'auto'
 		}
 
 		if (ext === 'adoc' && this.show_asciidoc === 'true') {
@@ -431,7 +429,7 @@ OCA.ReadmeMD.App = {
 				console.debug('ReadMeMD : asciidoctor loaded')
 				const converter = Aconverter.default()
 				zone.container.innerHTML = converter.convert(zone.content)
-				document.querySelector(self.contenair_parent + ' .files-filestable > tfoot > tr').style.height = 'auto'
+				document.querySelector(self.contenairParent + ' .files-filestable > tfoot > tr').style.height = 'auto'
 			})
 
 		}
@@ -491,7 +489,7 @@ OCA.ReadmeMD.App = {
 						[].forEach.call(checkboxs, (cb) => {
 							cb.onclick = function() { return false }
 						})
-						document.querySelector(self.contenair_parent + ' .files-filestable > tfoot > tr').style.height = 'auto'
+						document.querySelector(self.contenairParent + ' .files-filestable > tfoot > tr').style.height = 'auto'
 					})
 
 			})
@@ -502,8 +500,8 @@ OCA.ReadmeMD.App = {
 	/**
 	 * load large MD plugins only when needed
 	 *
-	 * @param zone
-	 * @param converter
+	 * @param {string} zone footer or header
+	 * @param {object} converter MarkdownIt main renderer
 	 */
 	loadAdditionnalMDPlugins(zone, converter) {
 
@@ -547,18 +545,18 @@ __webpack_public_path__ = OC.linkTo('files_readmemd', 'js/') // eslint-disable-l
 document.addEventListener('DOMContentLoaded', () => {
 
 	let mode
-	let contenair_parent
+	let contenairParent
 
 	// Don't load if not in the files app
 	const fileapp = document.getElementById('app-content-files')
 	if (typeof (fileapp) !== 'undefined' && fileapp !== null) {
 		mode = 'private'
-		contenair_parent = '#app-content-files'
+		contenairParent = '#app-content-files'
 	} else {
 		const fileshare = document.getElementsByClassName('files-public-content')
 		if (typeof (fileshare) !== 'undefined' && fileshare !== null) {
 			mode = 'public'
-			contenair_parent = '#files-public-content'
+			contenairParent = '#files-public-content'
 		} else {
 			return
 		}
@@ -580,6 +578,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	console.debug('OCA.ReadmeMD initializing ' + mode + ' mode ...')
 
-	OCA.ReadmeMD.initialize(header, footer, mode, contenair_parent)
+	OCA.ReadmeMD.initialize(header, footer, mode, contenairParent)
 
 })

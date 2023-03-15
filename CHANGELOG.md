@@ -1,10 +1,16 @@
-## 1.2.3 15-03-2023
+## 2.0.0 15-03-2023
 ### Added
  - Compat with NC 25
    [#78](https://github.com/mamatt/files_readmemd/issues/78)
 
+### Remove
+  - Compat with NC < 25
+
 ### Fixed
   - Multiple vulnerabilities in dependancies
+
+### Changed
+  - Move repository to github 
 
 ## 1.2.2 21-02-2022
 ### Added

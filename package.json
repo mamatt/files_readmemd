@@ -1,8 +1,8 @@
 {
   "name": "files_readmemd",
-  "version": "1.2.3",
+  "version": "2.0.0",
   "description": "show README.md github style",
-  "repository": "https://gitlab.univ-nantes.fr/uncloud/files_readmemd.git",
+  "repository": "https://github.com/mamatt/files_readmemd.git",
   "author": "Matthieu Le Corre <matthieu.lecorre@univ-nantes.fr>",
   "license": "AGPL-3.0",
   "scripts": {
@@ -36,6 +36,7 @@
     "@nextcloud/babel-config": "^1.0.0",
     "@nextcloud/browserslist-config": "^2.3.0",
     "@nextcloud/eslint-config": "^8.2.1",
+    "@nextcloud/eslint-plugin": "^2.0.0",
     "@nextcloud/stylelint-config": "^2.3.0",
     "@nextcloud/webpack-vue-config": "^5.4.0"
   },

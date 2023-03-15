@@ -2,4 +2,5 @@ module.exports = {
 	extends: [
 		'@nextcloud',
 	],
+	
 }
