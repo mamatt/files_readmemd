@@ -21,7 +21,7 @@
     "@types/markdown-it": "^12.2.3",
     "asciidoctor": "^2.2.6",
     "github-markdown-css": "^5.2.0",
-    "katex": "^0.16.4",
+    "katex": "^0.16.7",
     "markdown-it": "^13.0.1",
     "markdown-it-anchor": "^8.6.7",
     "markdown-it-highlightjs": "^4.0.1",
