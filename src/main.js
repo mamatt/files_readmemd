@@ -389,7 +389,7 @@ OCA.ReadmeMD.App = {
 					token,
 				  path: dir,
 				  file: zone.filename,
-				}
+				},
 			)
 		} else {
 			dir = OCA.Files.App.fileList._currentDirectory.replace('?', '%3F')
