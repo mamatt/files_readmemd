@@ -517,7 +517,7 @@ OCA.ReadmeMD.App = {
 
 		/** Mermaid */
 		if (zone.content.match(/(gantt|sequenceDiagram|graph (?:TB|BT|RL|LR|TD))/) !== null) {
-			promiseList.push(import(/* webpackChunkName: "m-it-mermaid" */ 'markdown-it-mermaid').then(module => {
+			promiseList.push(import(/* webpackChunkName: "m-it-mermaid" */ '@wekanteam/markdown-it-mermaid').then(module => {
 				converter.use(module.default)
 				console.debug('ReadMeMD : Mermaid loaded')
 			}))
