@@ -19,7 +19,7 @@
     "@nextcloud/event-bus": "^3.1.0",
     "@nextcloud/router": "^2.1.1",
     "@types/markdown-it": "^13.0.7",
-    "asciidoctor": "^2.2.6",
+    "asciidoctor": "^3.0.2",
     "github-markdown-css": "^5.2.0",
     "katex": "^0.16.7",
     "markdown-it": "^13.0.1",
