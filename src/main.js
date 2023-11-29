@@ -524,13 +524,13 @@ OCA.ReadmeMD.App = {
 		}
 
 		/** Latex */
-		if (zone.content.indexOf('$') !== -1) {
-			promiseList.push(import(/* webpackChunkName: "katex" */ 'katex'))
-			promiseList.push(import(/* webpackChunkName: "m-it-katex" */ 'markdown-it-katex').then(module => {
+		/* if (zone.content.indexOf('$') !== -1) {
+			promiseList.push(import(/* webpackChunkName: "katex" *\/ 'katex'))
+			promiseList.push(import(/* webpackChunkName: "m-it-katex" *\/ 'markdown-it-katex').then(module => {
 				converter.use(module.default)
 				console.debug('ReadMeMD : Katex loaded')
 			}))
-		}
+		} */
 
 		return Promise.all(promiseList)
 

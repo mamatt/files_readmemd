@@ -1,3 +1,14 @@
+## 2.0.1 XX-12-2023
+### Added
+  - Compat with NC 26 & 27
+   [#110](https://github.com/mamatt/files_readmemd/issues/110)
+### Remove
+  - Latex support : vulnarabiliteis un markdown-it-katex module
+### Fixed
+  - Multiple vulnerabilities in dependancies
+### Changed
+  - Update markdown CSS to handle dark mode
+  
 ## 2.0.0 15-03-2023
 ### Added
  - Compat with NC 25

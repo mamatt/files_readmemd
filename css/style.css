@@ -37,3 +37,7 @@
 {
 	position: initial !important;
 }
+
+.markdown-body em {
+	font-style:italic ;
+}
