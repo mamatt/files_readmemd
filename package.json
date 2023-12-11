@@ -21,7 +21,7 @@
     "@types/markdown-it": "^13.0.7",
     "asciidoctor": "^3.0.2",
     
-    "markdown-it": "^13.0.1",
+    "markdown-it": "^14.0.0",
     "markdown-it-anchor": "^8.6.7",
     "markdown-it-highlightjs": "^4.0.1",
     "markdown-it-imsize": "^2.0.1",
