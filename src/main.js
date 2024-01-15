@@ -510,6 +510,7 @@ OCA.ReadmeMD.App = {
 		/** highlightjs */
 		if (zone.content.indexOf('```') !== -1) {
 			promiseList.push(import(/* webpackChunkName: "m-it-highlightjs" */ 'markdown-it-highlightjs').then(module => {
+				import(/* webpackChunkName: "m-it-highlightjs-css" */ 'highlight.js/styles/github.css')
 				converter.use(module.default)
 				console.debug('ReadMeMD : highlightjs loaded')
 			}))
@@ -524,13 +525,13 @@ OCA.ReadmeMD.App = {
 		}
 
 		/** Latex */
-		/* if (zone.content.indexOf('$') !== -1) {
-			promiseList.push(import(/* webpackChunkName: "katex" *\/ 'katex'))
-			promiseList.push(import(/* webpackChunkName: "m-it-katex" *\/ 'markdown-it-katex').then(module => {
+		 if (zone.content.indexOf('$') !== -1) {
+			promiseList.push(import(/* webpackChunkName: "katex" */ 'katex'))
+			promiseList.push(import(/* webpackChunkName: "m-it-katex" */ '@vscode/markdown-it-katex').then(module => {
 				converter.use(module.default)
 				console.debug('ReadMeMD : Katex loaded')
 			}))
-		} */
+		}
 
 		return Promise.all(promiseList)
 
