@@ -26,7 +26,7 @@
     "markdown-it-highlightjs": "^4.0.1",
     "markdown-it-imsize": "^2.0.1",
     "@wekanteam/markdown-it-mermaid": "^0.6.4",
-    "markdown-it-replace-link": "^1.2.0",
+    "markdown-it-replace-link": "^1.2.1",
     "markdown-it-task-lists": "^2.1.1",
     "markdown-it-toc-done-right": "^4.2.0"
   },
