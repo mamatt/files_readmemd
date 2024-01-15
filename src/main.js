@@ -424,15 +424,15 @@ OCA.ReadmeMD.App = {
 			document.querySelector(self.contenairParent + ' .files-filestable > tfoot > tr').style.height = 'auto'
 		}
 
-		if (ext === 'adoc' && this.show_asciidoc === 'true') {
-			import(/* webpackChunkName: "asciidoctor" */ 'asciidoctor').then(Aconverter => {
+		/*if (ext === 'adoc' && this.show_asciidoc === 'true') {
+			import(/* webpackChunkName: "asciidoctor" *\/ 'asciidoctor').then(Aconverter => {
 				console.debug('ReadMeMD : asciidoctor loaded')
 				const converter = Aconverter.default()
 				zone.container.innerHTML = converter.convert(zone.content)
 				document.querySelector(self.contenairParent + ' .files-filestable > tfoot > tr').style.height = 'auto'
 			})
 
-		}
+		}*/
 
 		if (ext === 'md' || ext === 'markdown') {
 			import(/* webpackChunkName: "markdown-it" */ 'markdown-it').then(MDconverter => {
