@@ -19,7 +19,7 @@
     "@nextcloud/event-bus": "^3.1.0",
     "@nextcloud/router": "^2.1.1",
     "@types/markdown-it": "^13.0.7",
-    "@vscode/markdown-it-katex": "1.0.2",
+    "@vscode/markdown-it-katex": "1.0.3",
     "@wekanteam/markdown-it-mermaid": "^0.6.4",
     "asciidoctor": "^3.0.3",
     "katex": "^0.16.9",
