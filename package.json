@@ -23,7 +23,7 @@
     "@wekanteam/markdown-it-mermaid": "^0.6.4",
     "asciidoctor": "^3.0.3",
     "katex": "^0.16.9",
-    "markdown-it": "^13.0.1",
+    "markdown-it": "^14.1.0",
     "markdown-it-anchor": "^8.6.7",
     "markdown-it-highlightjs": "^4.0.1",
     "markdown-it-imsize": "^2.0.1",
