@@ -3,7 +3,7 @@
   - SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 <template>
-	<div ref="container" class="markdown-bod" v-html="renderedContent" />
+	<div ref="container" class="markdown-body" v-html="renderedContent" />
 </template>
 
 <script>
@@ -18,6 +18,8 @@ import markdownitimsize from 'markdown-it-imsize'
 import markdownitanchor from 'markdown-it-anchor'
 import markdownittocdoneright from 'markdown-it-toc-done-right'
 import markdownitreplacelink from 'markdown-it-replace-link'
+import { full as markdownitemoji } from 'markdown-it-emoji'
+
 
 export default {
 	name: 'MarkdownEngine',
@@ -40,14 +42,18 @@ export default {
 	},
 
 	created() {
-		this.converter = markdownit('commonmark', { html: false, breaks: true, linkify: true, typographer: true })
+		this.converter = markdownit({ html: false, breaks: true, linkify: true, typographer: true })
         	.enable('strikethrough')
 	        .enable('table')
-			.use(markdownitcontainer)
+			.use(markdownitcontainer, 'info')
+            .use(markdownitcontainer, 'warn')
+            .use(markdownitcontainer, 'error')
+            .use(markdownitcontainer, 'success')
 			.use(markdownittasklist, { enabled: true })
 			.use(markdownitMentions)
 	        .use(implicitFigures)
 			.use(markdownitimsize)
+            .use(markdownitemoji)
 			.use(markdownitanchor)
 			.use(markdownittocdoneright)
 			.use(markdownitreplacelink, {
@@ -143,7 +149,7 @@ export default {
 
 }
 </script>
-<style scoped>
+<style>
 .headermd ul,
 .footermd ul
 {
@@ -164,5 +170,38 @@ export default {
     background-color: transparent ;
 }
 
+.markdown-body .info {
+    background-color: var(--callout-background, var(--color-background-hover));
+    border-left: 10px solid var(--color-info) ;
+    padding: 1em ;
+    margin: 1em ;
+    border-radius: var(--border-radius)
+}
+
+.markdown-body .warn {
+    background-color: var(--callout-background, var(--color-background-hover));
+    border-left: 10px solid var(--color-warning) ;
+    padding: 1em ;
+    margin: 1em ;
+    border-radius: var(--border-radius)
+}
+
+.markdown-body .error {
+    background-color: var(--callout-background, var(--color-background-hover));
+    border-left: 10px solid var(--color-error) ;
+    padding: 1em ;
+    margin: 1em ;
+    border-radius: var(--border-radius)
+}
+
+.markdown-body .success {
+    background-color: var(--callout-background, var(--color-background-hover));
+    border-left: 10px solid var(--color-success) ;
+    padding: 1em ;
+    margin: 1em ;
+    border-radius: var(--border-radius)
+}
+
 @import './../../css/content.css';
+
 </style>

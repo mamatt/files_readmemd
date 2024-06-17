@@ -56,12 +56,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 			let footerElement
 
-			if (!document.querySelector('#files-list__footer-readmemd')) {
+			if (!document.querySelector('.footermd')) {
 				footerElement = document.createElement('div')
-				footerElement.id = 'files-list__footer-readmemd'
-				document.querySelector(' .files-list').append(footerElement)
+				document.querySelector('.files-list').after(footerElement)
 			} else {
-				footerElement = document.querySelector('#files-list__footer-readmemd')
+				footerElement = document.querySelector('.footermd')
 
 			}
 

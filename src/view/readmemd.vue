@@ -5,29 +5,30 @@
 
 <template>
 	<div v-if="fileName !== null && fileName!== undefined" :class="[ zone ]">
-		<markdownEngine v-if="engineType == &quot;markdown&quot; "
+		<markdownEngine v-if='engineType == "markdown"'
 			:content="content"
 			:mode="mode"
 			:path="path" />
-		<!--NcRichText :text="content" :autolink="true" :use-markdown="true" :use-extended-markdown="true" /-->
-		<!--htmlEngine v-if='engineType == "html"' :content='content' /-->
+		<htmlEngine v-if='engineType == "html"' :content='content' />
 		<!--asciidocEngine v-if='engineType == "asciidoc"' :content='content' /-->
 	</div>
 </template>
 
 <script>
-// import NcRichText from '@nextcloud/vue/dist/Components/NcRichText.js'
 import markdownEngine from '../components/markdownEngine.vue'
+import htmlEngine from '../components/htmlEngine.vue'
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 import logger from '../logger.js'
 
 export default {
 	name: 'readmemd',
+
 	components: {
 		markdownEngine,
-		// NcRichText,
+        htmlEngine,
 	},
+
 	data() {
 		return {
 			config: {},
@@ -123,6 +124,10 @@ export default {
 	watch: {
 		async path() {
 			this.content = await this.fillContent()
+            document.querySelector(".files-list").style.setProperty('overflow','unset')
+            document.querySelector(".files-list > table > tfoot").style.setProperty('min-height','unset')
+            document.querySelector(".files-list > table > tfoot ").style.height = '65px'
+            document.querySelector(".files-list > table > tfoot > tr").style.height = '65px'
 		},
 	},
 
@@ -134,6 +139,10 @@ export default {
 
 	async mounted() {
 		this.content = await this.fillContent()
+        document.querySelector(".files-list").style.setProperty('overflow','unset')
+        document.querySelector(".files-list > table > tfoot").style.setProperty('min-height','unset')
+        document.querySelector(".files-list > table > tfoot ").style.height = '65px'
+        document.querySelector(".files-list > table > tfoot > tr").style.height = '65px'
 	},
 
 	methods: {
