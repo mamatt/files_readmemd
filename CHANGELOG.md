@@ -1,3 +1,10 @@
+## 3.0.0 XX-XX-2024
+### Added
+  - Compat with NC 28
+### Removed
+  - Compat with pre-Vue.js versions (NC < 28)
+### Changed
+  - Massive rewrite to switch to Vue.js
 ## 2.0.1 15-01-2024
 ### Added
   - Compat with NC 26 & 27

@@ -21,52 +21,39 @@
 
  namespace OCA\ReadmeMD\Appinfo ;
 
+ 
+ use OCP\AppFramework\App;
+ use OCP\AppFramework\Bootstrap\IBootstrap;
+ use OCP\AppFramework\Bootstrap\IBootContext;
+ use OCP\AppFramework\Bootstrap\IRegistrationContext;
+ use OCP\IConfig;
+ use OCA\Files\Event\LoadAdditionalScriptsEvent;
  use OCA\ReadmeMD\Services\Config ;
- use OCP\AppFramework\App; 
+ use OCA\ReadmeMD\Listeners\LoadAdditionalScriptsListener;
 
+ class Application extends App implements IBootstrap {
+    public const APP_ID = 'files_readmemd';
+    public const APP_NAME = 'ReadmeMD';
 
- class Application extends App {
+    public function __construct(array $params = []) {
+        parent::__construct(self::APP_ID, $params);
+    }
 
-    public function __construct(array $urlParams = []) {
-        parent::__construct('files_readmemd', $urlParams);
+    public function boot(IBootContext $context): void {
+	}
 
-        $container = $this->getContainer();
-        $server = $container->getServer();
+    public function register(IRegistrationContext $context): void {
 
-        $eventDispatcher = $server->getEventDispatcher();
-
-        $this->addPublicViewListeners($eventDispatcher) ;
-        $this->addPrivateListeners($eventDispatcher) ;
-
-        $container->registerService('Config', function($c) {
+        $context->registerService(Config::class, function($c) : Config {
             return new Config(
-                $c->query('Config'),
+                $c->query(IConfig::class),
                 $c->query('AppName')
             );
         });
 
+        $context->registerEventListener(LoadAdditionalScriptsEvent::class, LoadAdditionalScriptsListener::class);
+        $context->registerEventListener(OCA\Files_Sharing\Event\loadAdditionalScripts::class,LoadAdditionalScriptsListener::class);
 
-    }
-
-    protected function addPublicViewListeners ($eventDispatcher) {
-        
-        $eventDispatcher->addListener('OCA\Files_Sharing::loadAdditionalScripts',
-            function() {
-                \OCP\Util::addscript('files_readmemd', 'files_readmemd-main');
-                \OCP\Util::addStyle('files_readmemd','style') ;
-                \OCP\Util::addStyle('files_readmemd','content') ;
-            });
-        
-    }
-
-    protected function addPrivateListeners ($eventDispatcher) {
-
-        $eventDispatcher->addListener('OCA\Files::loadAdditionalScripts',
-            function() {
-                \OCP\Util::addscript('files_readmemd', 'files_readmemd-main');
-                \OCP\Util::addStyle('files_readmemd','style') ;
-                \OCP\Util::addStyle('files_readmemd','content') ;
-            });
     }
 
 }

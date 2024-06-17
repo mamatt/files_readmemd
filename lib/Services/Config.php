@@ -21,15 +21,15 @@
 
 namespace OCA\ReadmeMD\Services ;
 
-use \OCP\IConfig;
+use OCP\IConfig;
 
 
 class Config {
 
-    private $config;
-    private $appName;
+    private IConfig $config;
+    private string $appName;
 
-    public function __construct(IConfig $config, $appName){
+    public function __construct(IConfig $config, string $appName){
         $this->config = $config;
         $this->appName = $appName;
 
