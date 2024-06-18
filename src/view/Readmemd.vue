@@ -5,34 +5,34 @@
 
 <template>
 	<div v-if="fileName !== null && fileName!== undefined" :class="[ zone ]">
-		<markdownEngine v-if='engineType == "markdown"'
+		<MarkdownEngine v-if="engineType == &quot;markdown&quot;"
 			:content="content"
 			:mode="mode"
 			:path="path" />
-		<htmlEngine v-if='engineType == "html"' :content='content' />
+		<HtmlEngine v-if="engineType == &quot;html&quot;" :content="content" />
 		<!--asciidocEngine v-if='engineType == "asciidoc"' :content='content' /-->
 	</div>
 </template>
 
 <script>
-import markdownEngine from '../components/markdownEngine.vue'
-import htmlEngine from '../components/htmlEngine.vue'
+import MarkdownEngine from '../components/MarkdownEngine.vue'
+import HtmlEngine from '../components/HtmlEngine.vue'
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 import logger from '../logger.js'
 import { loadState } from '@nextcloud/initial-state'
 
 export default {
-	name: 'readmemd',
+	name: 'Readmemd',
 
 	components: {
-		markdownEngine,
-        htmlEngine,
+		MarkdownEngine,
+		HtmlEngine,
 	},
 
 	data() {
 		return {
-            config: loadState('files_readmemd','config'),
+			config: loadState('files_readmemd', 'config'),
 			fileName: null,
 			fileTableView: {},
 			path: null,
@@ -46,6 +46,7 @@ export default {
 			if (ext === 'html' && this.config.show_html === 'true') { return 'html' }
 			if (ext === 'adoc' && this.show_asciidoc === 'true') { return 'asciidoc' }
 			if (ext === 'md' || ext === 'markdown') { return 'markdown' }
+			return 'unsupported'
 		},
 
 		fileList() {
@@ -108,17 +109,16 @@ export default {
 				})
 				return HFNames
 			}
-			logger.debug('[' + this.zone + '] FileList generated')
 		},
 
 		mode() {
 			const IS_PUBLIC = !!(document.getElementById('isPublic'))
 
-            if (IS_PUBLIC) {
-                return 'public'
-            } else {
-                return 'private'
-            }
+			if (IS_PUBLIC) {
+				return 'public'
+			} else {
+				return 'private'
+			}
 		},
 
 	},
@@ -126,21 +126,21 @@ export default {
 	watch: {
 		async path() {
 			this.content = await this.fillContent()
-            this.adjustCSS()
+			this.adjustCSS()
 		},
 	},
 
 	async mounted() {
 		this.content = await this.fillContent()
-        this.adjustCSS()
+		this.adjustCSS()
 	},
 
 	methods: {
 		adjustCSS() {
-			document.querySelector(".files-list").style.setProperty('overflow','unset')
-			document.querySelector(".files-list > table > tfoot").style.setProperty('min-height','unset')
-			document.querySelector(".files-list > table > tfoot").style.setProperty('height','65px')
-			document.querySelector(".files-list > table > tfoot > tr").style.setProperty('height','65px')
+			document.querySelector('.files-list').style.setProperty('overflow', 'unset')
+			document.querySelector('.files-list > table > tfoot').style.setProperty('min-height', 'unset')
+			document.querySelector('.files-list > table > tfoot').style.setProperty('height', '65px')
+			document.querySelector('.files-list > table > tfoot > tr').style.setProperty('height', '65px')
 		},
 
 		async fillContent() {
@@ -150,10 +150,10 @@ export default {
 			logger.debug('[' + this.zone + '] File elected : ' + this.fileName + ' for path ' + this.path)
 			// if we've got a candidate then let's use it
 			if (this.fileName !== null && this.fileName !== undefined) {
-                logger.debug('[' + this.zone + '] File elected : ' + this.fileName + ' for path ' + this.path)
+				logger.debug('[' + this.zone + '] File elected : ' + this.fileName + ' for path ' + this.path)
 				return await this.getFile()
 			} else {
-                logger.debug('[' + this.zone + '] No File elected : for path ' + this.path)
+				logger.debug('[' + this.zone + '] No File elected : for path ' + this.path)
 				return null
 			}
 		},
@@ -162,8 +162,8 @@ export default {
 			// retreive folder listing
 			// TODO check public mode
 			const { contents } = await this.fileTableView.getContents(this.path)
-			const FL = contents.map((file) => { if (file.type === 'file') { return file.basename }})
-			
+			const FL = contents.map((file) => { if (file.type === 'file') { return file.basename } else { return undefined } })
+
 			let result
 
 			for (const activFile in this.fileList) {

@@ -3,15 +3,18 @@
   - SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 <template>
-	<div ref="container" class="html-body" v-html="content" />
+	<div ref="container" class="html-body" v-html="content" /> <!-- eslint-disable-line -->
 </template>
 
 <script>
 
 export default {
-    name: 'htmlEngine',
-    props: {
-        content: String,
-    }
+	name: 'HtmlEngine',
+	props: {
+		content: {
+			type: String,
+			default: '',
+		},
+	},
 }
 </script>

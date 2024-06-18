@@ -3,7 +3,7 @@
   - SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 <template>
-	<div ref="container" class="markdown-body" v-html="renderedContent" />
+	<div ref="container" class="markdown-body" v-html="renderedContent" /> <!-- eslint-disable-line -->
 </template>
 
 <script>
@@ -19,13 +19,21 @@ import markdownittocdoneright from 'markdown-it-toc-done-right'
 import markdownitreplacelink from 'markdown-it-replace-link'
 import { full as markdownitemoji } from 'markdown-it-emoji'
 
-
 export default {
 	name: 'MarkdownEngine',
 	props: {
-		content: String,
-		mode: String,
-		path: String,
+		content: {
+			type: String,
+			default: '',
+		},
+		mode: {
+			type: String,
+			default: 'private',
+		},
+		path: {
+			type: String,
+			default: '',
+		},
 	},
 
 	data() {
@@ -38,21 +46,21 @@ export default {
 		async content() {
 			this.renderedContent = await this.renderMD()
 		},
-		
+
 	},
 
 	created() {
 		this.converter = markdownit({ html: false, breaks: true, linkify: true, typographer: true })
-        	.enable('strikethrough')
+			.enable('strikethrough')
 	        .enable('table')
 			.use(markdownitcontainer, 'info')
-            .use(markdownitcontainer, 'warn')
-            .use(markdownitcontainer, 'error')
-            .use(markdownitcontainer, 'success')
+			.use(markdownitcontainer, 'warn')
+			.use(markdownitcontainer, 'error')
+			.use(markdownitcontainer, 'success')
 			.use(markdownittasklist, { enabled: true })
 	        .use(implicitFigures)
 			.use(markdownitimsize)
-            .use(markdownitemoji)
+			.use(markdownitemoji)
 			.use(markdownitanchor)
 			.use(markdownittocdoneright)
 			.use(markdownitreplacelink, {
@@ -73,7 +81,7 @@ export default {
 						}
 					}
 				},
-			}) 
+			})
 
 		const defaultRender = this.converter.renderer.rules.link_open || function(tokens, idx, options, env, self) {
 			return self.renderToken(tokens, idx, options)
@@ -96,8 +104,8 @@ export default {
 
 	},
 
-	updated(){
-		this.forceCheckBox() 
+	updated() {
+		this.forceCheckBox()
 	},
 
 	methods: {
@@ -144,7 +152,6 @@ export default {
 
 		forceCheckBox() {
 			// Disabling checkboxs
-			console.log(this.$refs.container.querySelectorAll('input[type=checkbox]'))
 			const checkboxs = this.$refs.container.querySelectorAll('input[type=checkbox]');
 			[].forEach.call(checkboxs, (cb) => {
 				cb.onclick = function() { return false }

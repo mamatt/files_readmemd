@@ -19,10 +19,10 @@
  */
 import Vue from 'vue'
 import { registerFileListHeaders, Header } from '@nextcloud/files'
-import readmemd from './view/readmemd.vue'
+import Readmemd from './view/Readmemd.vue'
 import logger from './logger.js'
 
-const ReadmemdView = Vue.extend(readmemd)
+const ReadmemdView = Vue.extend(Readmemd)
 
 __webpack_nonce__ = btoa(OC.requestToken) 			 		 // eslint-disable-line
 __webpack_public_path__ = OC.linkTo('files_readmemd', 'js/') // eslint-disable-line
