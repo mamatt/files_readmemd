@@ -45,7 +45,7 @@
     "@nextcloud/eslint-plugin": "^2.0.0",
     "@nextcloud/stylelint-config": "^2.3.0",
     "@nextcloud/webpack-vue-config": "^6.0.0",
-    "github-markdown-css": "^5.5.0"
+    "github-markdown-css": "^5.6.1"
   },
   "browserslist": [
     "extends @nextcloud/browserslist-config"
