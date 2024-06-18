@@ -30,6 +30,7 @@
  use OCA\Files\Event\LoadAdditionalScriptsEvent;
  use OCA\ReadmeMD\Services\Config ;
  use OCA\ReadmeMD\Listeners\LoadAdditionalScriptsListener;
+ use OCA\Files_Sharing\Event\BeforeTemplateRenderedEvent;
  
 
  class Application extends App implements IBootstrap {
@@ -53,7 +54,7 @@
         });
 
         $context->registerEventListener(LoadAdditionalScriptsEvent::class, LoadAdditionalScriptsListener::class);
-        $context->registerEventListener(OCA\Files_Sharing\Event\loadAdditionalScripts::class,LoadAdditionalScriptsListener::class);
+        $context->registerEventListener(BeforeTemplateRenderedEvent::class,LoadAdditionalScriptsListener::class);
 
     }
 

@@ -38,6 +38,7 @@ export default {
 		async content() {
 			this.renderedContent = await this.renderMD()
 		},
+		
 	},
 
 	created() {
@@ -49,7 +50,6 @@ export default {
             .use(markdownitcontainer, 'error')
             .use(markdownitcontainer, 'success')
 			.use(markdownittasklist, { enabled: true })
-			.use(markdownitMentions)
 	        .use(implicitFigures)
 			.use(markdownitimsize)
             .use(markdownitemoji)
@@ -96,18 +96,15 @@ export default {
 
 	},
 
+	updated(){
+		this.forceCheckBox() 
+	},
+
 	methods: {
 
 		async renderMD() {
 
 			await this.loadAdditionnalMDPlugins(this.converter)
-
-			// Disabling checkboxs
-			const checkboxs = this.$refs.container.querySelectorAll('input[type=checkBox]');
-			[].forEach.call(checkboxs, (cb) => {
-				cb.onclick = function() { return false }
-			})
-
 			return this.converter.render(this.content)
 		},
 
@@ -143,6 +140,15 @@ export default {
 
 			return Promise.all(promiseList)
 
+		},
+
+		forceCheckBox() {
+			// Disabling checkboxs
+			console.log(this.$refs.container.querySelectorAll('input[type=checkbox]'))
+			const checkboxs = this.$refs.container.querySelectorAll('input[type=checkbox]');
+			[].forEach.call(checkboxs, (cb) => {
+				cb.onclick = function() { return false }
+			})
 		},
 	},
 
