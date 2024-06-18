@@ -80,4 +80,15 @@ class Config {
         $this->config->setAppValue($this->appName, $key, $value);
     }
 
+    public function getAllAppValue() {
+        $allValue = [] ;
+
+        $allValue['show_asciidoc'] = $this->getAppValue('show_asciidoc') ;
+        $allValue['show_html'] = $this->getAppValue('show_html') ;
+        $allValue['fileslist_header'] = json_decode($this->getAppValue('fileslist_header')) ;
+        $allValue['fileslist_footer'] = json_decode($this->getAppValue('fileslist_footer'));
+
+        return $allValue ;
+    }
+
 }

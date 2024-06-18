@@ -18,6 +18,7 @@
     "@nextcloud/axios": "^2.4.0",
     "@nextcloud/event-bus": "^3.1.0",
     "@nextcloud/files": "^3.4.1",
+    "@nextcloud/initial-state": "^2.2.0",
     "@nextcloud/router": "^2.1.1",
     "@nextcloud/vue": "^8.12.0",
     "@types/markdown-it": "^13.0.7",

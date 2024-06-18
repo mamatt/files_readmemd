@@ -20,6 +20,7 @@ import htmlEngine from '../components/htmlEngine.vue'
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 import logger from '../logger.js'
+import { loadState } from '@nextcloud/initial-state'
 
 export default {
 	name: 'readmemd',
@@ -31,7 +32,7 @@ export default {
 
 	data() {
 		return {
-			config: {},
+            config: loadState('files_readmemd','config'),
 			fileName: null,
 			fileTableView: {},
 			path: null,
@@ -119,33 +120,29 @@ export default {
                 return 'private'
             }
 		},
+
 	},
 
 	watch: {
 		async path() {
 			this.content = await this.fillContent()
-            document.querySelector(".files-list").style.setProperty('overflow','unset')
-            document.querySelector(".files-list > table > tfoot").style.setProperty('min-height','unset')
-            document.querySelector(".files-list > table > tfoot ").style.height = '65px'
-            document.querySelector(".files-list > table > tfoot > tr").style.height = '65px'
+            this.adjustCSS()
 		},
-	},
-
-	async created() {
-		// grab the config
-		this.config = await this.getConfig()
-		logger.debug('[' + this.zone + '] Config loaded')
 	},
 
 	async mounted() {
 		this.content = await this.fillContent()
-        document.querySelector(".files-list").style.setProperty('overflow','unset')
-        document.querySelector(".files-list > table > tfoot").style.setProperty('min-height','unset')
-        document.querySelector(".files-list > table > tfoot ").style.height = '65px'
-        document.querySelector(".files-list > table > tfoot > tr").style.height = '65px'
+        this.adjustCSS()
 	},
 
 	methods: {
+		adjustCSS() {
+			document.querySelector(".files-list").style.setProperty('overflow','unset')
+			document.querySelector(".files-list > table > tfoot").style.setProperty('min-height','unset')
+			document.querySelector(".files-list > table > tfoot").style.setProperty('height','65px')
+			document.querySelector(".files-list > table > tfoot > tr").style.setProperty('height','65px')
+		},
+
 		async fillContent() {
 			// find a file in current dir that match one from filelist above
 			this.fileName = null
@@ -153,23 +150,20 @@ export default {
 			logger.debug('[' + this.zone + '] File elected : ' + this.fileName + ' for path ' + this.path)
 			// if we've got a candidate then let's use it
 			if (this.fileName !== null && this.fileName !== undefined) {
+                logger.debug('[' + this.zone + '] File elected : ' + this.fileName + ' for path ' + this.path)
 				return await this.getFile()
 			} else {
+                logger.debug('[' + this.zone + '] No File elected : for path ' + this.path)
 				return null
 			}
-		},
-
-		async getConfig() {
-			const response = await axios.get(generateUrl('apps/files_readmemd/config'))
-			return response.data
 		},
 
 		async getElectedFileName() {
 			// retreive folder listing
 			// TODO check public mode
 			const { contents } = await this.fileTableView.getContents(this.path)
-			const FL = contents.map((file) => file.basename)
-
+			const FL = contents.map((file) => { if (file.type === 'file') { return file.basename }})
+			
 			let result
 
 			for (const activFile in this.fileList) {
@@ -211,7 +205,7 @@ export default {
 
 <style scoped>
 .footermd {
-	padding: 2em ;
+	padding: 1em ;
 	border-top: 1px solid silver ;
 	margin-top: 1em ;
 	text-align: initial ;

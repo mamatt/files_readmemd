@@ -13,7 +13,6 @@ import markdownit from 'markdown-it'
 import markdownitcontainer from 'markdown-it-container'
 import markdownittasklist from 'markdown-it-task-lists'
 import implicitFigures from 'markdown-it-image-figures'
-import markdownitMentions from 'markdown-it-mentions'
 import markdownitimsize from 'markdown-it-imsize'
 import markdownitanchor from 'markdown-it-anchor'
 import markdownittocdoneright from 'markdown-it-toc-done-right'
@@ -57,7 +56,7 @@ export default {
 			.use(markdownitanchor)
 			.use(markdownittocdoneright)
 			.use(markdownitreplacelink, {
-				replaceLink(link, env) {
+				 replaceLink: (link, env) => {
 					if (link.startsWith('mailto:') || link.startsWith('http://') || link.startsWith('https://') || link.startsWith(generateUrl('core/preview'))) {
 						return link
 					} else {
@@ -74,7 +73,7 @@ export default {
 						}
 					}
 				},
-			})
+			}) 
 
 		const defaultRender = this.converter.renderer.rules.link_open || function(tokens, idx, options, env, self) {
 			return self.renderToken(tokens, idx, options)

@@ -30,6 +30,7 @@
  use OCA\Files\Event\LoadAdditionalScriptsEvent;
  use OCA\ReadmeMD\Services\Config ;
  use OCA\ReadmeMD\Listeners\LoadAdditionalScriptsListener;
+ 
 
  class Application extends App implements IBootstrap {
     public const APP_ID = 'files_readmemd';

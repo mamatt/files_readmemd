@@ -23,11 +23,28 @@
 
  use OCP\EventDispatcher\Event;
  use OCP\EventDispatcher\IEventListener;
-
+ use OCP\Util;
+ use OCA\ReadmeMD\Services\Config ;
+ use OCP\AppFramework\Services\IInitialState;
 
  class LoadAdditionalScriptsListener implements IEventListener {
     
+    protected InitialStateProvider $initialStateProvider;
+
+    public function __construct(Config $config, IInitialState $initialState) {
+		$this->initialState = $initialState;
+        $this->config = $config ;
+	}
+    
     public function handle(Event $event): void {
-        \OCP\Util::addscript('files_readmemd', 'files_readmemd-main');
+
+        Util::addscript('files_readmemd', 'files_readmemd-main');
+        $result = $this->config-> getAllAppValue() ;
+        $this->initialState->provideInitialState('config',$result);
+
     }
+
+    
+
+
 }
