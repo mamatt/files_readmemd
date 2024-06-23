@@ -36,6 +36,15 @@ export default {
 		},
 	},
 
+	computer: {
+		isDarkTheme() {
+			return document.body.dataset.themes.startsWith('dark')
+		},
+		isDefaultTheme() {
+			return document.body.dataset.themes === 'default'
+		}
+	},
+
 	data() {
 		return {
 			renderedContent: '',
@@ -51,7 +60,6 @@ export default {
 
 	created() {
 
-		// 
 		const slugify = (s) => 'md-'+ encodeURIComponent(String(s).trim().toLowerCase().replace(/\s+/g, '-'))
 
 		this.converter = markdownit({ html: false, breaks: true, linkify: true, typographer: true })
@@ -155,7 +163,6 @@ export default {
 		},
 
 		forceCheckBox() {
-			// Disabling checkboxs
 			const checkboxs = this.$refs.container.querySelectorAll('input[type=checkbox]');
 			[].forEach.call(checkboxs, (cb) => {
 				cb.onclick = function() { return false }
@@ -165,6 +172,17 @@ export default {
 
 }
 </script>
+<!--style lan="scss">
+	.markdown-body-dark {
+		@import 'github-markdown-css/github-markdown-dark'
+	}
+
+	.markdown-body-light {
+		@import 'github-markdown-css/github-markdown-light'
+	}
+</style-->
+<style src='github-markdown-css/github-markdown.css'/>
+
 <style>
 .headermd ul,
 .footermd ul
@@ -217,7 +235,5 @@ export default {
     margin: 1em ;
     border-radius: var(--border-radius)
 }
-
-@import './../../css/content.css';
 
 </style>

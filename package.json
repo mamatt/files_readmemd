@@ -39,7 +39,8 @@
     "markdown-it-replace-link": "^1.2.1",
     "markdown-it-task-lists": "^2.1.1",
     "markdown-it-toc-done-right": "^4.2.0",
-    "vue": "^2.7.16"
+    "vue": "^2.7.16",
+    "github-markdown-css": "^5.6.1"
   },
   "devDependencies": {
     "@nextcloud/babel-config": "^1.2.0",
@@ -47,8 +48,8 @@
     "@nextcloud/eslint-config": "^8.4.1",
     "@nextcloud/eslint-plugin": "^2.2.1",
     "@nextcloud/stylelint-config": "^3.0.1",
-    "@nextcloud/webpack-vue-config": "^6.0.1",
-    "github-markdown-css": "^5.6.1"
+    "@nextcloud/webpack-vue-config": "^6.0.1"
+
   },
   "browserslist": [
     "extends @nextcloud/browserslist-config"
