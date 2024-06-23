@@ -21,15 +21,15 @@
 
 namespace OCA\ReadmeMD\Services ;
 
-use \OCP\IConfig;
+use OCP\IConfig;
 
 
 class Config {
 
-    private $config;
-    private $appName;
+    private IConfig $config;
+    private string $appName;
 
-    public function __construct(IConfig $config, $appName){
+    public function __construct(IConfig $config, string $appName){
         $this->config = $config;
         $this->appName = $appName;
 
@@ -78,6 +78,17 @@ class Config {
 
     public function setAppValue($key, $value) {
         $this->config->setAppValue($this->appName, $key, $value);
+    }
+
+    public function getAllAppValue() {
+        $allValue = [] ;
+
+        $allValue['show_asciidoc'] = $this->getAppValue('show_asciidoc') ;
+        $allValue['show_html'] = $this->getAppValue('show_html') ;
+        $allValue['fileslist_header'] = json_decode($this->getAppValue('fileslist_header')) ;
+        $allValue['fileslist_footer'] = json_decode($this->getAppValue('fileslist_footer'));
+
+        return $allValue ;
     }
 
 }
