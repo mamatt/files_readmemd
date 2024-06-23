@@ -50,6 +50,10 @@ export default {
 	},
 
 	created() {
+
+		// 
+		const slugify = (s) => 'md-'+ encodeURIComponent(String(s).trim().toLowerCase().replace(/\s+/g, '-'))
+
 		this.converter = markdownit({ html: false, breaks: true, linkify: true, typographer: true })
 			.enable('strikethrough')
 	        .enable('table')
@@ -61,7 +65,7 @@ export default {
 	        .use(implicitFigures)
 			.use(markdownitimsize)
 			.use(markdownitemoji)
-			.use(markdownitanchor)
+			.use(markdownitanchor, { slugify } )
 			.use(markdownittocdoneright)
 			.use(markdownitreplacelink, {
 				 replaceLink: (link, env) => {
