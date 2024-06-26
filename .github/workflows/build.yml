@@ -23,6 +23,7 @@ jobs:
         uses: actions/setup-node@v3
         with: 
           node-version: '20.0.0'
+          npm-version: '10.0.0'
           cache: 'npm'
 
       - name: Build ${{ env.APP_NAME }}
