@@ -22,20 +22,18 @@ jobs:
       - name: Install Node
         uses: actions/setup-node@v3
         with: 
-          node-version: '20.x'
+          node-version: '20.0.0'
           cache: 'npm'
 
       - name: Build ${{ env.APP_NAME }}
         env:
           NODE_ENV: production
         run: |
-          #cd ${{ env.APP_NAME }}
           npm ci
           npm run build --if-present
 
       - name: Package ${{ env.APP_NAME }} ${{ env.APP_VERSION }} with makefile
         run: |
-          cd ${{ env.APP_NAME }}
           ls -l
           make package
 
