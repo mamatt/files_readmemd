@@ -5,18 +5,19 @@
 
 <template>
 	<div v-if="fileName !== null && fileName!== undefined" :class="[ zone ]">
-		<MarkdownEngine v-if="engineType == &quot;markdown&quot;"
+		<MarkdownEngine v-if="engineType == 'markdown'"
 			:content="content"
 			:mode="mode"
 			:path="path" />
-		<HtmlEngine v-if="engineType == &quot;html&quot;" :content="content" />
-		<!--asciidocEngine v-if='engineType == "asciidoc"' :content='content' /-->
+		<HtmlEngine v-if="engineType == 'html'" :content="content" />
+		<AsciidocEngine v-if="engineType == 'asciidoc'" :content="content" />
 	</div>
 </template>
 
 <script>
 import MarkdownEngine from '../components/MarkdownEngine.vue'
 import HtmlEngine from '../components/HtmlEngine.vue'
+import AsciidocEngine from '../components/AsciidocEngine.vue'
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 import logger from '../logger.js'
@@ -28,6 +29,7 @@ export default {
 	components: {
 		MarkdownEngine,
 		HtmlEngine,
+		AsciidocEngine,
 	},
 
 	data() {
@@ -43,10 +45,10 @@ export default {
 	computed: {
 		engineType() {
 			const ext = this.fileName.substr(this.fileName.lastIndexOf('.') + 1)
-			if (ext === 'html' && this.config.show_html === 'true') { return 'html' }
-			if (ext === 'adoc' && this.show_asciidoc === 'true') { return 'asciidoc' }
+			if ((ext === 'html' || ext === 'htm') && this.config.show_html === 'true') { return 'html' }
+			if ((ext === 'adoc' || ext === 'asciidoc') && this.config.show_asciidoc === 'true') { return 'asciidoc' }
 			if (ext === 'md' || ext === 'markdown') { return 'markdown' }
-			return 'unsupported'
+			return 'Unsupported Engine'
 		},
 
 		fileList() {

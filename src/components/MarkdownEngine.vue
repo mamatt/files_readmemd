@@ -38,10 +38,16 @@ export default {
 
 	computer: {
 		isDarkTheme() {
+			import('github-markdown-css/github-markdown-dark.css')
 			return document.body.dataset.themes.startsWith('dark')
 		},
 		isDefaultTheme() {
+			import('github-markdown-css/github-markdown.css')
 			return document.body.dataset.themes === 'default'
+		},
+
+		isLightTheme() {
+
 		},
 	},
 
@@ -114,6 +120,21 @@ export default {
 			return defaultRender(tokens, idx, options, env, self)
 		}
 
+		// now choose the right CSS
+		if (document.body.dataset.themes.startsWith('dark')) {
+			import('github-markdown-css/github-markdown-dark.css')
+		}
+
+		if (document.body.dataset.themes.startsWith('light')) {
+			import('github-markdown-css/github-markdown-light.css')
+		}
+
+		if (document.body.dataset.themes === 'default') {
+			import('github-markdown-css/github-markdown.css')
+		}
+
+		logger.debug('Markdown engine loaded')
+
 	},
 
 	updated() {
@@ -172,16 +193,6 @@ export default {
 
 }
 </script>
-<!--style lan="scss">
-	.markdown-body-dark {
-		@import 'github-markdown-css/github-markdown-dark'
-	}
-
-	.markdown-body-light {
-		@import 'github-markdown-css/github-markdown-light'
-	}
-</style-->
-<style src='github-markdown-css/github-markdown.css' />
 
 <style>
 .headermd ul,
