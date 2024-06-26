@@ -15,8 +15,8 @@
     "stylelint:fix": "stylelint css/*.css css/*.scss src/**/*.scss src/**/*.vue --fix"
   },
   "engines": {
-    "node": "^20.0.0",
-    "npm": "^10.0.0"
+    "node": "^20.5.1",
+    "npm": "^10.8.1"
   },
   "dependencies": {
     "@nextcloud/axios": "^2.5.0",
@@ -52,8 +52,7 @@
     "@nextcloud/eslint-config": "^8.4.1",
     "@nextcloud/eslint-plugin": "^2.2.1",
     "@nextcloud/stylelint-config": "^3.0.1",
-    "@nextcloud/webpack-vue-config": "^6.0.1",
-    "scss-loader": "^0.0.1"
+    "@nextcloud/webpack-vue-config": "^6.0.1"
   },
   "browserslist": [
     "extends @nextcloud/browserslist-config"
