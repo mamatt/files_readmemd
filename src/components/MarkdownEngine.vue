@@ -42,7 +42,7 @@ export default {
 		},
 		isDefaultTheme() {
 			return document.body.dataset.themes === 'default'
-		}
+		},
 	},
 
 	data() {
@@ -60,7 +60,7 @@ export default {
 
 	created() {
 
-		const slugify = (s) => 'md-'+ encodeURIComponent(String(s).trim().toLowerCase().replace(/\s+/g, '-'))
+		const slugify = (s) => 'md-' + encodeURIComponent(String(s).trim().toLowerCase().replace(/\s+/g, '-'))
 
 		this.converter = markdownit({ html: false, breaks: true, linkify: true, typographer: true })
 			.enable('strikethrough')
@@ -73,7 +73,7 @@ export default {
 	        .use(implicitFigures)
 			.use(markdownitimsize)
 			.use(markdownitemoji)
-			.use(markdownitanchor, { slugify } )
+			.use(markdownitanchor, { slugify })
 			.use(markdownittocdoneright)
 			.use(markdownitreplacelink, {
 				 replaceLink: (link, env) => {
@@ -181,7 +181,7 @@ export default {
 		@import 'github-markdown-css/github-markdown-light'
 	}
 </style-->
-<style src='github-markdown-css/github-markdown.css'/>
+<style src='github-markdown-css/github-markdown.css' />
 
 <style>
 .headermd ul,

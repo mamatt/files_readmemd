@@ -14,69 +14,64 @@ __webpack_public_path__ = OC.linkTo('files_readmemd', 'js/') // eslint-disable-l
 
 document.addEventListener('DOMContentLoaded', () => {
 
-	
-    let HeaderView
+	let HeaderView
 	let FooterView
-    logger.info('Initializing for public page ...')
-    // wait for filelist to be ready
-    const fileSharingReady =  new Promise (resolve => {
-            let interval = setInterval(() => {
-                console.debug(OCA.Sharing.PublicApp)
-                if (OCA.Sharing.PublicApp.fileList.files !== undefined ) {
-                    clearInterval(interval) ;
-                    resolve()
-                }
-            },1000)
-    })
-    
-   fileSharingReady.then(() => {
-    logger.info('FileTable is ready ! ')
-    logger.debug(OCA.Sharing.PublicApp.fileList.files)
-        const folder =  {
-            path : OCA.Sharing.PublicApp.fileList._currentDirectory
-        }
+	logger.info('Initializing for public page ...')
+	// wait for filelist to be ready
+	const fileSharingReady = new Promise(resolve => {
+		const interval = setInterval(() => {
+			console.debug(OCA.Sharing.PublicApp)
+			if (OCA.Sharing.PublicApp.fileList.files !== undefined) {
+				clearInterval(interval)
+				resolve()
+			}
+		}, 1000)
+	})
 
-        let headerElement
-        if (!document.querySelector('.headermd')) {
-            headerElement = document.createElement('div')
-            document.querySelector('.filelist-header').append(headerElement)
-        } else {
-            headerElement = document.querySelector('.headermd')
+	fileSharingReady.then(() => {
+		logger.info('FileTable is ready ! ')
+		const folder = {
+			path: OCA.Sharing.PublicApp.fileList._currentDirectory,
+		}
 
-        }
+		let headerElement
+		if (!document.querySelector('.headermd')) {
+			headerElement = document.createElement('div')
+			document.querySelector('.filelist-header').append(headerElement)
+		} else {
+			headerElement = document.querySelector('.headermd')
 
-        HeaderView = new ReadmemdView({
-            data: {
-                name: 'readmemd-header',
-                zone: 'headermd',
-                path: folder.path,
-            },
-        })
+		}
 
-        let footerElement
+		HeaderView = new ReadmemdView({
+			data: {
+				name: 'readmemd-header',
+				zone: 'headermd',
+				path: folder.path,
+			},
+		})
 
-        if (!document.querySelector('.footermd')) {
-            footerElement = document.createElement('div')
-            document.querySelector('.filelist-footer').append(footerElement)
-        } else {
-            footerElement = document.querySelector('.footermd')
+		let footerElement
 
-        }
+		if (!document.querySelector('.footermd')) {
+			footerElement = document.createElement('div')
+			document.querySelector('.filelist-footer').append(footerElement)
+		} else {
+			footerElement = document.querySelector('.footermd')
 
-        FooterView = new ReadmemdView({
-            data: {
-                name: 'readmemd-footer',
-                zone: 'footermd',
-                path: folder.path,
-            },
-        })
+		}
 
-        
-        HeaderView.$mount(headerElement)
-        FooterView.$mount(footerElement)
+		FooterView = new ReadmemdView({
+			data: {
+				name: 'readmemd-footer',
+				zone: 'footermd',
+				path: folder.path,
+			},
+		})
 
-   })
+		HeaderView.$mount(headerElement)
+		FooterView.$mount(footerElement)
 
-
+	})
 
 })

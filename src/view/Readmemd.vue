@@ -173,7 +173,7 @@ export default {
 			if (this.mode === 'public') {
 				logger.debug('Mode public')
 				const contents = OCA.Sharing.PublicApp.fileList.files
-				FL =  contents.map((file) => { if (file.type === 'file') { return file.name } else { return undefined } })
+				FL = contents.map((file) => { if (file.type === 'file') { return file.name } else { return undefined } })
 			} else {
 				logger.debug('Mode private')
 				const { contents } = await this.fileTableView.getContents(this.path)
