@@ -13,19 +13,13 @@ jobs:
       - name: Setup app env
         run: |
           echo "APP_NAME=${GITHUB_REPOSITORY##*/}" >> $GITHUB_ENV
-          echo "APP_VERSION=${GITHUB_REF##*/}" >> $GITHUB_ENV
+          #echo "APP_VERSION=${GITHUB_REF##*/}" >> $GITHUB_ENV
+          echo "APP_VERSION=3.0.0" >> $GITHUB_ENV
           
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          path:  ${{ env.APP_NAME}}
-
-      - name: Get appinfo data
-        id: appinfo
-        uses: skjnldsv/xpath-action@7e6a7c379d0e9abc8acaef43df403ab4fc4f770c # master
-        with:
-          filename: ${{ env.APP_NAME }}/appinfo/info.xml
-          expression: "//info//dependencies//nextcloud/@min-version"
+          path: ${{ env.APP_NAME}}
 
       - name: Install Node
         uses: actions/setup-node@v3
@@ -34,8 +28,6 @@ jobs:
           cache: 'npm'
 
       - name: Build ${{ env.APP_NAME }}
-        # Skip if no package.json
-        if: ${{ steps.versions.outputs.nodeVersion }}
         env:
           NODE_ENV: production
         run: |
