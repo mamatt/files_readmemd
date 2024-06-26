@@ -36,19 +36,22 @@ export default {
 		this.converter = asciidoctor()
 		logger.debug('AsciiDoc engine loaded')
 
-		// now choose the right CSS
-		if (document.body.dataset.themes.startsWith('dark')) {
-			import('github-markdown-css/github-markdown-dark.css')
-		}
+			// now choose the right CSS
+		if (this.mode === "private") {
+			if (document.body.dataset.themes.startsWith('dark')) {
+				import('github-markdown-css/github-markdown-dark.css')
+			}
 
-		if (document.body.dataset.themes.startsWith('light')) {
-			import('github-markdown-css/github-markdown-light.css')
-		}
+			if (document.body.dataset.themes.startsWith('light')) {
+				import('github-markdown-css/github-markdown-light.css')
+			}
 
-		if (document.body.dataset.themes === 'default') {
+			if (document.body.dataset.themes === 'default') {
+				import('github-markdown-css/github-markdown.css')
+			}
+		} else {
 			import('github-markdown-css/github-markdown.css')
 		}
-
 	},
 }
 </script>

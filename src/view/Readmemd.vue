@@ -148,6 +148,7 @@ export default {
 				container = '#files-public-content > #preview'
 			}
 			document.querySelector(container).style.setProperty('overflow', 'unset')
+			document.querySelector(container + ' > table > tbody').style.setProperty('min-height', 'unset')
 			document.querySelector(container + ' > table > tfoot').style.setProperty('min-height', 'unset')
 			document.querySelector(container + ' > table > tfoot').style.setProperty('height', '65px')
 			document.querySelector(container + ' > table > tfoot > tr').style.setProperty('height', '65px')
