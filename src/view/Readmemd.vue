@@ -137,10 +137,18 @@ export default {
 
 	methods: {
 		adjustCSS() {
-			document.querySelector('.files-list').style.setProperty('overflow', 'unset')
-			document.querySelector('.files-list > table > tfoot').style.setProperty('min-height', 'unset')
-			document.querySelector('.files-list > table > tfoot').style.setProperty('height', '65px')
-			document.querySelector('.files-list > table > tfoot > tr').style.setProperty('height', '65px')
+
+			let container
+
+			if (this.mode === 'private') {
+				container = '.files-list'
+			} else {
+				container = '#files-public-content > #preview'
+			}
+			document.querySelector(container).style.setProperty('overflow', 'unset')
+			document.querySelector(container + ' > table > tfoot').style.setProperty('min-height', 'unset')
+			document.querySelector(container + ' > table > tfoot').style.setProperty('height', '65px')
+			document.querySelector(container + ' > table > tfoot > tr').style.setProperty('height', '65px')
 		},
 
 		async fillContent() {
@@ -159,10 +167,18 @@ export default {
 		},
 
 		async getElectedFileName() {
-			// retreive folder listing
-			// TODO check public mode
-			const { contents } = await this.fileTableView.getContents(this.path)
-			const FL = contents.map((file) => { if (file.type === 'file') { return file.basename } else { return undefined } })
+
+			let FL
+
+			if (this.mode === 'public') {
+				logger.debug('Mode public')
+				const contents = OCA.Sharing.PublicApp.fileList.files
+				FL =  contents.map((file) => { if (file.type === 'file') { return file.name } else { return undefined } })
+			} else {
+				logger.debug('Mode private')
+				const { contents } = await this.fileTableView.getContents(this.path)
+				FL = contents.map((file) => { if (file.type === 'file') { return file.basename } else { return undefined } })
+			}
 
 			let result
 
