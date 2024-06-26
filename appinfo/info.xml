@@ -19,7 +19,7 @@ It show README.md in the way gitlab does.]]></description>
     <bugs>https://github.com/mamatt/files_readmemd/issues</bugs>
     <screenshot>https://raw.githubusercontent.com/mamatt/files_readmemd/master/screenshot.png</screenshot>
     <dependencies>	    
-        <nextcloud min-version="28" max-version="28"/>
+        <nextcloud min-version="28" max-version="29"/>
     </dependencies>
     <settings>   
         <admin>OCA\ReadmeMD\Settings\Admin\Engine</admin>

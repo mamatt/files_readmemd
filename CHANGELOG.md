@@ -1,10 +1,16 @@
-## 3.0.0 XX-XX-2024
+## 3.0.0 28-06-2024
 ### Added
-  - Compat with NC 28
+  - Compat with NC 28 & 29
+  [#1124](https://github.com/mamatt/files_readmemd/issues/124)
+  [#134](https://github.com/mamatt/files_readmemd/issues/134)
+
 ### Removed
   - Compat with pre-Vue.js versions (NC < 28)
 ### Changed
   - Massive rewrite to switch to Vue.js
+### Fixed
+  - Automatically generated ID of headers might collide with NextCloud styling rules
+  [#106](https://github.com/mamatt/files_readmemd/issues/110)
 ## 2.0.1 15-01-2024
 ### Added
   - Compat with NC 26 & 27
