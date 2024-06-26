@@ -19,12 +19,34 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Install Node
-        uses: actions/setup-node@v3
-        with: 
-          node-version: '20.0.0'
-          npm-version: '10.0.0'
-          cache: 'npm'
+      - name: Get appinfo data
+        id: appinfo
+        uses: skjnldsv/xpath-action@7e6a7c379d0e9abc8acaef43df403ab4fc4f770c # master
+        with:
+          filename: ${{ env.APP_NAME }}/appinfo/info.xml
+          expression: "//info//dependencies//nextcloud/@min-version"
+
+      - name: Read package.json node and npm engines version
+        uses: skjnldsv/read-package-engines-version-actions@06d6baf7d8f41934ab630e97d9e6c0bc9c9ac5e4 # v3
+        id: versions
+        # Continue if no package.json
+        continue-on-error: true
+        with:
+          path: ${{ env.APP_NAME }}
+          fallbackNode: '^20'
+          fallbackNpm: '^10'
+
+      - name: Set up node ${{ steps.versions.outputs.nodeVersion }}
+        # Skip if no package.json
+        if: ${{ steps.versions.outputs.nodeVersion }}
+        uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v3
+        with:
+          node-version: ${{ steps.versions.outputs.nodeVersion }}
+
+      - name: Set up npm ${{ steps.versions.outputs.npmVersion }}
+        # Skip if no package.json
+        if: ${{ steps.versions.outputs.npmVersion }}
+        run: npm i -g 'npm@${{ steps.versions.outputs.npmVersion }}'
 
       - name: Build ${{ env.APP_NAME }}
         env:
