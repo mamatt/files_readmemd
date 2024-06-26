@@ -3,6 +3,7 @@ name: Build the App and create realese
 on:
   release:
     type: [published]
+  workflow_dispatch:
 
 jobs:
   build:
