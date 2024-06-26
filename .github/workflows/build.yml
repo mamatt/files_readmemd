@@ -33,7 +33,7 @@ jobs:
         continue-on-error: true
         with:
           fallbackNode: '^20'
-          fallbackNpm: '^10'
+          fallbackNpm: '^9'
 
       - name: Set up node ${{ steps.versions.outputs.nodeVersion }}
         # Skip if no package.json
