@@ -29,13 +29,14 @@ jobs:
         env:
           NODE_ENV: production
         run: |
-          cd ${{ env.APP_NAME }}
+          #cd ${{ env.APP_NAME }}
           npm ci
           npm run build --if-present
 
       - name: Package ${{ env.APP_NAME }} ${{ env.APP_VERSION }} with makefile
         run: |
           cd ${{ env.APP_NAME }}
+          ls -l
           make package
 
       - name: Sign package
