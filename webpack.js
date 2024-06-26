@@ -8,6 +8,7 @@ webpackConfig.stats = {
 }
 
 webpackConfig.entry['main'] = path.join(__dirname, 'src', 'main.js'),
+webpackConfig.entry['public'] = path.join(__dirname, 'src', 'public.js'),
 webpackConfig.entry['config'] = path.join(__dirname, 'src', 'config.js')
 
 module.exports = webpackConfig

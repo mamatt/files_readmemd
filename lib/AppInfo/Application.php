@@ -30,6 +30,7 @@
  use OCA\Files\Event\LoadAdditionalScriptsEvent;
  use OCA\ReadmeMD\Services\Config ;
  use OCA\ReadmeMD\Listeners\LoadAdditionalScriptsListener;
+ use OCA\ReadmeMD\Listeners\LoadAdditionalPublicScriptsListener;
  use OCA\Files_Sharing\Event\BeforeTemplateRenderedEvent;
  
 
@@ -54,7 +55,8 @@
         });
 
         $context->registerEventListener(LoadAdditionalScriptsEvent::class, LoadAdditionalScriptsListener::class);
-        $context->registerEventListener(BeforeTemplateRenderedEvent::class,LoadAdditionalScriptsListener::class);
+        //$context->registerEventListener(BeforeTemplateRenderedEvent::class,LoadAdditionalScriptsListener::class);
+        $context->registerEventListener(BeforeTemplateRenderedEvent::class,LoadAdditionalPublicScriptsListener::class);
 
     }
 
