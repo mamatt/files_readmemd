@@ -16,8 +16,11 @@ jobs:
       - name: Setup app env
         run: |
           echo "APP_NAME=${GITHUB_REPOSITORY##*/}" >> $GITHUB_ENV
-          echo "APP_VERSION=${GITHUB_REF##*/}" >> $GITHUB_ENV
-          echo "APP_VERSION=3.0.0" >> $GITHUB_ENV
+          echo "APP_RELEASE=${GITHUB_REF##*/}" >> $GITHUB_ENV
+          echo "APP_RELEASE=V3.0.0" >> $GITHUB_ENV
+          echo "APP_VERSION=${{end.APP_RELEASE#*v}}" >> $GITHUB_ENV
+          echo ${{ env.APP_RELEASE }}
+          echo ${{ env.APP_VERSION }}
           
       - name: Checkout
         uses: actions/checkout@v4
@@ -70,7 +73,7 @@ jobs:
         id: changelog
         uses: 3liz/changelog-release@0.2.0
         with:
-          tag_name: "3.0.0"
+          tag_name: ${{ env.APP_VERSION }}
           changelog_file: ${{ env.APP_NAME }}/CHANGELOG.md
           
       - name: Attach tarball to github release
@@ -84,6 +87,6 @@ jobs:
           draft: true
           overwrite: true
           body: ${{ steps.changelog.outputs.markdown }}
-          release_name: ${GITHUB_REF##*/}
+          release_name: ${{ github.ref }}
 
    
