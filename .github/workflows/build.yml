@@ -55,7 +55,7 @@ jobs:
 
       - name: Build ${{ env.APP_NAME }}
         env:
-          NODE_ENV: developpement
+          NODE_ENV: production
         run: |
           cd ${{ env.APP_NAME }}
           npm ci
