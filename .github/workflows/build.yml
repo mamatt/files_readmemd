@@ -68,6 +68,12 @@ jobs:
           pwd
           echo ${{ env.APP_NAME }}
           ls -lr build
+
+      - name: Changelog release
+        id: changelog
+        uses: 3liz/changelog-release@0.2.0
+        with:
+          tag_name:  ${{ env.APP_NAME }}
           
       - name: Attach tarball to github release
         uses: svenstaro/upload-release-action@v2
@@ -80,3 +86,6 @@ jobs:
           tag: "V3.0.0"
           draft: true
           overwrite: true
+          body: ${{ steps.changelog.outputs.markdown }}
+
+   
