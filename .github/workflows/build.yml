@@ -4,7 +4,9 @@ on:
   release:
     type: [published]
   workflow_dispatch:
-    
+
+permissions:
+  contents: write
 
 jobs:
   build:
