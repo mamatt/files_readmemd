@@ -62,6 +62,7 @@ jobs:
         run: |
           cd ${{ env.APP_NAME }}
           make package
+          ls -l ${{ env.APP_NAME }}/build/${{ env.APP_NAME }}.tar.gz
           
       - name: Attach tarball to github release
         uses: svenstaro/upload-release-action@04733e069f2d7f7f0b4aebc4fbdbce8613b03ccd # v2
