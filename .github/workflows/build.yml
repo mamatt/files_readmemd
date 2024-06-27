@@ -16,8 +16,6 @@ jobs:
           echo "APP_NAME=${GITHUB_REPOSITORY##*/}" >> $GITHUB_ENV
           #echo "APP_VERSION=${GITHUB_REF##*/}" >> $GITHUB_ENV
           echo "APP_VERSION=3.0.0" >> $GITHUB_ENV
-          echo ${GITHUB_REF##*/} 
-          echo ${GITHUB_REF}
           
       - name: Checkout
         uses: actions/checkout@v4
