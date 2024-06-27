@@ -87,5 +87,6 @@ jobs:
           draft: true
           overwrite: true
           body: ${{ steps.changelog.outputs.markdown }}
+          release_name: "V3.0.0"
 
    
