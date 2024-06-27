@@ -18,7 +18,7 @@ jobs:
           echo "APP_NAME=${GITHUB_REPOSITORY##*/}" >> $GITHUB_ENV
           echo "APP_RELEASE=${GITHUB_REF##*/}" >> $GITHUB_ENV
           echo "APP_RELEASE=V3.0.0" >> $GITHUB_ENV
-          echo "APP_VERSION=${{env.APP_RELEASE#v/}}" >> $GITHUB_ENV
+          echo "APP_VERSION=${APP_RELEASE#V}" >> $GITHUB_ENV
           echo ${{ env.APP_RELEASE }}
           echo ${{ env.APP_VERSION }}
           
