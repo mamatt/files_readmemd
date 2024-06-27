@@ -59,7 +59,7 @@ jobs:
         run: |
           cd ${{ env.APP_NAME }}
           npm ci
-          npm run dev
+          npm run build
 
       - name: Package ${{ env.APP_NAME }} ${{ env.APP_VERSION }} with makefile
         run: |
