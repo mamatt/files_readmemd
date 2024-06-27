@@ -78,4 +78,5 @@ jobs:
           asset_name: ${{ env.APP_NAME }}.tar.gz
           #tag: ${{ github.ref }}
           tag: "V3.0.0"
+          draft: true
           overwrite: true
