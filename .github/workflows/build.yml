@@ -87,6 +87,6 @@ jobs:
           draft: true
           overwrite: true
           body: ${{ steps.changelog.outputs.markdown }}
-          release_name: ${{ github.ref }}
+          release_name: ${{ env.APP_RELEASE }}
 
    
