@@ -23,9 +23,12 @@ jobs:
 
     - name: Upload app ${{ env.APP_NAME }} ${{ env.APP_VERSION }} to Nextcloud appstore
       run: |
-        echo " $ {{ github.event.release.assets[0].browser_download_url }} "
-        echo " $ {{ github.event.release.assets[1].browser_download_url }} "
-        echo " $ {{ github.event.release.assets[2].browser_download_url }} "
+        echo " ${{ github.event.release.assets[0].browser_download_url }} "
+        echo " ${{ github.event.release.assets[1].browser_download_url }} "
+        echo " ${{ github.event.release.assets[2].browser_download_url }} "
+        echo " ${{ github.event.release.assets.0.browser_download_url }} "
+        echo " ${{ github.event.release.assets.1.browser_download_url }} "
+        echo " ${{ github.event.release.assets.2.browser_download_url }} "
         
       #uses: nextcloud-releases/nextcloud-appstore-push-action@a011fe619bcf6e77ddebc96f9908e1af4071b9c1 # v1
       #with:
