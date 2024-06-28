@@ -1,0 +1,36 @@
+name: Publish App on Nextcloud Appstore
+
+on:
+  release:
+    types: [released]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    
+    steps:
+    
+    - name: Check Event type  
+      run: |
+          echo "event name is:" ${{ github.event_name }} 
+          echo "event type is:" ${{ github.event.action }} 
+      
+    - name: Setup app env
+      run: |
+          echo "APP_NAME=${GITHUB_REPOSITORY##*/}" >> $GITHUB_ENV
+          echo "APP_RELEASE=${GITHUB_REF##*/}" >> $GITHUB_ENV
+          echo "APP_VERSION=${GITHUB_REF##*/V}" >> $GITHUB_ENV
+
+    - name: Upload app ${{ env.APP_NAME }} ${{ env.APP_VERSION }} to Nextcloud appstore
+      run: |
+        echo " $ {{ github.event.release.assets[0].browser_download_url }} "
+        echo " $ {{ github.event.release.assets[1].browser_download_url }} "
+        echo " $ {{ github.event.release.assets[2].browser_download_url }} "
+        
+      #uses: nextcloud-releases/nextcloud-appstore-push-action@a011fe619bcf6e77ddebc96f9908e1af4071b9c1 # v1
+      #with:
+      #    app_name: ${{ env.APP_NAME }}
+      #    appstore_token: ${{ secrets.APPSTORE_TOKEN }}
+      #    download_url: ${{ steps.attach_to_release.outputs.browser_download_url }}
+      #    app_private_key: ${{ secrets.APP_PRIVATE_KEY }}
+    
