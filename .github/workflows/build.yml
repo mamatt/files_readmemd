@@ -2,7 +2,7 @@ name: Build the App and create realese
 
 on:
   release:
-    type: [created]
+    type: [prereleased]
   workflow_dispatch:
 
 permissions:
