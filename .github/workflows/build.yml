@@ -54,8 +54,6 @@ jobs:
         run: npm i -g 'npm@${{ steps.versions.outputs.npmVersion }}'
 
       - name: Build ${{ env.APP_NAME }}
-        env:
-          NODE_ENV: production
         run: |
           cd ${{ env.APP_NAME }}
           npm ci
