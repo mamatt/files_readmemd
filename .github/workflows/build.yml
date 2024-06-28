@@ -18,6 +18,7 @@ jobs:
           echo "APP_NAME=${GITHUB_REPOSITORY##*/}" >> $GITHUB_ENV
           echo "APP_RELEASE=${GITHUB_REF##*/}" >> $GITHUB_ENV
           echo "APP_VERSION=${GITHUB_REF##*/V}" >> $GITHUB_ENV
+          echo ${{ github.event }}
           
       - name: Checkout
         uses: actions/checkout@v4
