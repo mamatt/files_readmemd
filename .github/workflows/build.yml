@@ -12,13 +12,19 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+
+
     steps:
+      - name: Check Event type  
+        run: |
+          echo "event name is:" ${{ github.event_name }} 
+          echo "event type is:" ${{ github.event.action }} 
+      
       - name: Setup app env
         run: |
           echo "APP_NAME=${GITHUB_REPOSITORY##*/}" >> $GITHUB_ENV
           echo "APP_RELEASE=${GITHUB_REF##*/}" >> $GITHUB_ENV
           echo "APP_VERSION=${GITHUB_REF##*/V}" >> $GITHUB_ENV
-          echo ${{ github.event }}
           
       - name: Checkout
         uses: actions/checkout@v4
