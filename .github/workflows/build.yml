@@ -2,7 +2,7 @@ name: Build the App and create realese
 
 on:
   release:
-    type: ["prereleased"]
+    types: [prereleased]
   workflow_dispatch:
 
 permissions:
@@ -11,9 +11,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-
-
-
+    
     steps:
       - name: Check Event type  
         run: |
