@@ -1,4 +1,4 @@
-name: Build the App and create realese
+name: Build the App and create release
 
 on:
   release:
