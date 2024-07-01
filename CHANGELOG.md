@@ -1,3 +1,8 @@
+## 3.0.1 XX-XX-2024
+### Added
+  - Provide date-file dataset
+  [#160](https://github.com/mamatt/files_readmemd/issues/160)
+  
 ## 3.0.0 28-06-2024
 ### Added
   - Compat with NC 28 & 29
