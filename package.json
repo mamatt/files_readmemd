@@ -32,7 +32,7 @@
     "asciidoctor": "^3.0.4",
     "github-markdown-css": "^5.6.1",
     "highlight.js": "^11.9.0",
-    "katex": "^0.16.10",
+    "katex": "^0.16.11",
     "markdown-it": "^14.1.0",
     "markdown-it-anchor": "^9.0.1",
     "markdown-it-container": "^4.0.0",
