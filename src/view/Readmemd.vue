@@ -128,13 +128,17 @@ export default {
 	watch: {
 		async path() {
 			this.content = await this.fillContent()
-			this.adjustCSS()
+			if (this.zone == "footermd" && this.content !== null ) {
+				this.adjustCSS()
+			}
 		},
 	},
 
 	async mounted() {
 		this.content = await this.fillContent()
-		this.adjustCSS()
+		if (this.zone == "footermd" && this.content !== null ) {
+			this.adjustCSS()
+		}
 	},
 
 	methods: {
