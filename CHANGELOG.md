@@ -2,6 +2,8 @@
 ### Added
   - Provide date-file dataset
   [#160](https://github.com/mamatt/files_readmemd/issues/160)
+  - Fix Adjust CSS always triggered even if there is no footer
+  [#174](https://github.com/mamatt/files_readmemd/issues/160)
   
 ## 3.0.0 28-06-2024
 ### Added
