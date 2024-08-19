@@ -24,7 +24,7 @@ namespace OCA\ReadmeMD\Services ;
 use OCP\IConfig;
 
 
-class Config {
+class ConfigService {
 
     private IConfig $config;
     private string $appName;
@@ -46,22 +46,6 @@ class Config {
             $this->setAppValue('show_html','false') ;
         }
 
-        if (empty($this->getAppValue('show_title')) ) { 
-            $this->setAppValue('show_title','true') ;
-        }
-
-        if (empty($this->getAppValue('yellow_back')) ) { 
-            $this->setAppValue('yellow_back','true') ;
-        }
-
-        if (empty($this->getAppValue('auto_refresh')) ) { 
-            $this->setAppValue('auto_refresh','false') ;
-        }
-
-        if (empty($this->getAppValue('disable_workspace')) ) { 
-            $this->setAppValue('disable_workspace','true') ;
-        }
-
         if (null === json_decode($this->getAppValue('fileslist_header')) ){
             $this->setAppValue('fileslist_header',json_encode(array('HEADER'))) ;
         }
@@ -81,14 +65,22 @@ class Config {
     }
 
     public function getAllAppValue() {
-        $allValue = [] ;
+        $allValues = [] ;
 
-        $allValue['show_asciidoc'] = $this->getAppValue('show_asciidoc') ;
-        $allValue['show_html'] = $this->getAppValue('show_html') ;
-        $allValue['fileslist_header'] = json_decode($this->getAppValue('fileslist_header')) ;
-        $allValue['fileslist_footer'] = json_decode($this->getAppValue('fileslist_footer'));
+        $appKeys = $this->config->getAppKeys($this->appName);
 
-        return $allValue ;
+        foreach ($appKeys as $key ) {
+            $allValues[$key]= json_decode($this->config->getAppValue($this->appName,$key));
+        }
+
+        return $allValues ;
+    }
+
+    public function setAllAppValue($AllValues) {
+        foreach ($AllValues as $key => $value) {
+            $this->config->setAppValues($this->appName,$key,$allValues[$key]);
+        }
+   
     }
 
 }
