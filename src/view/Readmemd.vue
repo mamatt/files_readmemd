@@ -4,7 +4,7 @@
 -->
 
 <template>
-	<div v-if="fileName !== null && fileName!== undefined" :class="[ zone ]" :data-filename="fileName" >
+	<div v-if="fileName !== null && fileName!== undefined" :class="[ zone ]" :data-filename="fileName">
 		<MarkdownEngine v-if="engineType == 'markdown'"
 			:content="content"
 			:mode="mode"
