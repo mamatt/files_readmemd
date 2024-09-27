@@ -4,14 +4,14 @@
 -->
 
 <template>
-		<div v-if="fileName !== null && fileName!== undefined" :class="[ zone ]" :data-filename="fileName">
-			<MarkdownEngine v-if="engineType == 'markdown'"
-				:content="content"
-				:mode="mode"
-				:path="path" />
-			<HtmlEngine v-if="engineType == 'html'" :content="content" />
-			<AsciidocEngine v-if="engineType == 'asciidoc'" :content="content" />
-		</div>
+	<div v-if="fileName !== null && fileName!== undefined" :class="[ zone ]" :data-filename="fileName">
+		<MarkdownEngine v-if="engineType == 'markdown'"
+			:content="content"
+			:mode="mode"
+			:path="path" />
+		<HtmlEngine v-if="engineType == 'html'" :content="content" />
+		<AsciidocEngine v-if="engineType == 'asciidoc'" :content="content" />
+	</div>
 </template>
 
 
@@ -129,13 +129,17 @@ export default {
 	watch: {
 		async path() {
 			this.content = await this.fillContent()
+			if (this.zone == "footermd" && this.content !== null ) {
 				this.adjustCSS()
+			}
 		},
 	},
 
 	async mounted() {
 		this.content = await this.fillContent()
+		if (this.zone == "footermd" && this.content !== null ) {
 			this.adjustCSS()
+		}
 	},
 
 	methods: {

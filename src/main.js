@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		order: 100,
 
 		enabled(folder, view) {
-			return view.id === 'files' || view.id === 'files.public'
+			return view.id === 'files' || view.id === 'files.public' || view.id === 'favorites'
 		},
 
 		async render(el, folder, view) {

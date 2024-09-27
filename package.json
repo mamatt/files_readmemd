@@ -1,6 +1,6 @@
 {
   "name": "files_readmemd",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "show README.md github style",
   "repository": "https://github.com/mamatt/files_readmemd.git",
   "author": "Matthieu Le Corre <matthieu.lecorre@univ-nantes.fr>",
@@ -19,25 +19,25 @@
     "npm": "^10.8.1"
   },
   "dependencies": {
-    "@nextcloud/axios": "^2.5.0",
+    "@nextcloud/axios": "^2.5.1",
     "@nextcloud/event-bus": "^3.3.1",
-    "@nextcloud/files": "^3.5.1",
+    "@nextcloud/files": "^3.9.0",
     "@nextcloud/initial-state": "^2.2.0",
     "@nextcloud/logger": "^3.0.2",
     "@nextcloud/router": "^3.0.1",
-    "@nextcloud/vue": "^8.12.0",
-    "@types/markdown-it": "^14.1.0",
-    "@vscode/markdown-it-katex": "1.0.3",
+    "@nextcloud/vue": "^8.19.0",
+    "@types/markdown-it": "^14.1.2",
+    "@vscode/markdown-it-katex": "1.1.0",
     "@wekanteam/markdown-it-mermaid": "^0.6.4",
     "asciidoctor": "^3.0.4",
     "github-markdown-css": "^5.6.1",
-    "highlight.js": "^11.9.0",
-    "katex": "^0.16.10",
+    "highlight.js": "^11.10.0",
+    "katex": "^0.16.11",
     "markdown-it": "^14.1.0",
-    "markdown-it-anchor": "^9.0.1",
+    "markdown-it-anchor": "^9.2.0",
     "markdown-it-container": "^4.0.0",
     "markdown-it-emoji": "^3.0.0",
-    "markdown-it-highlightjs": "^4.1.0",
+    "markdown-it-highlightjs": "^4.2.0",
     "markdown-it-image-figures": "^2.1.1",
     "markdown-it-imsize": "^2.0.1",
     "markdown-it-mentions": "^1.0.0",
@@ -53,7 +53,7 @@
     "@nextcloud/eslint-config": "^8.4.1",
     "@nextcloud/eslint-plugin": "^2.2.1",
     "@nextcloud/stylelint-config": "^3.0.1",
-    "@nextcloud/webpack-vue-config": "^6.0.1"
+    "@nextcloud/webpack-vue-config": "^6.1.0"
   },
   "browserslist": [
     "extends @nextcloud/browserslist-config"

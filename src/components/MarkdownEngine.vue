@@ -121,7 +121,7 @@ export default {
 		}
 
 		// now choose the right CSS
-		if (this.mode === "private") {
+		if (this.mode === 'private') {
 			if (document.body.dataset.themes.startsWith('dark')) {
 				import('github-markdown-css/github-markdown-dark.css')
 			}
