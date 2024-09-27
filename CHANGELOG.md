@@ -1,9 +1,12 @@
-## 3.0.1 XX-XX-2024
+## 3.0.2 27-09-2024
 ### Added
   - Provide date-file dataset
   [#160](https://github.com/mamatt/files_readmemd/issues/160)
+### Fixed
   - Fix Adjust CSS always triggered even if there is no footer
   [#174](https://github.com/mamatt/files_readmemd/issues/160)
+  - Multiple vulnerabilities in dependancies
+  - Not showing when opened via favorites (thanks to @ernolf)
   
 ## 3.0.0 28-06-2024
 ### Added
