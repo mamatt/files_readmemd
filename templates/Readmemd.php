@@ -1,7 +1,8 @@
+<?php
 /**
  * @author Matthieu Le Corre <matthieu.lecorre@univ-nantes.fr>
  *
- * @license AGPL-3.0-or-later
+ * @license GNU AGPL version 3 or any later version
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -17,22 +18,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-import Vue from 'vue'
-import Config from './view/Config.vue'
-import logger from './logger.js'
 
-Vue.prototype.t = t
-Vue.prototype.OC = window.OC
-Vue.prototype.OCA = window.OCA
 
-const ConfigView = Vue.extend(Config)
+script("files_readmemd","files_readmemd-config") ;
 
-__webpack_nonce__ = btoa(OC.requestToken) 			 		 // eslint-disable-line
-__webpack_public_path__ = OC.linkTo('files_readmemd', 'js/') // eslint-disable-line
-
-document.addEventListener('DOMContentLoaded', () => {
-
-	logger.info('initializing config ...')
-    new ConfigView().$mount('#readmemd-settings')
-
-})
+?>
+<div id=readmemd-settings></did>

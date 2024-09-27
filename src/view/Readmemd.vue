@@ -14,6 +14,7 @@
 	</div>
 </template>
 
+
 <script>
 import MarkdownEngine from '../components/MarkdownEngine.vue'
 import HtmlEngine from '../components/HtmlEngine.vue'
@@ -45,8 +46,8 @@ export default {
 	computed: {
 		engineType() {
 			const ext = this.fileName.substr(this.fileName.lastIndexOf('.') + 1)
-			if ((ext === 'html' || ext === 'htm') && this.config.show_html === 'true') { return 'html' }
-			if ((ext === 'adoc' || ext === 'asciidoc') && this.config.show_asciidoc === 'true') { return 'asciidoc' }
+			if ((ext === 'html' || ext === 'htm') && this.config.show_html === true) { return 'html' }
+			if ((ext === 'adoc' || ext === 'asciidoc') && this.config.show_asciidoc === true) { return 'asciidoc' }
 			if (ext === 'md' || ext === 'markdown') { return 'markdown' }
 			return 'Unsupported Engine'
 		},
@@ -62,7 +63,7 @@ export default {
 						'.' + fn + '.markdown',
 					])
 
-					if (this.config.show_asciidoc === 'true') {
+					if (this.config.show_asciidoc === true) {
 						Array.prototype.push.apply(FFNames, [
 							fn + '.adoc',
 							fn + '.asciidoc',
@@ -71,7 +72,7 @@ export default {
 						])
 					}
 
-					if (this.config.show_html === 'true') {
+					if (this.config.show_html === true) {
 						Array.prototype.push.apply(FFNames, [
 							fn + '.htm',
 							fn + '.html',
@@ -91,7 +92,7 @@ export default {
 						'.' + fn + '.markdown',
 					])
 
-					if (this.config.show_asciidoc === 'true') {
+					if (this.config.show_asciidoc === true) {
 						Array.prototype.push.apply(HFNames, [
 							fn + '.adoc',
 							fn + '.asciidoc',
@@ -100,7 +101,7 @@ export default {
 						])
 					}
 
-					if (this.config.show_html === 'true') {
+					if (this.config.show_html === true) {
 						Array.prototype.push.apply(HFNames, [
 							fn + '.htm',
 							fn + '.html',

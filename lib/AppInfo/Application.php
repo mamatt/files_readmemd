@@ -28,7 +28,7 @@
  use OCP\AppFramework\Bootstrap\IRegistrationContext;
  use OCP\IConfig;
  use OCA\Files\Event\LoadAdditionalScriptsEvent;
- use OCA\ReadmeMD\Services\Config ;
+ use OCA\ReadmeMD\Services\ConfigService ;
  use OCA\ReadmeMD\Listeners\LoadAdditionalScriptsListener;
  use OCA\ReadmeMD\Listeners\LoadAdditionalPublicScriptsListener;
  use OCA\Files_Sharing\Event\BeforeTemplateRenderedEvent;
@@ -47,15 +47,14 @@
 
     public function register(IRegistrationContext $context): void {
 
-        $context->registerService(Config::class, function($c) : Config {
-            return new Config(
+        $context->registerService(ConfigService::class, function($c) : ConfigService {
+            return new ConfigService(
                 $c->query(IConfig::class),
-                $c->query('AppName')
+                $c->query('appName')
             );
         });
 
         $context->registerEventListener(LoadAdditionalScriptsEvent::class, LoadAdditionalScriptsListener::class);
-        //$context->registerEventListener(BeforeTemplateRenderedEvent::class,LoadAdditionalScriptsListener::class);
         $context->registerEventListener(BeforeTemplateRenderedEvent::class,LoadAdditionalPublicScriptsListener::class);
 
     }

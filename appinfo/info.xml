@@ -22,8 +22,7 @@ It show README.md in the way gitlab does.]]></description>
         <nextcloud min-version="28" max-version="29"/>
     </dependencies>
     <settings>   
-        <admin>OCA\ReadmeMD\Settings\Admin\Engine</admin>
-        <admin>OCA\ReadmeMD\Settings\Admin\Filelist</admin>
+        <admin>OCA\ReadmeMD\Settings\Admin\Readmemd</admin>
         <admin-section>OCA\ReadmeMD\Settings\Admin\Section</admin-section>
     </settings>
 </info>

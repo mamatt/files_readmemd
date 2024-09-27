@@ -24,14 +24,14 @@
  use OCP\EventDispatcher\Event;
  use OCP\EventDispatcher\IEventListener;
  use OCP\Util;
- use OCA\ReadmeMD\Services\Config ;
+ use OCA\ReadmeMD\Services\ConfigService ;
  use OCP\AppFramework\Services\IInitialState;
 
  class LoadAdditionalPublicScriptsListener implements IEventListener {
     
     protected InitialStateProvider $initialStateProvider;
 
-    public function __construct(Config $config, IInitialState $initialState) {
+    public function __construct(ConfigService $config, IInitialState $initialState) {
 		$this->initialState = $initialState;
         $this->config = $config ;
 	}
@@ -39,7 +39,7 @@
     public function handle(Event $event): void {
 
         Util::addscript('files_readmemd', 'files_readmemd-public');
-        $result = $this->config-> getAllAppValue() ;
+        $result = $this->config->getAllAppValue() ;
         $this->initialState->provideInitialState('config',$result);
 
     }

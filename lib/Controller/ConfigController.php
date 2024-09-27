@@ -22,12 +22,12 @@
 namespace OCA\ReadmeMD\Controller ;
 
 use OCP\AppFramework\Controller  ;
-use OCA\ReadmeMD\Services\Config ;
+use OCA\ReadmeMD\Services\ConfigService ;
 use OCP\IRequest;
 
 class ConfigController extends Controller {
 
-    public function __construct($AppName, IRequest $request, Config $config ) {
+    public function __construct($AppName, IRequest $request, ConfigService $config ) {
         parent::__construct($AppName, $request);
 
         $this->config = $config;

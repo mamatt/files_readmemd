@@ -21,31 +21,25 @@
 
 namespace OCA\ReadmeMD\Settings\Admin ;
 
-use OCP\IL10N;
+
 use OCP\Settings\ISettings;
-use OCA\ReadmeMD\Services\Config ;
 use OCP\AppFramework\Http\TemplateResponse;
+use OCP\AppFramework\Services\IInitialState;
+use OCA\ReadmeMD\Services\ConfigService ;
 
-class Engine implements ISettings {
-    /** @var Config */
-    private $config;
 
-    /** @var IL10N */
-    private $l;
+class Readmemd implements ISettings {
 
-    /** @var IDateTimeFormatter */
-    private $dateTimeFormatter;
-
-    public function __construct(Config $config,IL10N $l) {
-        $this->config = $config;
-        $this->l = $l;
+    public function __construct(ConfigService $config, private IInitialState $initialState) {
+        $this->initialState = $initialState;
+        $this->config = $config ;
     }
 
     /**
      * @return string the section ID, e.g. 'sharing'
      */
     public function getSection() {
-            return 'files_readmemd';
+        return 'files_readmemd';
     }
 
     /**
@@ -62,15 +56,10 @@ class Engine implements ISettings {
      */
     public function getForm() {
 
-        $show_asciidoc = $this->config->getAppValue('show_asciidoc') ; 
-            $show_html = $this->config->getAppValue('show_html')     ;
+        $result = $this->config-> getAllAppValue() ;
+        $this->initialState->provideInitialState('config',$result);
 
-        $parameters = [
-            'show_asciidoc' => $show_asciidoc,
-            'show_html' => $show_html
-        ];
-
-        return new TemplateResponse('files_readmemd', 'Engine', $parameters);
+        return new TemplateResponse('files_readmemd', 'Readmemd');
     }
 
 }
