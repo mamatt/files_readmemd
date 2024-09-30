@@ -30,7 +30,7 @@
     "@vscode/markdown-it-katex": "1.1.0",
     "@wekanteam/markdown-it-mermaid": "^0.6.4",
     "asciidoctor": "^3.0.4",
-    "github-markdown-css": "^5.6.1",
+    "github-markdown-css": "^5.7.0",
     "highlight.js": "^11.10.0",
     "katex": "^0.16.11",
     "markdown-it": "^14.1.0",
