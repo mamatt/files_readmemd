@@ -1,3 +1,17 @@
+## 3.1.0 27-02-2026
+### Added
+  - Compat with NC 30, 31, 32 & 33
+
+### Changed
+  - Update @nextcloud/files to v4 and migrate file list header registration API
+  - Improve webpack build compatibility on Windows and recent npm versions
+  - Bump app version to 3.1.0
+
+### Fixed
+  - Replace deprecated axios .success() usage in admin settings frontend
+  - Harden public share initialization with guards and timeout fallback
+  - Improve listener typing and AppInfo namespace consistency for bootstrap loading
+
 ## 3.0.2 27-09-2024
 ### Added
   - Provide date-file dataset

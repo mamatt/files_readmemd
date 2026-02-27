@@ -28,13 +28,14 @@
  use OCP\AppFramework\Services\IInitialState;
 
  class LoadAdditionalScriptsListener implements IEventListener {
-    
-    protected InitialStateProvider $initialStateProvider;
+
+    private Config $config;
+    private IInitialState $initialState;
 
     public function __construct(Config $config, IInitialState $initialState) {
-		$this->initialState = $initialState;
+        $this->initialState = $initialState;
         $this->config = $config ;
-	}
+    }
     
     public function handle(Event $event): void {
 

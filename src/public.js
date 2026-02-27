@@ -13,65 +13,68 @@ __webpack_nonce__ = btoa(OC.requestToken) 			 		 // eslint-disable-line
 __webpack_public_path__ = OC.linkTo('files_readmemd', 'js/') // eslint-disable-line
 
 document.addEventListener('DOMContentLoaded', () => {
-
-	let HeaderView
-	let FooterView
 	logger.info('Initializing for public page ...')
-	// wait for filelist to be ready
-	const fileSharingReady = new Promise(resolve => {
+	const waitForPublicFileList = () => new Promise((resolve, reject) => {
+		let retries = 0
+		const maxRetries = 30
 		const interval = setInterval(() => {
-			console.debug(OCA.Sharing.PublicApp)
-			if (OCA.Sharing.PublicApp.fileList.files !== undefined) {
+			const publicApp = window.OCA?.Sharing?.PublicApp
+			const fileList = publicApp?.fileList
+			const isReady = Array.isArray(fileList?.files)
+			if (isReady) {
 				clearInterval(interval)
-				resolve()
+				resolve(fileList)
+				return
 			}
-		}, 1000)
+			retries += 1
+			if (retries >= maxRetries) {
+				clearInterval(interval)
+				reject(new Error('Public file list is not available'))
+			}
+		}, 500)
 	})
 
-	fileSharingReady.then(() => {
-		logger.info('FileTable is ready ! ')
-		const folder = {
-			path: OCA.Sharing.PublicApp.fileList._currentDirectory,
-		}
-
+	waitForPublicFileList().then((fileList) => {
+		logger.info('File table is ready')
 		let headerElement
 		if (!document.querySelector('.headermd')) {
 			headerElement = document.createElement('div')
-			document.querySelector('.filelist-header').append(headerElement)
+			document.querySelector('.filelist-header')?.append(headerElement)
 		} else {
 			headerElement = document.querySelector('.headermd')
-
 		}
 
-		HeaderView = new ReadmemdView({
+		const HeaderView = new ReadmemdView({
 			data: {
 				name: 'readmemd-header',
 				zone: 'headermd',
-				path: folder.path,
+				path: fileList._currentDirectory || '/',
 			},
 		})
 
 		let footerElement
-
 		if (!document.querySelector('.footermd')) {
 			footerElement = document.createElement('div')
-			document.querySelector('.filelist-footer').append(footerElement)
+			document.querySelector('.filelist-footer')?.append(footerElement)
 		} else {
 			footerElement = document.querySelector('.footermd')
-
 		}
 
-		FooterView = new ReadmemdView({
+		const FooterView = new ReadmemdView({
 			data: {
 				name: 'readmemd-footer',
 				zone: 'footermd',
-				path: folder.path,
+				path: fileList._currentDirectory || '/',
 			},
 		})
 
-		HeaderView.$mount(headerElement)
-		FooterView.$mount(footerElement)
-
+		if (headerElement) {
+			HeaderView.$mount(headerElement)
+		}
+		if (footerElement) {
+			FooterView.$mount(footerElement)
+		}
+	}).catch((error) => {
+		logger.error('Could not initialize public view rendering', { error })
 	})
-
 })

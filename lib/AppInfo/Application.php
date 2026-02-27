@@ -19,7 +19,7 @@
  *
  */
 
- namespace OCA\ReadmeMD\Appinfo ;
+ namespace OCA\ReadmeMD\AppInfo;
 
  
  use OCP\AppFramework\App;
@@ -34,7 +34,7 @@
  use OCA\Files_Sharing\Event\BeforeTemplateRenderedEvent;
  
 
- class Application extends App implements IBootstrap {
+class Application extends App implements IBootstrap {
     public const APP_ID = 'files_readmemd';
     public const APP_NAME = 'ReadmeMD';
 
