@@ -18,7 +18,7 @@
  *
  */
 import Vue from 'vue'
-import { registerFileListHeaders, Header } from '@nextcloud/files'
+import { registerFileListHeader } from '@nextcloud/files'
 import Readmemd from './view/Readmemd.vue'
 import logger from './logger.js'
 
@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	let FooterView
 
 	// create Header object
-	const ReadmeMDHeader = new Header({
+	const ReadmeMDHeader = {
 		id: 'readmemd',
 		order: 100,
 
@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 			if (!document.querySelector('.footermd')) {
 				footerElement = document.createElement('div')
-				document.querySelector('.files-list').after(footerElement)
+				document.querySelector('.files-list')?.after(footerElement)
 			} else {
 				footerElement = document.querySelector('.footermd')
 
@@ -74,12 +74,16 @@ document.addEventListener('DOMContentLoaded', () => {
 			}).$mount(footerElement)
 		},
 
-		updated(folder, view) {
-			HeaderView.$data.path = folder.path
-			FooterView.$data.path = folder.path
+		updated(folder) {
+			if (HeaderView?.$data) {
+				HeaderView.$data.path = folder.path
+			}
+			if (FooterView?.$data) {
+				FooterView.$data.path = folder.path
+			}
 		},
-	})
+	}
 
 	// last step, register the header to filelist
-	registerFileListHeaders(ReadmeMDHeader)
+	registerFileListHeader(ReadmeMDHeader)
 })

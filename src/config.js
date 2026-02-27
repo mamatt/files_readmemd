@@ -22,16 +22,13 @@ import { generateUrl } from '@nextcloud/router'
 import axios from '@nextcloud/axios'
 
 document.addEventListener('DOMContentLoaded', () => {
+	const postSetting = (key, value) => {
+		const params = new URLSearchParams()
+		params.append('key', key)
+		params.append('value', value)
 
-	// Engines
-
-	document.getElementById('readmeMD-engine-asciidoc').onclick = function(Event) {
-		const params = new URLSearchParams() // eslint-disable-line
-		params.append('key', 'show_asciidoc')
-		params.append('value', Event.target.checked)
-
-		axios.post(
-			generateUrl('apps/files_readmemd/config'),
+		return axios.post(
+			generateUrl('/apps/files_readmemd/config'),
 			params,
 			{
 				headers: {
@@ -39,28 +36,21 @@ document.addEventListener('DOMContentLoaded', () => {
 				},
 			},
 		)
-			.success(function(json) {
-			// console.log(json) ;
-			})
 	}
 
-	document.getElementById('readmeMD-engine-html').onclick = function(Event) {
-		const params = new URLSearchParams() // eslint-disable-line
-		params.append('key', 'show_html')
-		params.append('value', Event.target.checked)
+	// Engines
+	const asciidocCheckbox = document.getElementById('readmeMD-engine-asciidoc')
+	if (asciidocCheckbox) {
+		asciidocCheckbox.onclick = function(event) {
+			postSetting('show_asciidoc', event.target.checked).catch(() => {})
+		}
+	}
 
-		axios.post(
-			generateUrl('apps/files_readmemd/config'),
-			params,
-			{
-				headers: {
-					'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-				},
-			},
-		)
-			.success(function(json) {
-			// console.log(json) ;
-			})
+	const htmlCheckbox = document.getElementById('readmeMD-engine-html')
+	if (htmlCheckbox) {
+		htmlCheckbox.onclick = function(event) {
+			postSetting('show_html', event.target.checked).catch(() => {})
+		}
 	}
 
 	// Fileslists
@@ -68,47 +58,53 @@ document.addEventListener('DOMContentLoaded', () => {
 	// DELETE
 	const els = document.getElementsByClassName('readmeMD-filelist_delete');
 	[].forEach.call(els, (el) => {
-		el.onclick = function(Event) {
+		el.onclick = function(event) {
+			const fn = event.target.dataset.filename
+			const zone = event.target.dataset.zone
 
-			const fn = Event.target.dataset.filename
-			const zone = Event.target.dataset.zone
-
-			axios.delete(generateUrl('apps/files_readmemd/config/filenames/' + zone + '/' + fn.replace('?', '%3F')))
-				.then(function(data) {
-					const parentElement = Event.target.parentNode
+			axios.delete(generateUrl('/apps/files_readmemd/config/filenames/' + encodeURIComponent(zone) + '/' + encodeURIComponent(fn)))
+				.then(function() {
+					const parentElement = event.target.parentNode
 					parentElement.parentNode.removeChild(parentElement)
 				})
+				.catch(() => {})
 		}
 	})
 
 	// ADD
 
-	document.getElementById('readmeMD-filelist_submit-footer').onclick = function(Event) {
+	const footerSubmit = document.getElementById('readmeMD-filelist_submit-footer')
+	if (footerSubmit) {
+		footerSubmit.onclick = function() {
+			const fn = document.getElementById('readmeMD-filelist_name-footer').value
+			const zone = 'footer'
 
-		const fn = document.getElementById('readmeMD-filelist_name-footer').value
-		const zone = 'footer'
-
-		axios.put(generateUrl('apps/files_readmemd/config/filenames/' + zone + '/' + fn.replace('?', '%3F')))
-			.then(function(data) {
-				document.getElementById('readmeMD-filelist_footer').insertAdjacentHTML('beforeend',
-					'<li class="readmeMD-filelist" id="readmeMD-filelist-' + fn + '">'
+			axios.put(generateUrl('/apps/files_readmemd/config/filenames/' + zone + '/' + encodeURIComponent(fn)))
+				.then(function() {
+					document.getElementById('readmeMD-filelist_footer').insertAdjacentHTML('beforeend',
+						'<li class="readmeMD-filelist" id="readmeMD-filelist-' + fn + '">'
                     + '<a data-zone="footer" data-filename="' + fn + '" class="readmeMD-filelist_delete icon-inline icon icon-delete"></a>'
                     + fn + '</li>')
-			})
+				})
+				.catch(() => {})
+		}
 	}
 
-	document.getElementById('readmeMD-filelist_submit-header').onclick = function(Event) {
+	const headerSubmit = document.getElementById('readmeMD-filelist_submit-header')
+	if (headerSubmit) {
+		headerSubmit.onclick = function() {
+			const fn = document.getElementById('readmeMD-filelist_name-header').value
+			const zone = 'header'
 
-		const fn = document.getElementById('readmeMD-filelist_name-header').value
-		const zone = 'header'
-
-		axios.put(generateUrl('apps/files_readmemd/config/filenames/' + zone + '/' + fn.replace('?', '%3F')))
-			.then(function(data) {
-				document.getElementById('readmeMD-filelist_header').insertAdjacentHTML('beforeend',
-					'<li class="readmeMD-filelist" id="readmeMD-filelist-' + fn + '">'
+			axios.put(generateUrl('/apps/files_readmemd/config/filenames/' + zone + '/' + encodeURIComponent(fn)))
+				.then(function() {
+					document.getElementById('readmeMD-filelist_header').insertAdjacentHTML('beforeend',
+						'<li class="readmeMD-filelist" id="readmeMD-filelist-' + fn + '">'
                     + '<a data-zone="header" data-filename="' + fn + '" class="readmeMD-filelist_delete icon-inline icon icon-delete"></a>'
                     + fn + '</li>')
-			})
+				})
+				.catch(() => {})
+		}
 	}
 
 })
